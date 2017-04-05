@@ -1,0 +1,28 @@
+intents:
+#    Temperature:
+#      speech: Temperature in the living room is {{ states('sensor.downstairs_temperature') }} degrees and upstairs temperature is {{ states('sensor.upstairs_temperature') }}.
+#    LocateIntent:
+#      speech:
+#          {%- if User == "Alan" and is_state('input_boolean.alanhome', 'off') -%}
+#            Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }} and is {{ states("sensor.alan_to_home") }} minutes away.
+#          {%- elif User == "Alan" -%}
+#            Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }}.
+#          {%- elif User == "Ray" and is_state('input_boolean.rayhome', 'off') -%}
+#            Ray is at {{ states.device_tracker.raywstse_note4.state.replace('_', ' ') }} and is {{states("sensor.ray_to_home") }} minutes away.
+#          {%- elif User == "Ray" -%}
+#            Ray is at {{ states.device_tracker.raywstse_note4.state.replace('_', ' ') }}.
+#          {%- else -%}
+#            I am sorry, I do not know where {{ User }} is.
+#          {%- endif -%}
+    WhereAreWeIntent:
+      speech: >
+          {%- if is_state('input_boolean.alanhome', 'on') and
+                 is_state('input_boolean.rayhome', 'on') -%}
+            You are both home, you silly goose.
+          {%- else -%}
+            Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }}.
+            and Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }}.
+          {% endif %}
+    HowIsTheTrafficIntent:
+      speech: >
+          Your commute to work is about {{ states.sensor.morning_commute.state }} minutes and to home is {{ states.sensor.evening_commute.state }} minutes.

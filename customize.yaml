@@ -1,0 +1,74 @@
+#################################################################
+## Customize
+#################################################################
+#devices
+
+
+ #weather
+     sensor.pws_pressure_in:
+       friendly_name: 'Outdoor Pressure'
+       icon: mdi:gauge
+     sensor.pws_wind_dir:
+       friendly_name: 'Wind Direction'
+       icon: mdi:compass-outline
+     sensor.pws_wind_string:
+       friendly_name: 'Wind Summary'
+       icon: mdi:weather-windy
+     sensor.pws_temp_f:
+       friendly_name: 'Outdoor Temperature'
+       icon: mdi:thermometer
+     sensor.pws_weather:
+       friendly_name: 'Weather Summary'
+     sensor.pws_relative_humidity:
+       icon: mdi:water-percent
+       friendly_name: 'Outdoor Humidity'
+     sensor.dark_sky_cloud_coverage:
+       friendly_name: 'Cloud Coverage'
+     sensor.dark_sky_daily_summary:
+       friendly_name: 'Daily Summary'
+     sensor.dark_sky_hourly_summary:
+       friendly_name: 'Hourly Summary'
+     group.weather:
+       icon: mdi:weather-pouring
+     group.information:
+       icon: mdi:information-outline
+     group.all_automations:
+       hidden: false
+       friendly_name: 'Automations'
+     group.all_scripts:
+       hidden: false
+       friendly_name: 'Scripts'
+     group.all_devices:
+       hidden: false
+       friendly_name: 'Devices'
+     group.all_lights:
+       hidden: false
+       friendly_name: 'Lights'
+     group.all_switches:
+       hidden: false
+       friendly_name: 'Switches'
+     sensor.google_travel_time:
+       friendly_name: 'Morning Commute'
+       icon: mdi:car
+     sensor.morning_commute:
+       friendly_name: 'Morning Commute'
+       icon: mdi:car
+     sensor.evening_commute:
+       friendly_name: 'Evening Commute'
+       icon: mdi:car
+     cover.garage_door_opener:
+       icon: mdi:glassdoor
+
+ #Emulated_Hue Devices
+     input_boolean.abodeupdate:
+       emulated_hue: true
+     input_boolean.startrecording:
+       emulated_hue: true
+     input_boolean.alanhome:
+       emulated_hue: true
+     input_boolean.rayhome:
+       emulated_hue: true
+#     switch.garage_relay_switch_8_0:
+#       emulated_hue: true
+#       emulated_hue_name: "Garage Door"
+#       friendly_name: Garage Door Switch

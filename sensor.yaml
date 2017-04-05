@@ -1,0 +1,53 @@
+#Weather Sensor:
+  - platform: darksky
+    api_key: !secret darksky_key
+    monitored_conditions:
+      - wind_speed
+      - cloud_cover
+      - hourly_summary
+      - daily_summary  
+  - platform: yr
+    monitored_conditions:
+      - temperature
+      - symbol
+  - platform: wunderground
+    api_key: !secret wunderground_key
+    #pws_id: !secret wunderground_pws
+    monitored_conditions:
+      - weather
+      - temp_f
+      - pressure_in
+      - wind_string
+      - relative_humidity
+#Time and Date Sensor
+  - platform: time_date
+    display_options:
+      - 'time_date'
+#  - platform: plex
+#    name: PlexSpy
+#    host: wdmycloudmirror
+#    port: 32400
+#    username: !secret plex_user
+#    password: !secret plex_password
+#Morning Commute Google Travel Time Sensor
+  - platform: google_travel_time
+    name: Morning Commute
+    api_key: !secret google_key
+    origin: !secret add_home
+    destination: !secret add_work
+#Evening Commute Google Travel Time Sensor
+  - platform: google_travel_time
+    name: Evening Commute
+    api_key: !secret google_key
+    origin: !secret add_work
+    destination: !secret add_home
+  - platform: google_travel_time
+    name: Alan to Home
+    api_key: !secret google_key
+    origin: device_tracker.alandtse_nexus5
+    destination: !secret add_home
+  - platform: google_travel_time
+    name: Ray to Home
+    api_key: !secret google_key
+    origin: device_tracker.raywtse_note4
+    destination: !secret add_home
