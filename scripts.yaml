@@ -9,6 +9,10 @@
         data:
           entity_id: input_select.abodestatus
           option: 'away'
+      - service: notify.pushbullet
+        data:
+          message: "Arming alarm for away"
+      - service: shell_command.armaway
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeAway", "value1":"Arm Abode"}
 #      - service: climate.set_away_mode
@@ -29,6 +33,11 @@
         data:
           entity_id: input_select.abodestatus
           option: 'home'
+      - service: shell_command.disarm
+      - service: notify.pushbullet
+        data:
+          message: "Arming alarm for home"
+      - service: shell_command.arm
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeHome", "value1":"Abode Home"}
 
@@ -39,6 +48,10 @@
         data:
           entity_id: input_select.abodestatus
           option: 'standby'
+      - service: notify.pushbullet
+        data:
+          message: "Disarming alarm"
+      - service: shell_command.disarm
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeStandby", "value1":"Abode Standby"}
 #      - service: climate.set_away_mode
@@ -52,6 +65,35 @@
 #      - service: light.turn_off
 #        entity_id: group.living_room_lights
 
+  notificationgaragedoor:
+    alias: 'Garage Door Open'
+    sequence:
+      - service: notify.pushbullet
+        data:
+          delay: '00:00:04'
+          message: 'Garage door is open, please check!'
+
+  notificationleavework:
+    alias: 'Leave for Work'
+    sequence:
+      - service: notify.pushbullet
+        data:
+          delay: '00:00:05'
+          message: 'Traffic has cleared, you can leave for work.'
+
+  arm_security:
+    alias: 'Arm Security'
+    sequence:
+      - delay: 00:05:00
+      - service: homeassistant.turn_on
+        entity_id: script.abodeaway
+
+  disarm_security:
+    alias: 'Disarm Security'
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: script.abodestandby
+  
   opengarage:
     alias: 'Open Garage'
     sequence:

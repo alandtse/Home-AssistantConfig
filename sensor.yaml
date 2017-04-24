@@ -51,3 +51,11 @@
     api_key: !secret google_key
     origin: device_tracker.raywtse_note4
     destination: !secret add_home
+  - platform: systemmonitor
+    resources:
+    - type: disk_use
+      arg: /
+    - type: memory_use_percent
+    - type: swap_use_percent
+    - type: processor_use
+

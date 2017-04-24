@@ -28,13 +28,13 @@
 #      - camera.door_camera_2
 #      - camera.door_camera_3
 
-#  media:
-#    name: Media
-#    view: yes
-#    icon: mdi:play-circle-outline
-#    entities:
+  media:
+    name: Media
+    view: yes
+    icon: mdi:play-circle-outline
+    entities:
 #      - group.entertainment
-#      - group.media_player
+      - group.media_player
 
   settings:
     name: Settings
@@ -74,11 +74,15 @@
     - sensor.evening_commute
     - sensor.alan_to_home 
     - sensor.ray_to_home 
+    - sensor.cpu_use
+    - sensor.ram_use
+    - sensor.swap_use
+    - sensor.disk_use_ 
     - sensor.plexspy
 #    - binary_sensor.garagedoor
 
-#  Media Player:
-#    - media_player.livingroomsonos
+  Media Player:
+    - media_player.roku_5s462k290748
 #    - media_player.kodi_nstv
 #    - media_player.google_home
 #    - media_player.panasonic_viera_tv
@@ -129,7 +133,13 @@
   Household:
     - input_boolean.alanhome
     - input_boolean.rayhome
-
+    - input_boolean.solomonhome
+    - input_boolean.orlahome
   Devices:
     - device_tracker.alandtse_nexus5
+    - device_tracker.nexus_5
     - device_tracker.raywtse_note4
+    - camera.alan_map
+    - camera.ray_map
+    - device_tracker.70480f72bc9b
+    - device_tracker.78fd940d9949

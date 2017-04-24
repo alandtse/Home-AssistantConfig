@@ -5,7 +5,7 @@ homeassistant:
   latitude: !secret lat_home
   longitude: !secret long_home
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 26
+  elevation: 65
   # metric for Metric, imperial for Imperial
   unit_system: imperial
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -15,15 +15,15 @@ homeassistant:
 #introduction:
 
 zone:
- - name: Home
+ - name: home
    latitude: !secret lat_home
    longitude: !secret long_home
    radius: 50
    icon: mdi:home
- - name: Work
+ - name: work
    latitude: !secret lat_work
    longitude: !secret long_work
-   radius: 20
+   radius: 120
    icon: mdi:briefcase
 # Enables the frontend
 frontend:
@@ -67,6 +67,10 @@ tts:
     cache: true
     cache_dir: /home/homeassistant/.homeassistant/tts
     time_memory: 300
+notify:
+  - platform: pushbullet
+    api_key: !secret pushbullet_key
+    name: pushbullet
 mqtt:
   broker: 127.0.0.1
   port: 1883
@@ -80,26 +84,52 @@ camera:
     friendly_name: Lily's Room
     username: !secret dlink_user
     password: !secret dlink_password
-    still_image_url: http://DCS-2330L/dmsdump/
-  - platform: generic
-    name: leafdashcam
-    still_image_url: http://192.168.1.128/blackvue_live.cgi?direction=R  
+    still_image_url: http://DCS-2330L:8080/dmsdump/
+#  - platform: generic
+#    name: leafdashcam
+#    still_image_url: http://192.168.1.128/blackvue_live.cgi?direction=R  
   - platform: generic
     still_image_url: https://radblast.wunderground.com/cgi-bin/radar/WUNIDS_map?station=SOX&brand=wui&num=1&delay=15&type=N0R&frame=0&scale=0.18097826086956523&noclutter=0&showstorms=0&mapx=400&mapy=240&centerx=638.6336336336336&centery=236.89189189189187&transx=238.63363363363362&transy=-3.1081081081081265&showlabels=1&severe=0&rainsnow=0&lightning=0&smooth=0&rand=24853447&lat=0&lon=0&label=you
     name: Radar
+  - platform: generic
+    name: Alan Map
+    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.alandtse_nexus5.attributes.latitude }},{{ states.device_tracker.alandtse_nexus5.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:A%7C{{ states.device_tracker.alandtse_nexus5.attributes.latitude }},{{ states.device_tracker.alandtse_nexus5.attributes.longitude }}
+    limit_refetch_to_url_change: true    
+  - platform: generic
+    name: Ray Map
+    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.raywtse_note4.attributes.latitude }},{{ states.device_tracker.raywtse_note4.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:R%7C{{ states.device_tracker.raywtse_note4.attributes.latitude }},{{ states.device_tracker.raywtse_note4.attributes.longitude }}
+    limit_refetch_to_url_change: true    
 cover:
   - platform: myq
     name: garage
     username: !secret myq_user
     password: !secret myq_password
     type: chamberlain 
-    
 device_tracker:
   - platform: ddwrt
     host: 192.168.1.1
     username: !secret ddwrt_user
     password: !secret ddwrt_password
+    interval_seconds: 30 
+    consider_home: 300
   - platform: owntracks
+    max_gps_accuracy: 500
+    interval_seconds: 30 
+    consider_home: 300
+  - platform: bluetooth_le_tracker
+    interval_seconds: 30
+    consider_home: 300
+  - platform: bluetooth_tracker
+    interval_seconds: 30
+    consider_home: 300
+  - platform: nmap_tracker
+    hosts:
+      - 192.168.1.1/24
+      - 192.168.1.2/24
+    interval_seconds: 60
+    consider_home: 300
+   # scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
+
 input_select:
   abodestatus:
     name: Abode status
@@ -122,6 +152,14 @@ input_boolean:
     name: Ray is Home
     initial: on
     icon: mdi:cellphone-android
+  solomonhome:
+    name: Solomon is Home
+    initial: on
+    icon: mdi:cellphone-iphone
+  orlahome:
+    name: Orla is Home
+    initial: on
+    icon: mdi:cellphone-iphone
 #alarm_control_panel:
 #  platform: simplisafe
 #  username: !secret simplisafe_user
@@ -132,6 +170,12 @@ recorder:
   exclude:
     domains:
       - sun
+
+shell_command:
+  arm: 'python3 /home/pi/simplisafe-rf/arm.py'
+  armaway: 'python3 /home/pi/simplisafe-rf/armaway.py'
+  disarm: 'python3 /home/pi/simplisafe-rf/disarm.py'
+
 automation: !include automation.yaml
 group: !include groups.yaml
 script: !include scripts.yaml

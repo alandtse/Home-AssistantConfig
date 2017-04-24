@@ -14,10 +14,10 @@
         {%- endif -%}
   trigger:
     - platform: state
-      entity_id: device_tracker.alandtse_nexus5
+      entity_id: device_tracker.alandtse_nexus5, device_tracker.nexus_5
       state: 'not_home'
       for:
-        minutes: 10
+        minutes: 5
   action:
     - service: homeassistant.turn_off
       entity_id: input_boolean.alanhome
@@ -46,7 +46,7 @@
       entity_id: device_tracker.raywtse_note4
       state: 'not_home'
       for:
-        minutes: 10
+        minutes: 5
   action:
     - service: homeassistant.turn_off
       entity_id: input_boolean.rayhome
@@ -72,7 +72,7 @@
         {%- endif -%}
   trigger:
     - platform: state
-      entity_id: device_tracker.alandtse_nexus5
+      entity_id: device_tracker.alandtse_nexus5, device_tracker.nexus_5
       state: 'home'
   action:
     - service: homeassistant.turn_on
@@ -111,6 +111,117 @@
           {%- for state in states if state.entity_id == trigger.entity_id -%}
             {{ state.attributes.friendly_name }} is Home.
           {%- endfor -%}
+#### Guests
+
+- alias: 'Solomon Away'
+  condition:
+    - condition: state
+      entity_id: input_boolean.solomonhome
+      state: 'on'
+    - condition: template
+      value_template: >
+        {%- if states.input_boolean.solomonhome.last_changed -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.solomonhome.last_changed)) > 300 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: device_tracker.70480f72bc9b
+      state: 'not_home'
+      for:
+        minutes: 5
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.solomonhome
+    - service: logbook.log
+      data_template:
+        name: "Solomon away: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Away.
+          {%- endfor -%}
+- alias: 'Solomon Home'
+  condition:
+    - condition: state
+      entity_id: input_boolean.solomonhome
+      state: 'off'
+    - condition: template
+      value_template: >
+        {%- if states.input_boolean.solomonhome.last_changed -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.solomonhome.last_changed)) > 300 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: device_tracker.70480f72bc9b
+      state: 'home'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.solomonhome
+    - service: logbook.log
+      data_template:
+        name: "Solomon home: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Home.
+          {%- endfor -%}
+
+- alias: 'Orla Away'
+  condition:
+    - condition: state
+      entity_id: input_boolean.orlahome
+      state: 'on'
+    - condition: template
+      value_template: >
+        {%- if states.input_boolean.orlahome.last_changed -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.orlahome.last_changed)) > 300 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: device_tracker.78fd940d9949
+      state: 'not_home'
+      for:
+        minutes: 5
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.orlahome
+    - service: logbook.log
+      data_template:
+        name: "Orla away: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Away.
+          {%- endfor -%}
+- alias: 'Orla Home'
+  condition:
+    - condition: state
+      entity_id: input_boolean.orlahome
+      state: 'off'
+    - condition: template
+      value_template: >
+        {%- if states.input_boolean.orlahome.last_changed -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.orlahome.last_changed)) > 300 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: device_tracker.78fd940d9949
+      state: 'home'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.orlahome
+    - service: logbook.log
+      data_template:
+        name: "Orla home: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Home.
+          {%- endfor -%}
 
 - alias: 'Mark both away if Abode armed'
   condition:
@@ -131,6 +242,10 @@
       entity_id: input_boolean.rayhome
     - service: homeassistant.turn_off
       entity_id: input_boolean.alanhome
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.solomonhome
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.orlahome
 
 #################################################################
 ## Security System
@@ -146,8 +261,8 @@
      entity_id: group.household
      state: 'on'
   action:
-     service: homeassistant.turn_on
-     entity_id: script.abodestandby
+    - service: homeassistant.turn_on
+      entity_id: script.abodestandby
 
 - alias: 'Garage Door open'
   condition:
@@ -162,10 +277,6 @@
       entity_id: input_select.abodestatus
       state: 'away'
   action:
-  #  - service: notify.pushbullet
-  #    data:
-  #      message: "Garage Door Open"
-  #      title: "Garage Door Open"
     - service: homeassistant.turn_on
       entity_id: script.notificationgaragedoor
 
@@ -190,7 +301,7 @@
        entity_id: input_select.abodestatus
        state: 'standby'
      - condition: time
-       after: '22:15:00'
+       after: '21:15:00'
        before: '07:30:00'
      - condition: state
        entity_id: input_boolean.abodeupdate
@@ -219,7 +330,7 @@
        state: 'on'
      - condition: time
        after: '08:15:00'
-       before: '21:45:00'
+       before: '19:45:00'
      - condition: state
        entity_id: input_boolean.abodeupdate
        state: 'on'
@@ -246,39 +357,39 @@
      service: homeassistant.turn_on
      entity_id: script.abodestandby
 
-- alias: 'Adjust settings changed by Abode'
-  condition:
-    condition: and
-    conditions:
-     - condition: or
-       conditions:
-        - condition: state
-          entity_id: input_select.abodestatus
-          state: 'home'
-        - condition: state
-          entity_id: input_select.abodestatus
-          state: 'standby'
-     - condition: or
-       conditions:
-        - condition: state
-          entity_id: input_boolean.thermo_away_main
-          state: 'on'
-        - condition: state
-          entity_id: input_boolean.thermo_away_upstairs
-          state: 'on'
-  trigger:
-   - platform: time
-     minutes: '/10'
-     seconds: 00
-  action:
-     - service: climate.set_away_mode
-       data:
-         entity_id: climate.downstairs
-         away_mode: 'False'
-     - service: climate.set_away_mode
-       data:
-         entity_id: climate.upstairs
-         away_mode: 'False'
+#- alias: 'Adjust settings changed by Abode'
+#  condition:
+#    condition: and
+#    conditions:
+#     - condition: or
+#       conditions:
+#        - condition: state
+#          entity_id: input_select.abodestatus
+#          state: 'home'
+#        - condition: state
+#          entity_id: input_select.abodestatus
+#          state: 'standby'
+#     - condition: or
+#       conditions:
+#        - condition: state
+#          entity_id: input_boolean.thermo_away_main
+#          state: 'on'
+#        - condition: state
+#          entity_id: input_boolean.thermo_away_upstairs
+#          state: 'on'
+#  trigger:
+#   - platform: time
+#     minutes: '/10'
+#     seconds: 00
+#  action:
+   #  - service: climate.set_away_mode
+   #    data:
+   #      entity_id: climate.downstairs
+   #      away_mode: 'False'
+   #  - service: climate.set_away_mode
+   #    data:
+   #      entity_id: climate.upstairs
+   #      away_mode: 'False'
 
 - alias: 'Arm Abode'
   condition:
@@ -305,7 +416,7 @@
        state: 'on'
   trigger:
     platform: time
-    after: '22:00:00'
+    after: '20:00:00'
   action:
      service: homeassistant.turn_on
      entity_id: script.abodehome
@@ -337,10 +448,11 @@
     platform: state
     entity_id: updater.updater
   action:
-    #- service: notify.pushbullet
-    #  data:
-    #    message: "HomeAssistant {{ states('updater.updater') }} is now available"
-    #    title: "Update HASS"
+    - service: notify.pushbullet
+      data:
+        message: "HomeAssistant {{ states('updater.updater') }} is now available"
+        title: "Update HASS"
+        target: device/Nexus5
     - service: persistent_notification.create
       data:
         title: "Update Available"
@@ -374,11 +486,11 @@
     entity_id: sensor.morning_commute
     below: 25 
   action:
-   # - service: notify.pushbullet
-   #   data:
-   #     message: Commute time is 43 minutes
-   #     title: Leave for Work
-   #     target: device/myiPhone
+    - service: notify.pushbullet
+      data:
+        message: Commute time is 25 minutes
+        title: Leave for Work
+        target: device/Nexus5
     - service: homeassistant.turn_on
       entity_id: script.notificationleavework
 
@@ -404,11 +516,11 @@
     entity_id: sensor.evening_commute
     below: 25
   action:
-  #  service: notify.pushbullet
-  #  data:
-  #    message: Commute time is 43 minutes
-  #    title: Leave for Home
-  #    target: device/myiPhone
+    service: notify.pushbullet
+    data:
+      message: Commute time is 25 minutes
+      title: Leave for Home
+      target: device/Nexus5
 
 - alias: "Plex Spy notification"
   trigger:
@@ -464,10 +576,16 @@
    - platform: state
      entity_id: input_boolean.alanhome, input_boolean.rayhome
      to: 'on'
+   - platform: zone
+     entity_id: device_tracker.00254270079f, device_tracker.raywtse_note4, device_tracker.alandtse_nexus5
+     zone: zone.home
+     event: enter
   action:
-    - service: cover.open_cover 
-      entity_id: cover.garage_door_opener 
-
+    #- service: cover.open_cover 
+    #  entity_id: cover.garage_door_opener 
+    - service: notify.pushbullet
+      data:
+        message: "Should open garage door" 
 - alias: 'Close garage door when Abode is Home or Away'
   condition:
    - condition: state
@@ -494,3 +612,7 @@
   action:
     - service: switch.turn_on
       entity_id: switch.garage_relay_switch_8_0
+    - service: notify.pushbullet
+      data:
+        message: "Garage Door Open" 
+
