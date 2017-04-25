@@ -265,17 +265,20 @@
       entity_id: script.abodestandby
 
 - alias: 'Garage Door open'
-  condition:
-    condition: state
-    entity_id: cover.garage_door_opener
-    state: 'Open'
-  trigger:
-    - platform: state
+  condition: or
+  conditions:
+    - condition: state
       entity_id: input_select.abodestatus
       state: 'home'
-    - platform: state
+    - condition: state
       entity_id: input_select.abodestatus
       state: 'away'
+  trigger:
+     - platform: state
+         entity_id: cover.garage_door_opener
+         to: 'Open'
+         for:
+            minutes: 10
   action:
     - service: homeassistant.turn_on
       entity_id: script.notificationgaragedoor
