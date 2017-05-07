@@ -264,29 +264,21 @@
     - service: homeassistant.turn_on
       entity_id: script.abodestandby
 
-- alias: 'Garage door left open'
-  condition:
-    condition: and
-    conditions: 
-      - condition: template
-        value_template: >
-          {%- if states.cover.garage_door_opener.last_changed -%}
-            {{ (as_timestamp(now()) - as_timestamp(states.cover.garage_door_opener.last_changed)) > 1 }}
-          {%- else -%}
-            true
-          {%- endif -%}
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: input_select.abodestatus
-          state: 'home'
-        - condition: state
-          entity_id: input_select.abodestatus
-          state: 'away'
+- alias: 'Garage Door open'
+  condition: or
+  conditions:
+    - condition: state
+      entity_id: input_select.abodestatus
+      state: 'home'
+    - condition: state
+      entity_id: input_select.abodestatus
+      state: 'away'
   trigger:
-    platform: state
-    entity_id: cover.garage_door_opener
-    state: 'open'
+     - platform: state
+         entity_id: cover.garage_door_opener
+         to: 'Open'
+         for:
+            minutes: 10
   action:
     - service: script.notificationgaragedoor 
 
