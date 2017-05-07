@@ -23,7 +23,7 @@ zone:
  - name: work
    latitude: !secret lat_work
    longitude: !secret long_work
-   radius: 120
+   radius: 150
    icon: mdi:briefcase
 # Enables the frontend
 frontend:
@@ -84,7 +84,7 @@ camera:
     friendly_name: Lily's Room
     username: !secret dlink_user
     password: !secret dlink_password
-    still_image_url: http://DCS-2330L:8080/dmsdump/
+    still_image_url: http://DCS-2330L:8080/dmsdump?nowprofileid=1
 #  - platform: generic
 #    name: leafdashcam
 #    still_image_url: http://192.168.1.128/blackvue_live.cgi?direction=R  
@@ -117,7 +117,7 @@ device_tracker:
     interval_seconds: 30 
     consider_home: 300
   - platform: bluetooth_le_tracker
-    interval_seconds: 30
+    interval_seconds: 90
     consider_home: 300
   - platform: bluetooth_tracker
     interval_seconds: 30
@@ -180,6 +180,6 @@ automation: !include automation.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml
-#binary_sensor: !include binary_sensor.yaml
+binary_sensor: !include binary_sensor.yaml
 alexa: !include alexa.yaml
 apiai: !include apiai.yaml

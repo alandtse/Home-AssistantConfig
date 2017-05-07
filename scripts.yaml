@@ -70,7 +70,6 @@
     sequence:
       - service: notify.pushbullet
         data:
-          delay: '00:00:04'
           message: 'Garage door is open, please check!'
 
   notificationleavework:
@@ -78,7 +77,6 @@
     sequence:
       - service: notify.pushbullet
         data:
-          delay: '00:00:05'
           message: 'Traffic has cleared, you can leave for work.'
 
   arm_security:
@@ -99,3 +97,14 @@
     sequence:
       - service: cover.open_cover
         entity_id: cover.garage_door_opener
+
+  owntracks_update:
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: owntracks/alandtse/Nexus5/cmd 
+          payload: '{"_type":"cmd","action":"reportLocation"}"'
+      - service: mqtt.publish
+        data:
+          topic: owntracks/raywtse/Note4/cmd 
+          payload: '{"_type":"cmd","action":"reportLocation"}"'
