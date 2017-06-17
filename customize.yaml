@@ -3,7 +3,10 @@
 #################################################################
 #devices
 
-
+     climate.downstairs:
+       friendly_name: EcobeeDown
+     climate.upstairs:
+       friendly_name: EcobeeUp
  #weather
      sensor.pws_pressure_in:
        friendly_name: 'Outdoor Pressure'

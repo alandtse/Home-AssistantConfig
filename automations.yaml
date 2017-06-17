@@ -1,6 +1,6 @@
-
 #################################################################
-- alias: 'Alan Away'
+- id: AlanAway
+  alias: 'Alan Away'
   condition:
    - condition: and
      conditions:
@@ -31,7 +31,8 @@
             {{ state.attributes.friendly_name }} is Away.
           {%- endfor -%}
 
-- alias: 'Ray Away'
+- id: RayAway 
+  alias: 'Ray Away'
   condition:
    - condition: and
      conditions:
@@ -62,7 +63,8 @@
             {{ state.attributes.friendly_name }} is Away.
           {%- endfor -%}
 
-- alias: 'Alan Home'
+- id: AlanHome
+  alias: 'Alan Home'
   condition:
    - condition: and
      conditions:
@@ -91,7 +93,8 @@
             {{ state.attributes.friendly_name }} is Home.
           {%- endfor -%}
 
-- alias: 'Ray Home'
+- id: RayHome
+  alias: 'Ray Home'
   condition:
    - condition: and
      conditions:
@@ -121,7 +124,8 @@
           {%- endfor -%}
 #### Guests
 
-- alias: 'Solomon Away'
+- id: SolomonAway
+  alias: 'Solomon Away'
   condition:
    - condition: and
      conditions:
@@ -151,7 +155,8 @@
           {%- for state in states if state.entity_id == trigger.entity_id -%}
             {{ state.attributes.friendly_name }} is Away.
           {%- endfor -%}
-- alias: 'Solomon Home'
+- id: SolomonHome
+  alias: 'Solomon Home'
   condition:
    - condition: and
      conditions:
@@ -180,7 +185,8 @@
             {{ state.attributes.friendly_name }} is Home.
           {%- endfor -%}
 
-- alias: 'Orla Away'
+- id: OrlaAway
+  alias: 'Orla Away'
   condition:
    - condition: and
      conditions:
@@ -210,7 +216,8 @@
           {%- for state in states if state.entity_id == trigger.entity_id -%}
             {{ state.attributes.friendly_name }} is Away.
           {%- endfor -%}
-- alias: 'Orla Home'
+- id: OrlaHome
+  alias: 'Orla Home'
   condition:
    - condition: and
      conditions:
@@ -239,7 +246,8 @@
             {{ state.attributes.friendly_name }} is Home.
           {%- endfor -%}
 
-- alias: 'Mark both away if Abode manually armed'
+- id: AwayWhenArmed
+  alias: 'Mark both away if Abode manually armed'
   condition:
    - condition: or
      conditions:
@@ -267,7 +275,8 @@
 ## Security System
 #################################################################
 
-- alias: 'Disarm Abode from Away'
+- id: DisarmFromAway
+  alias: 'Disarm Abode from Away'
   condition:
     condition: state
     entity_id: input_select.abodestatus
@@ -280,7 +289,8 @@
     - service: homeassistant.turn_on
       entity_id: script.abodestandby
 
-- alias: 'Garage Door open'
+- id: GarageOpen
+  alias: 'Garage Door open'
   condition: or
   conditions:
     - condition: state
@@ -298,7 +308,8 @@
   action:
     - service: script.notificationgaragedoor 
 
-- alias: 'Disarm Abode at night'
+- id: DisarmAtNight
+  alias: 'Disarm Abode at night'
   condition:
     condition: state
     entity_id: input_select.abodestatus
@@ -311,7 +322,8 @@
     service: homeassistant.turn_on
     entity_id: script.abodestandby
 
-- alias: 'Abode Home from Standby'
+- id: ArmFromStandby
+  alias: 'Abode Home from Standby'
   condition:
     condition: and
     conditions:
@@ -339,7 +351,8 @@
      service: homeassistant.turn_on
      entity_id: script.abodehome
 
-- alias: 'Abode Standby'
+- id: Standby
+  alias: 'Abode Standby'
   condition:
     condition: and
     conditions:
@@ -375,7 +388,8 @@
      service: homeassistant.turn_on
      entity_id: script.abodestandby
 
-- alias: 'Arm Abode'
+- id: Arm
+  alias: 'Arm Abode'
   condition:
     condition: state
     entity_id: input_boolean.abodeupdate
@@ -388,7 +402,8 @@
      service: homeassistant.turn_on
      entity_id: script.abodeaway
 
-- alias: 'Abode Home at night'
+- id: ArmAtNight
+  alias: 'Abode Home at night'
   condition:
     condition: and
     conditions:
@@ -405,7 +420,8 @@
      service: homeassistant.turn_on
      entity_id: script.abodehome
 
-- alias: 'Disarm Abode in the morning'
+- id: DisarmMorning
+  alias: 'Disarm Abode in the morning'
   condition:
     condition: and
     conditions:
@@ -427,7 +443,8 @@
 #################################################################
 
 
-- alias: "Update Available Notification"
+- id: UpdateAvailable
+  alias: "Update Available Notification"
   trigger:
     platform: state
     entity_id: updater.updater
@@ -449,7 +466,8 @@
 ## Home Automation Related
 #################################################################
 
-- alias: 'Close garage door when Abode is Home or Away'
+- id: AutoCloseGarage
+  alias: 'Close garage door when Abode is Home or Away'
   condition:
    - condition: template
      value_template: >
@@ -474,7 +492,8 @@
        minutes: 5
   action:
     - service: script.notificationgaragedoor
-- alias: "Owntracks Refresh"
+- id: OwntracksRefresh
+  alias: "Owntracks Refresh"
   condition:
    - condition: state
      entity_id: input_boolean.alanhome

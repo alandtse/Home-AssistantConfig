@@ -1,0 +1,31 @@
+#################################################################
+## Input_boolean
+#################################################################
+  abodeupdate:
+    name: Abode Updates
+    initial: on
+    icon: mdi:security
+  alanhome:
+    name: Alan is Home
+    initial: on
+    icon: mdi:cellphone-android
+  rayhome:
+    name: Ray is Home
+    initial: on
+    icon: mdi:cellphone-android
+  solomonhome:
+    name: Solomon is Home
+    initial: off
+    icon: mdi:cellphone-iphone
+  orlahome:
+    name: Orla is Home
+    initial: off
+    icon: mdi:cellphone-iphone
+  thermo_away_main:
+    name: Downstairs Away Mode
+    initial: off
+    icon: mdi:home
+  thermo_away_upstairs:
+    name: Upstairs Away Mode
+    initial: off
+    icon: mdi:home

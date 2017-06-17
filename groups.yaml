@@ -10,7 +10,7 @@
       - group.switches
       - group.home_security
       - group.weather
-#      - group.thermostats
+      - group.thermostats
       - group.information
 
   cameras:
@@ -56,16 +56,19 @@
     - sensor.dark_sky_hourly_summary
     - sensor.dark_sky_daily_summary
     - camera.radar
-#  Thermostats:
-#    - climate.downstairs
-#    - sensor.downstairsthermoper
-#    - sensor.downstairs_humidity
-#    - sensor.living_room_temperature
+  Thermostats:
+    - climate.downstairs
+    - sensor.downstairsthermoper
+    - sensor.downstairs_humidity
+    - sensor.guest_room_temperature
 #    - input_boolean.thermo_away_main
-#    - climate.upstairs
-#    - sensor.upstairsthermostatoperation
-#    - sensor.upstairs_humidity
-#    - sensor.upstairs_temperature
+    - climate.upstairs
+    - sensor.upstairsthermostatoperation
+    - sensor.upstairs_humidity
+    - sensor.upstairs_temperature
+    - sensor.kids_room_temperature
+    - sensor.master_bedroom_temperature
+    - sensor.playroom_temperature
 #    - input_boolean.thermo_away_upstairs
 
   Information:
@@ -96,6 +99,7 @@
     - input_boolean.abodeupdate
     - cover.garage_door_opener
     - camera.lilyroom
+    - alarm_control_panel.simplisafe 
 #    - input_boolean.startrecording
   Camera Sensors:
     - binary_sensor.dcs2330l_motion

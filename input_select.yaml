@@ -1,0 +1,13 @@
+#################################################################
+## Input_select
+#################################################################
+
+  abodestatus:
+    name: Abode status
+    options:
+     - standby
+     - home
+     - away
+    initial: standby
+    icon: mdi:security
+

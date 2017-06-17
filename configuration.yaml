@@ -57,7 +57,7 @@ history:
 
 # View all events in a logbook
 logbook:
-
+logger:
 # Track the sun
 sun:
 
@@ -71,6 +71,8 @@ notify:
   - platform: pushbullet
     api_key: !secret pushbullet_key
     name: pushbullet
+  - platform: ecobee
+    name: ecobee
 mqtt:
   broker: 127.0.0.1
   port: 1883
@@ -107,18 +109,21 @@ cover:
     type: chamberlain 
 device_tracker:
   - platform: ddwrt
-    host: 192.168.1.1
+    hosts: 
+      - 192.168.1.1
+      - 192.168.1.2
     username: !secret ddwrt_user
     password: !secret ddwrt_password
+    protocol: ssh
     interval_seconds: 30 
     consider_home: 300
   - platform: owntracks
     max_gps_accuracy: 500
     interval_seconds: 30 
     consider_home: 300
-  - platform: bluetooth_le_tracker
-    interval_seconds: 90
-    consider_home: 300
+#  - platform: bluetooth_le_tracker
+#    interval_seconds: 90
+#    consider_home: 300
   - platform: bluetooth_tracker
     interval_seconds: 30
     consider_home: 300
@@ -129,37 +134,9 @@ device_tracker:
     interval_seconds: 60
     consider_home: 300
    # scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
+ecobee:
+  api_key: !secret ecobee_key
 
-input_select:
-  abodestatus:
-    name: Abode status
-    options:
-     - standby
-     - home
-     - away
-    initial: standby
-    icon: mdi:security
-input_boolean:
-  abodeupdate:
-    name: Abode Updates
-    initial: on
-    icon: mdi:security
-  alanhome:
-    name: Alan is Home
-    initial: off
-    icon: mdi:cellphone-android
-  rayhome:
-    name: Ray is Home
-    initial: off
-    icon: mdi:cellphone-android
-  solomonhome:
-    name: Solomon is Home
-    initial: off
-    icon: mdi:cellphone-iphone
-  orlahome:
-    name: Orla is Home
-    initial: off
-    icon: mdi:cellphone-iphone
 alarm_control_panel:
   platform: simplisafe
   username: !secret simplisafe_user
@@ -176,10 +153,12 @@ shell_command:
   armaway: 'python3 /home/pi/simplisafe-rf/armaway.py'
   disarm: 'python3 /home/pi/simplisafe-rf/disarm.py'
 
-automation: !include automation.yaml
+automation: !include automations.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
 alexa: !include alexa.yaml
 apiai: !include apiai.yaml
+input_select: !include input_select.yaml
+input_boolean: !include input_boolean.yaml
