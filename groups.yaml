@@ -42,7 +42,9 @@
     icon: mdi:settings
     entities:
       - group.devices
-      - group.camera_sensors
+      - group.sensors
+      - group.downstairs_occupancy
+      - group.upstairs_occupancy
       - group.household
 
   Weather:
@@ -61,7 +63,7 @@
     - sensor.downstairsthermoper
     - sensor.downstairs_humidity
     - sensor.guest_room_temperature
-#    - input_boolean.thermo_away_main
+    - input_boolean.thermo_away_main
     - climate.upstairs
     - sensor.upstairsthermostatoperation
     - sensor.upstairs_humidity
@@ -69,7 +71,7 @@
     - sensor.kids_room_temperature
     - sensor.master_bedroom_temperature
     - sensor.playroom_temperature
-#    - input_boolean.thermo_away_upstairs
+    - input_boolean.thermo_away_upstairs
 
   Information:
     - sensor.time__date
@@ -101,8 +103,9 @@
     - camera.lilyroom
     - alarm_control_panel.simplisafe 
 #    - input_boolean.startrecording
-  Camera Sensors:
-    - binary_sensor.dcs2330l_motion
+  Sensors:
+    - group.downstairs_occupancy
+    - group.upstairs_occupancy
 #    - binary_sensor.backyard_field_detection
 #    - binary_sensor.backyard_line_crossing
 #    - binary_sensor.driveway_motion
@@ -115,6 +118,13 @@
 #    - binary_sensor.porch_line_crossing
 #    - binary_sensor.porch_motion
 
+  Downstairs Occupancy:
+    - binary_sensor.guest_room_occupancy
+  Upstairs Occupancy:
+    - binary_sensor.dcs2330l_motion
+    - binary_sensor.kids_room_occupancy
+    - binary_sensor.playroom_occupancy
+    - binary_sensor.master_bedroom_occupancy
 #  living_room_lights:
 #    - light.lifx3
 #    - light.lifxnrguest

@@ -15,14 +15,14 @@
       - service: shell_command.armaway
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeAway", "value1":"Arm Abode"}
-#      - service: climate.set_away_mode
-#        data:
-#          entity_id: climate.downstairs
-#          away_mode: 'True'
-#      - service: climate.set_away_mode
-#        data:
-#          entity_id: climate.upstairs
-#          away_mode: 'True'
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.downstairs
+          away_mode: 'True'
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.upstairs
+          away_mode: 'True'
       # - service: homeassistant.turn_on
       #   entity_id: input_boolean.startrecording
 
@@ -58,10 +58,10 @@
 #        data:
 #          entity_id: climate.upstairs
 #          away_mode: 'False'
-#      - service: climate.set_away_mode
-#        data:
-#          entity_id: climate.downstairs
-#          away_mode: 'False'
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.downstairs
+          away_mode: 'False'
 #      - service: light.turn_off
 #        entity_id: group.living_room_lights
 

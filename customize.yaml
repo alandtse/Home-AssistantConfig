@@ -61,7 +61,10 @@
        icon: mdi:car
      cover.garage_door_opener:
        icon: mdi:glassdoor
-
+     thermostat.main_floor:
+       icon: mdi:thermometer-lines
+     thermostat.upstairs:
+       icon: mdi:thermometer-lines
  #Emulated_Hue Devices
      input_boolean.abodeupdate:
        emulated_hue: true
