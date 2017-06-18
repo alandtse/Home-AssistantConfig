@@ -62,6 +62,7 @@
     - climate.downstairs
     - sensor.downstairsthermoper
     - sensor.downstairs_humidity
+    - sensor.downstairs_temperature
     - sensor.guest_room_temperature
     - input_boolean.thermo_away_main
     - climate.upstairs

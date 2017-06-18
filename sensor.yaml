@@ -112,3 +112,7 @@
           {%- else -%}
             mdi:fan
           {%- endif -%}
+  - platform: ohmconnect
+    id: !secret ohmconnect_id
+
+  
