@@ -135,7 +135,7 @@
   trigger:
     - platform: state
       entity_id: device_tracker.70480f72bc9b
-      state: 'not_home'
+      to: 'not_home'
       for:
         minutes: 5
   action:
@@ -194,7 +194,7 @@
   trigger:
     - platform: state
       entity_id: device_tracker.78fd940d9949
-      state: 'not_home'
+      to: 'not_home'
       for:
         minutes: 5
   action:
@@ -276,7 +276,7 @@
   trigger:
    - platform: state
      entity_id: group.household
-     state: 'on'
+     to: 'on'
   action:
     - service: homeassistant.turn_on
       entity_id: script.abodestandby
@@ -444,7 +444,7 @@
   trigger:
     - platform: state
       entity_id: group.household
-      state: 'off'
+      to: 'off'
   action:
      service: homeassistant.turn_on
      entity_id: script.abodeaway
@@ -463,7 +463,7 @@
        state: 'on'
   trigger:
     platform: time
-    after: '20:00:00'
+    at: '20:00:00'
   action:
      service: homeassistant.turn_on
      entity_id: script.abodehome
@@ -482,7 +482,7 @@
        state: 'on'
   trigger:
     platform: time
-    after: '07:45:00'
+    at: '07:45:00'
   action:
      service: homeassistant.turn_on
      entity_id: script.abodestandby
@@ -556,7 +556,7 @@
   trigger:
    - platform: state
      entity_id: cover.garage_door_opener
-     state: 'open'
+     to: 'open'
      for: 
        minutes: 5
   action:

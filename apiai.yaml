@@ -1,6 +1,6 @@
-intents:
-    Temperature:
-      speech: Temperature in the living room is {{ states('sensor.downstairs_temperature') }} degrees and upstairs temperature is {{ states('sensor.upstairs_temperature') }}.
+#intents:
+#    Temperature:
+#      speech: Temperature in the living room is {{ states('sensor.downstairs_temperature') }} degrees and upstairs temperature is {{ states('sensor.upstairs_temperature') }}.
 #    LocateIntent:
 #      speech:
 #          {%- if User == "Alan" and is_state('input_boolean.alanhome', 'off') -%}
@@ -23,6 +23,6 @@ intents:
 #            Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }}.
 #            and Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }}.
 #          {% endif %}
-    HowIsTheTrafficIntent:
-      speech: >
-          Your commute to work is about {{ states.sensor.morning_commute.state }} minutes and to home is {{ states.sensor.evening_commute.state }} minutes.
+#    HowIsTheTrafficIntent:
+#      speech: >
+#          Your commute to work is about {{ states.sensor.morning_commute.state }} minutes and to home is {{ states.sensor.evening_commute.state }} minutes.
