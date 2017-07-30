@@ -23,6 +23,15 @@
         type: simple
         title: Is the garage door open?
         content: Ask Home Assistant to check the garage door 
+    CheckAlarmIntent:
+      speech:
+        type: plaintext
+        text: >
+           The alarm is {{ states.alarm_control_panel.simplisafe.state }}. 
+      card:
+        type: simple
+        title: Is the alarm on?
+        content: Ask Home Assistant to check alarm
     OpenGarageIntent:
       action:
         service: cover.open_cover
