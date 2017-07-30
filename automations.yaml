@@ -237,7 +237,7 @@
           {%- endfor -%}
 
 - id: AwayWhenArmed
-  alias: 'Mark both away if Abode manually armed'
+  alias: 'Mark all away if Abode manually armed'
   initial_state: 'on'    
   condition:
    - condition: or
@@ -384,42 +384,56 @@
   action:
      service: homeassistant.turn_on
      entity_id: script.abodestandby
-#disabling since we're relying on ecobee presence sensor to renable home mode
-#- id: adjust_settings_changed_by_abode
-#  alias: 'Adjust settings changed by Abode'
-#  initial_state: 'on'
-#  condition:
-#    condition: and
-#    conditions:
-#     - condition: or
-#       conditions:
-#        - condition: state
-#          entity_id: input_select.abodestatus
-#          state: 'home'
-#        - condition: state
-#          entity_id: input_select.abodestatus
-#          state: 'standby'
-#     - condition: or
-#       conditions:
-#        - condition: state
-#          entity_id: input_boolean.thermo_away_main
-#          state: 'on'
-#        - condition: state
-#          entity_id: input_boolean.thermo_away_upstairs
-#          state: 'on'
-#  trigger:
-#   - platform: time
-#     minutes: '/10'
-#     seconds: 00
-#  action:
-#     - service: climate.set_away_mode
-#       data:
-#         entity_id: climate.downstairs
-#         away_mode: 'False'
-#     - service: climate.set_away_mode
-#       data:
-#         entity_id: climate.upstairs
-#         away_mode: 'False'
+
+- id: adjust_settings_changed_by_abode
+  alias: 'Adjust settings changed by Abode'
+  initial_state: 'on'
+  condition:
+    condition: and
+    conditions:
+     - condition: or
+       conditions:
+        - condition: state
+          entity_id: input_select.abodestatus
+          state: 'home'
+        - condition: state
+          entity_id: input_select.abodestatus
+          state: 'standby'
+     - condition: or
+       conditions:
+        - condition: state
+          entity_id: input_boolean.thermo_away_main
+          state: 'on'
+        - condition: state
+          entity_id: input_boolean.thermo_away_upstairs
+          state: 'on'
+  trigger:
+   - platform: state
+     entity_id: group.downstairs_occupancy, group.upstairs_occupancy
+     from: 'off'
+     to: 'on'
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Ecobee home: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is enabled.
+          {%- endfor -%}
+    - service: climate.set_away_mode
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == "group.downstairs_occupancy" %} climate.downstairs
+          {% elif trigger.entity_id == "group.upstairs_occupancy" %} climate.upstairs
+          {% endif %}
+        away_mode: 'False'
+    - service: climate.set_hold_mode
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == "group.downstairs_occupancy" %} climate.downstairs
+          {% elif trigger.entity_id == "group.upstairs_occupancy" %} climate.upstairs
+          {% endif %}
+        hold_mode: 'None'
 - id: Arm
   alias: 'Arm Abode'
   initial_state: 'on'    
@@ -472,6 +486,24 @@
   action:
      service: homeassistant.turn_on
      entity_id: script.abodestandby
+
+- id: Alarm_to_Input_Select
+  alias: Alarm to Input Select 
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_select.alarmstatus
+  action:
+    service: script.turn_on
+    data_template: 
+      entity_id: >
+        {%- if is_state('input_select.alarmstatus', 'disarmed') -%}
+          script.checkdisarm
+        {%- elif is_state('input_select.alarmstatus', 'home') -%}
+          script.checkarmhome
+        {%- elif is_state('input_select.alarmstatus', 'away') -%}
+          script.checkarmaway
+        {%- endif -%}
 
 #################################################################
 ## HASS Related
@@ -623,3 +655,21 @@
         {%- elif is_state('input_boolean.thermo_away_upstairs', 'on') -%}
           on
         {%- endif -%}
+- id: change_simplisafe_mode
+  alias: Change Simplisafe mode
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.simplisafe
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.alarmstatus
+        option: >
+           {%- if is_state('alarm_control_panel.simplisafe', 'disarmed') -%}
+             disarmed
+           {%- elif is_state('alarm_control_panel.simplisafe', 'armed_home') -%}
+             home
+           {%- elif is_state('alarm_control_panel.simplisafe', 'armed_away') -%}
+             away
+           {%- endif -%}

@@ -10,4 +10,12 @@
      - away
     initial: standby
     icon: mdi:security
+  alarmstatus:
+    name: Alarm status
+    options:
+     - disarmed
+     - home
+     - away
+    initial: disarmed
+    icon: mdi:security
 
