@@ -117,11 +117,13 @@ cover:
     type: chamberlain 
 device_tracker:
   - platform: ddwrt
+#   Second host is from custom component: https://community.home-assistant.io/t/dd-wrt-dual-band-router-and-multiple-router-support/12000
     hosts: 
       - 192.168.1.1
       - 192.168.1.2
     username: !secret ddwrt_user
     password: !secret ddwrt_password
+#   protocol is for custom_component to allow access to second ddwrt
     protocol: ssh
     interval_seconds: 30 
     consider_home: 300
