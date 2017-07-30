@@ -46,6 +46,8 @@ updater:
 
 # Discover some devices automatically
 discovery:
+  ignore:
+    - axis
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -81,25 +83,31 @@ mqtt:
   password: !secret mqtt_password
 # Lily Camera
 camera:
-  - platform: generic
-    name: lilyroom
-    friendly_name: Lily's Room
+  - platform: mjpeg
+    name: kidsroom
     username: !secret dlink_user
     password: !secret dlink_password
     still_image_url: http://DCS-2330L:8080/dmsdump?nowprofileid=1
-#  - platform: generic
-#    name: leafdashcam
-#    still_image_url: http://192.168.1.128/blackvue_live.cgi?direction=R  
+    mjpeg_url: http://dcs-2330l:8080/video1.mjpg
+  - platform: mjpeg
+    name: Doorbird
+    username: !secret doorbird_user
+    password: !secret doorbird_password
+    still_image_url: http://bha-1ccae3707f56/bha-api/image.cgi
+    mjpeg_url: http://bha-1ccae3707f56/bha-api/video.cgi
+  - platform: mjpeg
+    name: dashcam
+    mjpeg_url: http://DR500GW-HD/blackvue_live.cgi?direction=R  
   - platform: generic
     still_image_url: https://radblast.wunderground.com/cgi-bin/radar/WUNIDS_map?station=SOX&brand=wui&num=1&delay=15&type=N0R&frame=0&scale=0.18097826086956523&noclutter=0&showstorms=0&mapx=400&mapy=240&centerx=638.6336336336336&centery=236.89189189189187&transx=238.63363363363362&transy=-3.1081081081081265&showlabels=1&severe=0&rainsnow=0&lightning=0&smooth=0&rand=24853447&lat=0&lon=0&label=you
     name: Radar
   - platform: generic
     name: Alan Map
-    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.alandtse_nexus5.attributes.latitude }},{{ states.device_tracker.alandtse_nexus5.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:A%7C{{ states.device_tracker.alandtse_nexus5.attributes.latitude }},{{ states.device_tracker.alandtse_nexus5.attributes.longitude }}
+    still_image_url: !secret alan_still_image_url 
     limit_refetch_to_url_change: true    
   - platform: generic
     name: Ray Map
-    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.raywtse_note4.attributes.latitude }},{{ states.device_tracker.raywtse_note4.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:R%7C{{ states.device_tracker.raywtse_note4.attributes.latitude }},{{ states.device_tracker.raywtse_note4.attributes.longitude }}
+    still_image_url: !secret ray_still_image_url
     limit_refetch_to_url_change: true    
 cover:
   - platform: myq
