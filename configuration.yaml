@@ -173,6 +173,7 @@ script: !include scripts.yaml
 sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
 alexa: !include alexa.yaml
+intent_script: !include intent_script.yaml
 apiai: !include apiai.yaml
 input_select: !include input_select.yaml
 input_boolean: !include input_boolean.yaml

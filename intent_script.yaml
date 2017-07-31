@@ -1,0 +1,56 @@
+  WhereAreWeIntent:
+    speech:
+      type: plain
+      text: >
+        {%- if is_state('input_boolean.alanhome', 'on') and
+               is_state('input_boolean.rayhome', 'on') -%}
+          You are both home, you silly goose.
+        {%- else -%}
+          Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }}.
+          and Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }}.
+        {% endif %}
+  CheckGarageIntent:
+    speech:
+      type: plain
+      text: >
+         The garage door is {{ states.cover.garage_door_opener.state }}. 
+  CheckAlarmIntent:
+    speech:
+      type: plain
+      text: >
+         The alarm is {{ states.alarm_control_panel.simplisafe.state }}. 
+  OpenGarageIntent:
+    action:
+      service: cover.open_cover
+  LocateIntent:
+    action:
+      - service: logbook.log
+        data_template:
+          message: The location of {{ User }} has been queried via Alexa.
+    speech:
+      type: plain
+      text: >
+        {%- if User == "Alan" and is_state('input_boolean.alanhome', 'off') -%}
+          Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }} and is {{ states("sensor.alan_to_home") }} minutes away.
+        {%- elif User == "Alan" -%}
+          Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }}.
+        {%- elif User == "Ray" and is_state('input_boolean.rayhome', 'off') -%}
+          Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }} and is {{states("sensor.ray_to_home") }} minutes away.
+        {%- elif User == "Ray" -%}
+          Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }}.
+        {%- else -%}
+          I am sorry, I do not know where {{ User }} is. 
+        {%- endif -%}
+  HowIsTheTrafficIntent:
+    speech:
+      type: plain
+      text: >
+        Your commute to work is about {{ states.sensor.morning_commute.state }} minutes and back home is {{ states.sensor.evening_commute.state }} minutes.
+  RunScriptIntent:
+    action:
+      service: script.turn_on
+      data_template:
+        entity_id: script.{{ Script | replace(" ", "_") }}
+    speech:
+      type: plain
+      text: !include alexa_confirm.yaml
