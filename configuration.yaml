@@ -128,9 +128,10 @@ device_tracker:
     interval_seconds: 30 
     consider_home: 300
   - platform: owntracks
-    max_gps_accuracy: 500
+    max_gps_accuracy: 1000
     interval_seconds: 30 
     consider_home: 300
+    waypoints: True
 #  - platform: bluetooth_le_tracker
 #    interval_seconds: 90
 #    consider_home: 300
