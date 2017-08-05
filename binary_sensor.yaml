@@ -10,3 +10,19 @@
           {% else %}
               OFF
           {%- endif %}
+- platform: template
+  sensors:
+    doorbell:
+      friendly_name: Gate Doorbell
+      device_class: sound
+      value_template: 'off'
+      entity_id: foo.bar
+    frontdoor_motion:
+      friendly_name: Gate Motion
+      device_class: motion
+      value_template: 'off'
+      entity_id: foo.bar
+    frontdoor_open:
+      friendly_name: Gate Unlocked
+      value_template: 'off'
+      entity_id: foo.bar

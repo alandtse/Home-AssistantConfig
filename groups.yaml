@@ -28,6 +28,7 @@ settings:
   entities:
   - group.devices
   - group.sensors
+  - group.gate
   - group.downstairs_occupancy
   - group.upstairs_occupancy
   - group.household
@@ -82,6 +83,10 @@ Home Security:
 Sensors:
 - group.downstairs_occupancy
 - group.upstairs_occupancy
+Gate:
+- binary_sensor.doorbell
+- binary_sensor.frontdoor_motion
+- binary_sensor.frontdoor_open
 Downstairs Occupancy:
 - binary_sensor.guest_room_occupancy
 - binary_sensor.great_room_occupancy
