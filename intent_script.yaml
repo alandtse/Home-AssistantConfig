@@ -22,6 +22,9 @@
   OpenGarageIntent:
     action:
       service: cover.open_cover
+    speech:
+      type: plain
+      text: !include alexa_confirm.yaml
   LocateIntent:
     action:
       - service: logbook.log
