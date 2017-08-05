@@ -1,0 +1,10 @@
+  - platform: template
+    switches:
+      doorbird:
+        friendly_name: Gate Unlocked
+        value_template: "{{ is_state('binary_sensor.frontdoor_open', 'on') }}"
+        turn_on:
+          service: shell_command.unlockgate
+        turn_off:
+          service: switch.turn_on
+          entity_id: switch.skylight_open

@@ -24,7 +24,13 @@
       service: cover.open_cover
     speech:
       type: plain
-      text: !include alexa_confirm.yaml
+      text: Opening the garage.
+  OpenGateIntent:
+    action:
+      service: shell_command.unlockgate
+    speech:
+      type: plain
+      text: Unlocking the gate.
   LocateIntent:
     action:
       - service: logbook.log

@@ -86,7 +86,7 @@ Sensors:
 Gate:
 - binary_sensor.doorbell
 - binary_sensor.frontdoor_motion
-- binary_sensor.frontdoor_open
+- switch.doorbird
 Downstairs Occupancy:
 - binary_sensor.guest_room_occupancy
 - binary_sensor.great_room_occupancy

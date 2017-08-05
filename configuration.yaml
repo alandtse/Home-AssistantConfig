@@ -162,11 +162,7 @@ recorder:
     domains:
       - sun
 
-shell_command:
-  arm: 'python3 /home/pi/simplisafe-rf/arm.py'
-  armaway: 'python3 /home/pi/simplisafe-rf/armaway.py'
-  disarm: 'python3 /home/pi/simplisafe-rf/disarm.py'
-
+shell_command: !include shell_command.yaml
 automation: !include automations.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
@@ -177,3 +173,4 @@ intent_script: !include intent_script.yaml
 apiai: !include apiai.yaml
 input_select: !include input_select.yaml
 input_boolean: !include input_boolean.yaml
+switch: !include switch.yaml
