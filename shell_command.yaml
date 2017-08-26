@@ -2,4 +2,4 @@
   armaway: 'python3 /home/pi/simplisafe-rf/armaway.py'
   disarm: 'python3 /home/pi/simplisafe-rf/disarm.py'
   unlockgate: '/home/pi/homeassistant-doorbird-proxy/unlock.sh'
-
+  recordgate: '/home/pi/doorbird/recordgate.sh {{ value }}'

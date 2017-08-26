@@ -27,7 +27,9 @@
       text: Opening the garage.
   OpenGateIntent:
     action:
-      service: shell_command.unlockgate
+      service: homeassistant.turn_on
+      entity_id: script.unlockgate
+#      service: shell_command.unlockgate
     speech:
       type: plain
       text: Unlocking the gate.

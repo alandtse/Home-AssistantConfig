@@ -26,3 +26,4 @@
       friendly_name: Gate Unlocked
       value_template: 'off'
       entity_id: foo.bar
+- platform: simplisaferf

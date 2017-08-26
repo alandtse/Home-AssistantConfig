@@ -673,3 +673,26 @@
            {%- elif is_state('alarm_control_panel.simplisafe', 'armed_away') -%}
              away
            {%- endif -%}
+
+- id: auto_record_gate
+  alias: Auto record gate on motion
+  initial_state: 'on'
+  trigger:
+  - entity_id: binary_sensor.frontdoor_motion
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+    - service: shell_command.recordgate
+      data_template:
+        value: >
+          {% set timestamp = trigger.to_state.last_changed %}
+          {{ timestamp.strftime("%Y%m%d-%H%M%S") }}
+    - service: notify.pushbullet
+      data_template:
+        message: "Frontdoor motion"
+        title: "Motion Detected"
+        data:
+            url: !secret mycloud_doorbird_url
+        target: device/Nexus5
+

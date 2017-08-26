@@ -169,8 +169,8 @@
         data:
           topic: owntracks/raywtse/Note4/cmd 
           payload: '{"_type":"cmd","action":"reportLocation"}"'
-  unlockgate:
-    alias: 'Unlock Gate'
+  recordgate:
+    alias: 'Record Gate'
     sequence:
-      - service: shell_command.unlockgate
+      - service: shell_command.recordgate
 
