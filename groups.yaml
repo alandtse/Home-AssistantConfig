@@ -12,7 +12,9 @@ cameras:
   view: true
   icon: mdi:camera
   entities:
-  - camera.doorbird
+#  - camera.doorbird
+  - camera.doorbird_live
+  - camera.doorbird_last_ring
   - camera.dashcam
   - camera.kidsroom
 media:
@@ -85,8 +87,11 @@ Sensors:
 - group.upstairs_occupancy
 Gate:
 - binary_sensor.doorbell
+- binary_sensor.doorbell_ringing
 - binary_sensor.frontdoor_motion
 - switch.doorbird
+- switch.light_on
+- switch.open_door
 Downstairs Occupancy:
 - binary_sensor.guest_room_occupancy
 - binary_sensor.great_room_occupancy

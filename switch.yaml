@@ -8,3 +8,7 @@
         turn_off:
           service: switch.turn_on
           entity_id: switch.skylight_open
+  - platform: doorbird
+    switches:
+      - light_on
+      - open_door
