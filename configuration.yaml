@@ -104,6 +104,10 @@ camera:
     still_image_url: https://radblast.wunderground.com/cgi-bin/radar/WUNIDS_map?station=SOX&brand=wui&num=1&delay=15&type=N0R&frame=0&scale=0.18097826086956523&noclutter=0&showstorms=0&mapx=400&mapy=240&centerx=638.6336336336336&centery=236.89189189189187&transx=238.63363363363362&transy=-3.1081081081081265&showlabels=1&severe=0&rainsnow=0&lightning=0&smooth=0&rand=24853447&lat=0&lon=0&label=you
     name: Radar
   - platform: generic
+    name: Tesla Map
+    still_image_url: !secret tesla_still_image_url 
+    limit_refetch_to_url_change: true    
+  - platform: generic
     name: Alan Map
     still_image_url: !secret alan_still_image_url 
     limit_refetch_to_url_change: true    
