@@ -2,11 +2,15 @@ default_view:
   view: true
   icon: mdi:home
   entities:
+  #- group.all_lights
   - group.switches
   - group.home_security
   - group.weather
   - group.thermostats
   - group.information
+  - group.kitchen
+  - group.great_room
+  - group.garage
 cameras:
   name: Cameras
   view: true
@@ -35,7 +39,6 @@ settings:
   - group.upstairs_occupancy
   - group.household
 Weather:
-- sun.sun
 - sensor.pws_weather
 - sensor.pws_temp_f
 - sensor.pws_pressure_in
@@ -86,12 +89,23 @@ Sensors:
 - group.downstairs_occupancy
 - group.upstairs_occupancy
 Gate:
-- binary_sensor.doorbell
 - binary_sensor.doorbell_ringing
 - binary_sensor.frontdoor_motion
 - switch.doorbird
 - switch.light_on
-- switch.open_door
+Kitchen:
+- switch.refrigerator
+- switch.water_boiler
+Great Room:
+- light.great_room_lights
+Garage:
+- sensor.tesla_model_s_5yjsa1e13hf192718_battery_sensor
+- binary_sensor.tesla_model_s_5yjsa1e13hf192718_charger_sensor
+- climate.tesla_model_s_5yjsa1e13hf192718_hvac_climate_system
+- sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_inside
+- sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_outside    
+- binary_sensor.tesla_model_s_5yjsa1e13hf192718_parking_sensor
+- lock.tesla_model_s_5yjsa1e13hf192718_door_lock
 Downstairs Occupancy:
 - binary_sensor.guest_room_occupancy
 - binary_sensor.great_room_occupancy

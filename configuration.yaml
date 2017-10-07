@@ -172,6 +172,10 @@ recorder:
   exclude:
     domains:
       - sun
+wink:
+  email: !secret wink_user
+  password: !secret wink_password
+  local_control: true
 
 shell_command: !include shell_command.yaml
 automation: !include automations.yaml
