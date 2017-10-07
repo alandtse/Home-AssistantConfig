@@ -66,6 +66,7 @@ Thermostats:
 - sensor.playroom_temperature
 - input_boolean.thermo_away_upstairs
 Information:
+- sensor.ssl_certificate_expiry
 - sensor.time__date
 - sensor.morning_commute
 - sensor.evening_commute
