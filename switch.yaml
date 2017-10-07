@@ -8,6 +8,12 @@
         turn_off:
           service: switch.turn_on
           entity_id: switch.skylight_open
+  - platform: tplink
+    host: 192.168.1.95
+    name: Refrigerator
+  - platform: tplink
+    host: 192.168.1.94
+    name: Water Boiler
   - platform: doorbird
     switches:
       - light_on

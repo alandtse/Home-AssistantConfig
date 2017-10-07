@@ -105,8 +105,8 @@ camera:
     name: Radar
   - platform: generic
     name: Tesla Map
-    still_image_url: !secret tesla_still_image_url 
-    limit_refetch_to_url_change: true    
+    still_image_url: !secret tesla_still_image_url
+    limit_refetch_to_url_change: true
   - platform: generic
     name: Alan Map
     still_image_url: !secret alan_still_image_url 
