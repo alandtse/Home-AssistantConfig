@@ -1,5 +1,6 @@
 - platform: mqtt
   state_topic: 'camera/DCS-2330L/motion'
+  friendly_name: "Kids' Room Motion" 
   name: 'dcs-2330l_motion'
   device_class: motion
   # inactive: No alarm

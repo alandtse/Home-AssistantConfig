@@ -11,6 +11,8 @@ default_view:
   - group.kitchen
   - group.great_room
   - group.garage
+  - group.doors
+  - group.windows
 cameras:
   name: Cameras
   view: true
@@ -86,6 +88,9 @@ Home Security:
 - camera.kidsroom
 - alarm_control_panel.simplisafe
 - input_select.alarmstatus
+- group.doors
+- group.windows
+
 Sensors:
 - group.downstairs_occupancy
 - group.upstairs_occupancy
@@ -107,10 +112,30 @@ Garage:
 - sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_outside    
 - binary_sensor.tesla_model_s_5yjsa1e13hf192718_parking_sensor
 - lock.tesla_model_s_5yjsa1e13hf192718_door_lock
+Doors:
+- binary_sensor.simplisafe_entry_sensor_1t314
+- binary_sensor.simplisafe_entry_sensor_1t3jv
+- binary_sensor.simplisafe_entry_sensor_1t32v
+- binary_sensor.simplisafe_entry_sensor_1t32u
+Windows:
+- binary_sensor.simplisafe_entry_sensor_1ksxv
+- binary_sensor.simplisafe_entry_sensor_1l2aa
+- binary_sensor.simplisafe_entry_sensor_1ksya
+- binary_sensor.simplisafe_entry_sensor_1kszb
+- binary_sensor.simplisafe_entry_sensor_1sude
+- binary_sensor.simplisafe_entry_sensor_1t1b8 
+- binary_sensor.simplisafe_entry_sensor_1t2vw
+- binary_sensor.simplisafe_entry_sensor_1ksxr
+- binary_sensor.simplisafe_entry_sensor_1t2za
+- binary_sensor.simplisafe_entry_sensor_1t334
+- binary_sensor.simplisafe_entry_sensor_1t1ai
+- binary_sensor.simplisafe_entry_sensor_1t316
 Downstairs Occupancy:
 - binary_sensor.guest_room_occupancy
 - binary_sensor.great_room_occupancy
+- binary_sensor.simplisafe_motion_sensor_19ptl
 - binary_sensor.office_occupancy
+- binary_sensor.simplisafe_motion_sensor_19p59
 Upstairs Occupancy:
 - binary_sensor.dcs2330l_motion
 - binary_sensor.kids_room_occupancy

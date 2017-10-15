@@ -7,6 +7,49 @@
        friendly_name: EcobeeDown
      climate.upstairs:
        friendly_name: EcobeeUp
+#Simplisafe
+     binary_sensor.simplisafe_entry_sensor_1ksxv:
+       friendly_name: Kids Room Left Window
+     binary_sensor.simplisafe_entry_sensor_1l2aa:
+       friendly_name: Kids Room Right Window
+     binary_sensor.simplisafe_entry_sensor_1ksya:
+       friendly_name: Play Room Left Window
+     binary_sensor.simplisafe_entry_sensor_1kszb:
+       friendly_name: Play Room Right Window
+     binary_sensor.simplisafe_entry_sensor_1sude:
+       friendly_name: Guest Room Left Window
+     binary_sensor.simplisafe_entry_sensor_1t1b8:
+       friendly_name: Guest Room Right Window
+     binary_sensor.simplisafe_entry_sensor_1t316:
+       friendly_name: Guest Bathroom Window
+     binary_sensor.simplisafe_entry_sensor_1t2vw:
+       friendly_name: Dining Room Left Window
+     binary_sensor.simplisafe_entry_sensor_1ksxr:
+       friendly_name: Dining Room Middle Window
+     binary_sensor.simplisafe_entry_sensor_1t2za:
+       friendly_name: Dining Room Right Window
+     binary_sensor.simplisafe_entry_sensor_1t334:
+       friendly_name: Kitchen Window
+     binary_sensor.simplisafe_entry_sensor_1t1ai:
+       friendly_name: Great Room Window
+     binary_sensor.simplisafe_entry_sensor_1t314:
+       friendly_name: Front Door 
+     binary_sensor.simplisafe_entry_sensor_1t3jv:
+       friendly_name: Back Door 
+     binary_sensor.simplisafe_entry_sensor_1t32v:
+       friendly_name: Garage Interior Door
+     binary_sensor.simplisafe_entry_sensor_1t32u:
+       friendly_name: Garage Exterior Door
+     binary_sensor.simplisafe_motion_sensor_19p59:
+       friendly_name: Dining Room Motion
+     binary_sensor.simplisafe_motion_sensor_19ptl:
+       friendly_name: Great Room Motion
+     binary_sensor.simplisafe_smoke_detector_13ce8:
+       friendly_name: Great Room Smoke Detector
+     binary_sensor.simplisafe_glassbreak_sensor_119na:
+       friendly_name: Guest Room Glassbreak
+     binary_sensor.simplisafe_glassbreak_sensor_119l4:
+       friendly_name: Office Room Glassbreak
  #weather
      sensor.pws_pressure_in:
        friendly_name: 'Outdoor Pressure'
