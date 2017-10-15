@@ -1,4 +1,5 @@
 #Weather Sensor:
+  - platform: pi_hole
   - platform: cert_expiry
     host: !secret ha_url
   - platform: darksky
