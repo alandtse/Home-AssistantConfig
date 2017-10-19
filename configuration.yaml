@@ -188,3 +188,7 @@ apiai: !include apiai.yaml
 input_select: !include input_select.yaml
 input_boolean: !include input_boolean.yaml
 switch: !include switch.yaml
+zwave:
+  usb_path: /dev/ttyACM0
+  config_path: /srv/homeassistant/homeassistant_venv/lib/python3.4/site-packages/python_openzwave/ozw_config/ 
+ 

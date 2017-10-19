@@ -28,4 +28,11 @@
       friendly_name: Gate Unlocked
       value_template: 'off'
       entity_id: foo.bar
+    greatroomswitch_motion:
+      friendly_name: Great Room Switch Motion
+      device_class: motion
+      entity_id:
+        - sensor.great_room_switch_burglar 
+      value_template: >-
+        {{states("sensor.great_room_switch_burglar") |float > 0 }}
 - platform: simplisaferf

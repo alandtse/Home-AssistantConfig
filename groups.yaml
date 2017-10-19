@@ -95,6 +95,7 @@ Sensors:
 - group.downstairs_occupancy
 - group.upstairs_occupancy
 Gate:
+- binary_sensor.doorbell
 - binary_sensor.doorbell_ringing
 - binary_sensor.frontdoor_motion
 - switch.doorbird
@@ -103,7 +104,8 @@ Kitchen:
 - switch.refrigerator
 - switch.water_boiler
 Great Room:
-- light.great_room_lights
+- light.great_room_switch_level 
+- light.great_room_switch_level_2 
 Garage:
 - sensor.tesla_model_s_5yjsa1e13hf192718_battery_sensor
 - binary_sensor.tesla_model_s_5yjsa1e13hf192718_charger_sensor
@@ -134,8 +136,10 @@ Downstairs Occupancy:
 - binary_sensor.guest_room_occupancy
 - binary_sensor.great_room_occupancy
 - binary_sensor.simplisafe_motion_sensor_19ptl
+- binary_sensor.greatroomswitch_motion
 - binary_sensor.office_occupancy
 - binary_sensor.simplisafe_motion_sensor_19p59
+
 Upstairs Occupancy:
 - binary_sensor.dcs2330l_motion
 - binary_sensor.kids_room_occupancy
