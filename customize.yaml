@@ -49,7 +49,7 @@
      binary_sensor.simplisafe_glassbreak_sensor_119na:
        friendly_name: Guest Room Glassbreak
      binary_sensor.simplisafe_glassbreak_sensor_119l4:
-       friendly_name: Office Room Glassbreak
+       friendly_name: Office Glassbreak
  #weather
      sensor.pws_pressure_in:
        friendly_name: 'Outdoor Pressure'
