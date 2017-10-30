@@ -5,6 +5,10 @@
     name: Abode Updates
     initial: on
     icon: mdi:security
+  recordgate:
+    name: Record Doorbird Motion
+    initial: on
+    icon: mdi:security
   alanhome:
     name: Alan is Home
     initial: on
