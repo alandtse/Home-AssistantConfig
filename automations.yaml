@@ -714,3 +714,15 @@
         title: "Doorbird Motion Detected"
         data:
             url: !secret mycloud_doorbird_url
+- id: NotifyDoorbell
+  alias: 'Notify of ringing doorbell'
+  initial_state: 'on'    
+  trigger:
+    platform: state
+    entity_id: binary_sensor.doorbell 
+    to: 'on'
+  action:
+    service: tts.google_say
+    data:
+      entity_id: media_player.tts_bluetooth_speaker
+      message: 'Someone is on the front door!'

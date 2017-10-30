@@ -96,7 +96,7 @@ Sensors:
 - group.upstairs_occupancy
 Gate:
 - binary_sensor.doorbell
-- binary_sensor.doorbell_ringing
+#- binary_sensor.doorbell_ringing
 - input_boolean.recordgate
 - binary_sensor.frontdoor_motion
 - switch.doorbird
