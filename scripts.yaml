@@ -90,6 +90,10 @@
       - service: notify.ecobee
         data:
           message: 'Garage door is open, please check!'
+      - service: tts.google_say
+        data:
+          entity_id: media_player.tts_bluetooth_speaker
+          message: 'Garage door is open, please check!'
 
   notificationleavework:
     alias: 'Leave for Work'

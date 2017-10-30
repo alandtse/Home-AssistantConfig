@@ -80,6 +80,12 @@ tts:
     cache: true
     cache_dir: /home/homeassistant/.homeassistant/tts
     time_memory: 300
+media_player:
+  - platform: tts_bluetooth_speaker
+    address: 84:D6:D0:21:85:21
+    volume: 1.00
+    pre_silence_duration: .5
+    cache_dir: /home/homeassistant/.homeassistant/tts
 notify:
   - platform: pushbullet
     api_key: !secret pushbullet_key
