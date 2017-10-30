@@ -13,6 +13,13 @@
         {%- else -%}
           true
         {%- endif -%}
+    - condition: template
+      value_template: >
+        {%- if states.groups.doors.last_changed -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.groups.doors.last_changed)) < 300 }}
+        {%- else -%}
+          true
+        {%- endif -%}
   trigger:
     - platform: state
       entity_id: device_tracker.alandtse_nexus5, device_tracker.nexus_5
@@ -40,6 +47,13 @@
      value_template: >
        {%- if states.input_boolean.rayhome.last_changed -%}
          {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.rayhome.last_changed)) > 300 }}
+       {%- else -%}
+         true
+       {%- endif -%}
+   - condition: template
+     value_template: >
+       {%- if states.groups.doors.last_changed -%}
+         {{ (as_timestamp(now()) - as_timestamp(states.groups.doors.last_changed)) < 300 }}
        {%- else -%}
          true
        {%- endif -%}
@@ -386,7 +400,7 @@
      entity_id: script.abodestandby
 
 - id: adjust_settings_changed_by_abode
-  alias: 'Adjust settings changed by Abode'
+  alias: 'Adjust ecobee settings changed by Abode'
   initial_state: 'on'
   condition:
     condition: and

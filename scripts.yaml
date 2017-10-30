@@ -71,6 +71,13 @@
         data:
           entity_id: climate.downstairs
           away_mode: 'False'
+      - service_template: >
+          {% if is_state('sun.sun', 'below_horizon') %}
+            homeassistant.turn_on
+          {% else %}
+            homeassistant.turn_off
+          {% endif %}
+        entity_id: light.great_room_lights
 #      - service: light.turn_off
 #        entity_id: group.living_room_lights
 
@@ -158,6 +165,9 @@
     sequence:
       - service: cover.open_cover
         entity_id: cover.garage_door_opener
+      - service: script.turn_on
+        data:
+          entity_id: script.checkdisarm
 
   owntracks_update:
     sequence:
