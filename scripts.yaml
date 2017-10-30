@@ -27,7 +27,7 @@
           entity_id: climate.upstairs
           away_mode: 'True'
       - service: homeassistant.turn_off
-        entity_id: light.great_room_switch_level 
+        entity_id: light.great_room_lights
 
   abodehome:
     alias: 'Abode Home'

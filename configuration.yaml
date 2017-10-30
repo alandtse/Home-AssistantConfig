@@ -59,6 +59,17 @@ history:
 
 # View all events in a logbook
 logbook:
+  exclude:
+    entities:
+      - sensor.yr_symbol
+      - sensor.time__date
+      - sensor.great_room_switch_sourcenodeid
+      - sensor.great_room_switch_sourcenodeid_2
+      - sensor.great_room_switch_alarm_level
+      - sensor.great_room_switch_alarm_level_2
+      - sensor.great_room_switch_alarm_type
+      - sensor.great_room_switch_alarm_type_2
+
 logger:
 # Track the sun
 sun:

@@ -691,6 +691,12 @@
 - id: auto_record_gate
   alias: Auto record gate on motion
   initial_state: 'on'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_boolean.recordgate
+        state: 'on'
   trigger:
   - entity_id: binary_sensor.frontdoor_motion
     from: 'off'
@@ -705,8 +711,6 @@
     - service: notify.pushbullet
       data_template:
         message: "Frontdoor motion"
-        title: "Motion Detected"
+        title: "Doorbird Motion Detected"
         data:
             url: !secret mycloud_doorbird_url
-        target: device/Nexus5
-

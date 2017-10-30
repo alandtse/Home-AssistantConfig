@@ -104,8 +104,7 @@ Kitchen:
 - switch.refrigerator
 - switch.water_boiler
 Great Room:
-- light.great_room_switch_level 
-- light.great_room_switch_level_2 
+- light.great_room_lights
 Garage:
 - sensor.tesla_model_s_5yjsa1e13hf192718_battery_sensor
 - binary_sensor.tesla_model_s_5yjsa1e13hf192718_charger_sensor
