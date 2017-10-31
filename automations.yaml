@@ -15,8 +15,8 @@
         {%- endif -%}
     - condition: template
       value_template: >
-        {%- if states.groups.doors.last_changed -%}
-          {{ (as_timestamp(now()) - as_timestamp(states.groups.doors.last_changed)) < 300 }}
+        {%- if states.group.doors.last_changed -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 300 }}
         {%- else -%}
           true
         {%- endif -%}
@@ -52,8 +52,8 @@
        {%- endif -%}
    - condition: template
      value_template: >
-       {%- if states.groups.doors.last_changed -%}
-         {{ (as_timestamp(now()) - as_timestamp(states.groups.doors.last_changed)) < 300 }}
+       {%- if states.group.doors.last_changed -%}
+         {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 300 }}
        {%- else -%}
          true
        {%- endif -%}
