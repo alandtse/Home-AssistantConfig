@@ -115,10 +115,12 @@ Garage:
 - binary_sensor.tesla_model_s_5yjsa1e13hf192718_parking_sensor
 - lock.tesla_model_s_5yjsa1e13hf192718_door_lock
 Doors:
+- binary_sensor.gate_open
 - binary_sensor.simplisafe_entry_sensor_1t314
 - binary_sensor.simplisafe_entry_sensor_1t3jv
 - binary_sensor.simplisafe_entry_sensor_1t32v
 - binary_sensor.simplisafe_entry_sensor_1t32u
+- cover.garage_door_opener
 Windows:
 - binary_sensor.simplisafe_entry_sensor_1ksxv
 - binary_sensor.simplisafe_entry_sensor_1l2aa
