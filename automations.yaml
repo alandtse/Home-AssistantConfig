@@ -698,7 +698,7 @@
         entity_id: input_boolean.recordgate
         state: 'on'
   trigger:
-  - entity_id: binary_sensor.frontdoor_motion
+  - entity_id: binary_sensor.gate_motion
     from: 'off'
     platform: state
     to: 'on'
