@@ -16,7 +16,7 @@
     - condition: template
       value_template: >
         {%- if states.group.doors.last_changed -%}
-          {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 300 }}
+          {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 900 }}
         {%- else -%}
           true
         {%- endif -%}
@@ -24,7 +24,7 @@
     - platform: state
       entity_id: device_tracker.alandtse_nexus5, device_tracker.nexus_5
       to: 'not_home'
-      for: '00:05:00'
+      #for: '00:05:00'
   action:
     - service: homeassistant.turn_off
       entity_id: input_boolean.alanhome
@@ -53,7 +53,7 @@
    - condition: template
      value_template: >
        {%- if states.group.doors.last_changed -%}
-         {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 300 }}
+         {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 900 }}
        {%- else -%}
          true
        {%- endif -%}
@@ -61,7 +61,7 @@
     - platform: state
       entity_id: device_tracker.raywtse_note4, device_tracker.ray_tse_galaxy_note4
       to: 'not_home'
-      for: '00:05:00'
+#      for: '00:05:00'
   action:
     - service: homeassistant.turn_off
       entity_id: input_boolean.rayhome
@@ -725,4 +725,4 @@
     service: tts.google_say
     data:
       entity_id: media_player.tts_bluetooth_speaker
-      message: 'Someone is on the front door!'
+      message: 'Someone is at the front door!'
