@@ -1,0 +1,18 @@
+sensor.great_room_switch_alarm_level:
+  ignored: true
+  polling_intensity: 0
+sensor.great_room_switch_alarm_level_2:
+  ignored: true
+  polling_intensity: 0
+sensor.great_room_switch_alarm_type:
+  ignored: true
+  polling_intensity: 0
+sensor.great_room_switch_alarm_type_2:
+  ignored: true
+  polling_intensity: 0
+sensor.great_room_switch_sourcenodeid:
+  ignored: true
+  polling_intensity: 0
+sensor.great_room_switch_sourcenodeid_2:
+  ignored: true
+  polling_intensity: 0
