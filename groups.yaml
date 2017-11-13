@@ -96,11 +96,11 @@ Sensors:
 - group.upstairs_occupancy
 Gate:
 - binary_sensor.doorbell
-#- binary_sensor.doorbell_ringing
 - input_boolean.recordgate
-- binary_sensor.frontdoor_motion
-- switch.doorbird
+- binary_sensor.gate_motion
 - switch.light_on
+- switch.doorbird
+- binary_sensor.gate_open
 Kitchen:
 - switch.refrigerator
 - switch.water_boiler

@@ -19,15 +19,22 @@
       device_class: sound
       value_template: 'off'
       entity_id: foo.bar
-    frontdoor_motion:
+    gate_motion:
       friendly_name: Gate Motion
       device_class: motion
       value_template: 'off'
       entity_id: foo.bar
-    frontdoor_open:
+    gate_unlocked:
       friendly_name: Gate Unlocked
       value_template: 'off'
       entity_id: foo.bar
+    gate_open:
+      friendly_name: Gate Open 
+      device_class: opening
+      entity_id:
+        - sensor.gate_alarm_level
+      value_template: >-
+        {{states("sensor.gate_alarm_level") |float > 0 }}
     greatroomswitch_motion:
       friendly_name: Great Room Switch Motion
       device_class: motion
