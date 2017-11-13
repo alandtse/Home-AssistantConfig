@@ -11,6 +11,7 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
+  packages: !include_dir_named packages
 # Show links to resources in log and frontend
 #introduction:
 
@@ -189,8 +190,6 @@ recorder:
     domains:
       - sun
 wink:
-  email: !secret wink_user
-  password: !secret wink_password
   local_control: true
 
 shell_command: !include shell_command.yaml
