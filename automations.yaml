@@ -540,7 +540,7 @@
       data:
         title: "Update Available"
         message: >
-          Home Assistant {{ states('updater.updater') }} is available, please [update](https://home-assistant.io/getting-started/installation-raspberry-pi-all-in-one/#upgrading).
+          Home Assistant {{ states('updater.updater') }} is available, please [update](https://home-assistant.io/blog/).
         notification_id: "update_available"
 
 
@@ -725,4 +725,4 @@
     service: tts.google_say
     data:
       entity_id: media_player.tts_bluetooth_speaker
-      message: 'Someone is at the front door!'
+      message: 'Ding Dong! Someone is at the front door!'
