@@ -28,7 +28,8 @@
           away_mode: 'True'
       - service: homeassistant.turn_off
         entity_id: light.great_room_lights
-
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.recordgate
   abodehome:
     alias: 'Abode Home'
     sequence:
@@ -43,6 +44,8 @@
       - service: script.turn_on
         data:
           entity_id: script.arm_home
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.recordgate
 #      - service: shell_command.arm
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeHome", "value1":"Abode Home"}
@@ -171,7 +174,7 @@
         entity_id: cover.garage_door_opener
       - service: script.turn_on
         data:
-          entity_id: script.checkdisarm
+          entity_id: script.disarm
 
   owntracks_update:
     sequence:

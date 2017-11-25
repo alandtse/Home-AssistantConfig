@@ -139,8 +139,10 @@ Downstairs Occupancy:
 - binary_sensor.great_room_occupancy
 - binary_sensor.simplisafe_motion_sensor_19ptl
 - binary_sensor.greatroomswitch_motion
-- binary_sensor.office_occupancy
+- binary_sensor.tv
 - binary_sensor.simplisafe_motion_sensor_19p59
+- binary_sensor.office_occupancy
+- binary_sensor.office_computer
 
 Upstairs Occupancy:
 - binary_sensor.dcs2330l_motion

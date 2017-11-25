@@ -29,7 +29,7 @@
       value_template: 'off'
       entity_id: foo.bar
     gate_open:
-      friendly_name: Gate Open 
+      friendly_name: Gate 
       device_class: opening
       entity_id:
         - sensor.gate_alarm_level
@@ -42,4 +42,18 @@
         - sensor.great_room_switch_burglar 
       value_template: >-
         {{states("sensor.great_room_switch_burglar") |float > 0 }}
+    tv:
+      friendly_name: TV 
+      device_class: occupancy
+      entity_id:
+        - sensor.gate_alarm_level
+      value_template: >-
+        {{is_state("device_tracker.00248d9b0d1e","home")}}
+    office_computer:
+      friendly_name: Office Computer
+      device_class: occupancy
+      entity_id:
+        - sensor.gate_alarm_level
+      value_template: >-
+        {{is_state("device_tracker.38d547084a5e","home")}}
 - platform: simplisaferf
