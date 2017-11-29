@@ -88,6 +88,7 @@ media_player:
     volume: 1.00
     pre_silence_duration: .5
     connect_script: /home/homeassistant/.homeassistant/scripts/connect_bluetooth.sh
+    disconnect_script: /home/homeassistant/.homeassistant/scripts/disconnect_bluetooth.sh
     cache_dir: /home/homeassistant/.homeassistant/tts
 notify:
   - platform: pushbullet
