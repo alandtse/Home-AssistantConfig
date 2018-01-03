@@ -26,6 +26,16 @@ zone:
    longitude: !secret long_work
    radius: 150
    icon: mdi:briefcase
+ - name: Grandparent's
+   latitude: !secret lat_grandparents
+   longitude: !secret long_grandparents
+   radius: 50
+   icon: mdi:home
+ - name: Han's
+   latitude: !secret lat_grandparents
+   longitude: !secret long_grandparents
+   radius: 50
+   icon: mdi:home
 # Enables the frontend
 frontend:
   javascript_version: latest
@@ -176,9 +186,9 @@ device_tracker:
    # scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
 ecobee:
   api_key: !secret ecobee_key
-tesla:
-  username: !secret tesla_user
-  password: !secret tesla_password
+#tesla:
+#  username: !secret tesla_user
+#  password: !secret tesla_password
 doorbird:
   host: bha-1ccae3707f56  
 #  host: 192.168.1.99

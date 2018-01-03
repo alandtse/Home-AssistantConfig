@@ -117,5 +117,15 @@
           {%- endif -%}
   - platform: ohmconnect
     id: !secret ohmconnect_id
-
-  
+  - platform: google_geocode
+    name: Alan
+    origin: device_tracker.alandtse_nexus5
+    api_key: !secret google_key
+  - platform: google_geocode
+    name: Ray
+    origin: device_tracker.raywtse_note4
+    api_key: !secret google_key
+  - platform: google_geocode
+    name: Model S
+    origin: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+    api_key: !secret google_key

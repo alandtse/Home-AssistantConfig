@@ -11,6 +11,7 @@ default_view:
   - group.kitchen
   - group.great_room
   - group.garage
+  - group.lights
   - group.doors
   - group.windows
 cameras:
@@ -104,6 +105,8 @@ Gate:
 Kitchen:
 - switch.refrigerator
 - switch.water_boiler
+Lights:
+- switch.christmas_lights
 Great Room:
 - light.great_room_lights
 Garage:
@@ -155,10 +158,13 @@ Household:
 - input_boolean.solomonhome
 - input_boolean.orlahome
 Devices:
+- sensor.alan
 - device_tracker.alandtse_nexus5
 - device_tracker.nexus_5
+- sensor.ray
 - device_tracker.raywtse_note4
 - device_tracker.ray_tse_galaxy_note4
+- sensor.model_s
 - camera.alan_map
 - camera.tesla_map
 - camera.ray_map
