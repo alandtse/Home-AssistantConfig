@@ -48,13 +48,13 @@
       type: plain
       text: >
         {%- if User == "Alan" and is_state('input_boolean.alanhome', 'off') -%}
-          Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }} and is {{ states("sensor.alan_to_home") }} minutes away.
+          Alan is at {{ states("sensor.alan") }} and is {{ states("sensor.alan_to_home") }} minutes away.
         {%- elif User == "Alan" -%}
-          Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }}.
+          Alan is at {{ states("sensor.alan") }}.
         {%- elif User == "Ray" and is_state('input_boolean.rayhome', 'off') -%}
-          Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }} and is {{states("sensor.ray_to_home") }} minutes away.
+          Ray is at {{ states("sensor.ray") }} and is {{states("sensor.ray_to_home") }} minutes away.
         {%- elif User == "Ray" -%}
-          Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }}.
+          Ray is at {{ states("sensor.ray") }}.
         {%- else -%}
           I am sorry, I do not know where {{ User }} is. 
         {%- endif -%}
