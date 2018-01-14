@@ -26,9 +26,14 @@ zone:
    longitude: !secret long_work
    radius: 150
    icon: mdi:briefcase
- - name: Grandparent's
+ - name: Grandparent's Irvine
    latitude: !secret lat_grandparents
    longitude: !secret long_grandparents
+   radius: 50
+   icon: mdi:home
+ - name: Grandparent's San Diego
+   latitude: !secret lat_grandparents2
+   longitude: !secret long_grandparents2
    radius: 50
    icon: mdi:home
  - name: Han's
@@ -141,6 +146,10 @@ camera:
     still_image_url: !secret tesla_still_image_url
     limit_refetch_to_url_change: true
   - platform: generic
+    name: Tesla M3 Map
+    still_image_url: !secret tesla3_still_image_url
+    limit_refetch_to_url_change: true
+  - platform: generic
     name: Alan Map
     still_image_url: !secret alan_still_image_url 
     limit_refetch_to_url_change: true    
@@ -186,9 +195,9 @@ device_tracker:
    # scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
 ecobee:
   api_key: !secret ecobee_key
-#tesla:
-#  username: !secret tesla_user
-#  password: !secret tesla_password
+tesla:
+  username: !secret tesla_user
+  password: !secret tesla_password
 doorbird:
   host: bha-1ccae3707f56  
 #  host: 192.168.1.99

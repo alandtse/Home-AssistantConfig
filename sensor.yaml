@@ -129,3 +129,7 @@
     name: Model S
     origin: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
     api_key: !secret google_key
+  - platform: google_geocode
+    name: Model 3
+    origin: device_tracker.tesla_model_3_5yj3e1ea7hf002153_location_tracker
+    api_key: !secret google_key

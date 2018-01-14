@@ -170,3 +170,6 @@ Devices:
 - camera.ray_map
 - device_tracker.70480f72bc9b
 - device_tracker.78fd940d9949
+- sensor.model_3
+- camera.tesla_m3_map
+
