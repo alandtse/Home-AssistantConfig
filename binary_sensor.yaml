@@ -41,7 +41,7 @@
       entity_id:
         - cover.garage_door_opener
       value_template: >-
-        {{is_state("cover.garage_door_opener")}}
+        {{is_state("cover.garage_door_opener","open")}}
     nookswitch_motion:
       friendly_name: Nook Switch Motion
       device_class: motion
