@@ -35,6 +35,13 @@
         - sensor.gate_alarm_level
       value_template: >-
         {{states("sensor.gate_alarm_level") |float > 0 }}
+    garage:
+      friendly_name: Garage
+      device_class: opening
+      entity_id:
+        - cover.garage_door_opener
+      value_template: >-
+        {{is_state("cover.garage_door_opener")}}
     nookswitch_motion:
       friendly_name: Nook Switch Motion
       device_class: motion

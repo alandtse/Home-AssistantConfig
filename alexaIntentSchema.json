@@ -19,7 +19,16 @@
       "intent": "CheckGarageIntent"
     },
     {
+      "intent": "CheckBluetoothIntent"
+    },
+    {
       "intent": "OpenGarageIntent"
+    },
+    {
+      "intent": "CloseGarageIntent"
+    },
+    {
+      "intent": "OpenGateIntent"
     },
     {
       "intent": "HowIsTheTrafficIntent"
@@ -35,4 +44,3 @@
     }
   ]
 }
-

@@ -3,3 +3,4 @@
   disarm: '/home/pi/simplisafe-rf/disarm.py'
   unlockgate: '/home/pi/homeassistant-doorbird-proxy/unlock.sh'
   recordgate: '/home/pi/doorbird/recordgate.sh {{ value }}'
+  restartsimplisafe: 'sudo systemctl restart simplisaferf.service'

@@ -25,6 +25,12 @@
     speech:
       type: plain
       text: Opening the garage.
+  CloseGarageIntent:
+    action:
+      service: cover.close_cover
+    speech:
+      type: plain
+      text: Closing the garage.
   OpenGateIntent:
     action:
       service: homeassistant.turn_on
@@ -57,6 +63,13 @@
       type: plain
       text: >
         Your commute to work is about {{ states.sensor.morning_commute.state }} minutes and back home is {{ states.sensor.evening_commute.state }} minutes.
+  CheckBluetoothIntent:
+    action:
+      service: homeassistant.turn_on
+      entity_id: script.checkbluetoothspeaker
+    speech:
+      type: plain
+      text: !include alexa_confirm.yaml
   RunScriptIntent:
     action:
       service: script.turn_on

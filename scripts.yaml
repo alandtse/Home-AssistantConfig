@@ -104,6 +104,13 @@
       - service: notify.pushbullet
         data:
           message: 'Traffic has cleared, you can leave for work.'
+  checkbluetoothspeaker:
+    alias: 'Check Bluetooth Speakers'
+    sequence:
+      - service: tts.google_say
+        data:
+          entity_id: media_player.tts_bluetooth_speaker
+          message: 'Testing bluetooth speakers.'
 
   arm_home:
     alias: 'Arm Home'
@@ -176,6 +183,11 @@
         data:
           entity_id: script.disarm
 
+  closegarage:
+    alias: 'Close Garage'
+    sequence:
+      - service: cover.close_cover
+        entity_id: cover.garage_door_opener
   owntracks_update:
     sequence:
       - service: mqtt.publish

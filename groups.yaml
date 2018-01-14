@@ -91,6 +91,8 @@ Home Security:
 - input_select.alarmstatus
 - group.doors
 - group.windows
+- group.downstairs_occupancy
+- group.upstairs_occupancy
 
 Sensors:
 - group.downstairs_occupancy
@@ -124,6 +126,7 @@ Doors:
 - binary_sensor.simplisafe_entry_sensor_1t3jv
 - binary_sensor.simplisafe_entry_sensor_1t32v
 - binary_sensor.simplisafe_entry_sensor_1t32u
+- binary_sensor.garage
 - cover.garage_door_opener
 Windows:
 - binary_sensor.simplisafe_entry_sensor_1ksxv
@@ -131,7 +134,7 @@ Windows:
 - binary_sensor.simplisafe_entry_sensor_1ksya
 - binary_sensor.simplisafe_entry_sensor_1kszb
 - binary_sensor.simplisafe_entry_sensor_1sude
-- binary_sensor.simplisafe_entry_sensor_1t1b8 
+- binary_sensor.simplisafe_entry_sensor_1t1b8
 - binary_sensor.simplisafe_entry_sensor_1t2vw
 - binary_sensor.simplisafe_entry_sensor_1ksxr
 - binary_sensor.simplisafe_entry_sensor_1t2za
@@ -174,4 +177,22 @@ Devices:
 - device_tracker.78fd940d9949
 - sensor.model_3
 - camera.tesla_m3_map
-
+Simplisafe:
+- binary_sensor.simplisafe_entry_sensor_1t314
+- binary_sensor.simplisafe_entry_sensor_1t3jv
+- binary_sensor.simplisafe_entry_sensor_1t32v
+- binary_sensor.simplisafe_entry_sensor_1t32u
+- binary_sensor.simplisafe_entry_sensor_1ksxv
+- binary_sensor.simplisafe_entry_sensor_1l2aa
+- binary_sensor.simplisafe_entry_sensor_1ksya
+- binary_sensor.simplisafe_entry_sensor_1kszb
+- binary_sensor.simplisafe_entry_sensor_1sude
+- binary_sensor.simplisafe_entry_sensor_1t1b8
+- binary_sensor.simplisafe_entry_sensor_1t2vw
+- binary_sensor.simplisafe_entry_sensor_1ksxr
+- binary_sensor.simplisafe_entry_sensor_1t2za
+- binary_sensor.simplisafe_entry_sensor_1t334
+- binary_sensor.simplisafe_entry_sensor_1t1ai
+- binary_sensor.simplisafe_entry_sensor_1t316
+- binary_sensor.simplisafe_motion_sensor_19ptl
+- binary_sensor.simplisafe_motion_sensor_19p59
