@@ -11,7 +11,7 @@ default_view:
   - group.kitchen
   - group.great_room
   - group.garage
-  - group.lights
+  - group.nook
   - group.doors
   - group.windows
 cameras:
@@ -105,7 +105,8 @@ Gate:
 Kitchen:
 - switch.refrigerator
 - switch.water_boiler
-Lights:
+Nook:
+- light.stairs_lights
 - switch.christmas_lights
 Great Room:
 - light.great_room_lights
@@ -151,6 +152,7 @@ Upstairs Occupancy:
 - binary_sensor.dcs2330l_motion
 - binary_sensor.kids_room_occupancy
 - binary_sensor.playroom_occupancy
+- binary_sensor.nookswitch_motion
 - binary_sensor.master_bedroom_occupancy
 Household:
 - input_boolean.alanhome

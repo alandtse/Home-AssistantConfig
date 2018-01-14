@@ -35,6 +35,13 @@
         - sensor.gate_alarm_level
       value_template: >-
         {{states("sensor.gate_alarm_level") |float > 0 }}
+    nookswitch_motion:
+      friendly_name: Nook Switch Motion
+      device_class: motion
+      entity_id:
+        - sensor.nook_switch_burglar
+      value_template: >-
+        {{states("sensor.nook_switch_burglar") |float > 0 }}
     greatroomswitch_motion:
       friendly_name: Great Room Switch Motion
       device_class: motion

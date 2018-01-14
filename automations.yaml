@@ -792,4 +792,15 @@
   action:
     service: homeassistant.turn_off
     entity_id: light.great_room_lights
+- id: DisableStairsLights
+  alias: 'Disable Stairs Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.nookswitch_motion
+      to: 'off'
+      for:
+        minutes: 15
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.stairs_lights
 
