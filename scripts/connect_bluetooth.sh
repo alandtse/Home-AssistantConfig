@@ -11,10 +11,11 @@ command="$test.${speaker//:/_}"
 result=`eval $command`
 #echo $result
 if [[ -z $result ]]; then
-  echo "Connecting to $speaker"
+  echo "Connecting to $speaker with ${controllers[i]}"
   /home/homeassistant/.homeassistant/scripts/bluetooth.sh ${speakers[i]} ${controllers[i]}
   #pactl set-card-profile `pactl list short | grep bluez_card | awk '{print $1}'` a2dp_sink
 else
-  echo "Already connected to $speaker"
+  echo "Already connected to $speaker with ${controllers[i]}"
+
 fi 
 done
