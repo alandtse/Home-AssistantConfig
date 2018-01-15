@@ -49,6 +49,13 @@
         - sensor.nook_switch_burglar
       value_template: >-
         {{states("sensor.nook_switch_burglar") |float > 0 }}
+    guestroomswitch_motion:
+      friendly_name: Guest Room Switch Motion
+      device_class: motion
+      entity_id:
+        - sensor.guest_room_switch_burglar 
+      value_template: >-
+        {{states("sensor.guest_room_switch_burglar") |float > 0 }}
     greatroomswitch_motion:
       friendly_name: Great Room Switch Motion
       device_class: motion

@@ -777,18 +777,23 @@
     
 - id: DisableGreatRoomLight
   alias: 'Disable Great Room Light'
-#  condition:
-#    - condition: or
-#      conditions:
-#      - condition: state
-#        entity_id: input_select.abodestatus
-#        state: 'standby'
   trigger:
     - platform: state
       entity_id: group.downstairs_occupancy 
       to: 'off'
       for:
         minutes: 5
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.great_room_lights
+- id: DisableGuestRoomLight
+  alias: 'Disable Guest Room Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.guestroomswitch_motion
+      to: 'off'
+      for:
+        minutes: 15
   action:
     service: homeassistant.turn_off
     entity_id: light.great_room_lights

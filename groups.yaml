@@ -10,6 +10,7 @@ default_view:
   - group.information
   - group.kitchen
   - group.great_room
+  - group.guest_room
   - group.garage
   - group.nook
   - group.doors
@@ -112,6 +113,8 @@ Nook:
 - switch.christmas_lights
 Great Room:
 - light.great_room_lights
+Guest Room:
+- light.guest_room_lights
 Garage:
 - sensor.tesla_model_s_5yjsa1e13hf192718_battery_sensor
 - binary_sensor.tesla_model_s_5yjsa1e13hf192718_charger_sensor
@@ -143,9 +146,10 @@ Windows:
 - binary_sensor.simplisafe_entry_sensor_1t316
 Downstairs Occupancy:
 - binary_sensor.guest_room_occupancy
+- binary_sensor.guestroomswitch_motion
 - binary_sensor.great_room_occupancy
-- binary_sensor.simplisafe_motion_sensor_19ptl
 - binary_sensor.greatroomswitch_motion
+- binary_sensor.simplisafe_motion_sensor_19ptl
 - binary_sensor.tv
 - binary_sensor.simplisafe_motion_sensor_19p59
 - binary_sensor.office_occupancy
