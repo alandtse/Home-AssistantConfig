@@ -18,63 +18,46 @@
       friendly_name: Gate Doorbell
       device_class: sound
       value_template: 'off'
-      entity_id: foo.bar
     gate_motion:
       friendly_name: Gate Motion
       device_class: motion
       value_template: 'off'
-      entity_id: foo.bar
     gate_unlocked:
       friendly_name: Gate Unlocked
       value_template: 'off'
-      entity_id: foo.bar
     gate_open:
       friendly_name: Gate 
       device_class: opening
-      entity_id:
-        - sensor.gate_alarm_level
       value_template: >-
         {{states("sensor.gate_alarm_level") |float > 0 }}
     garage:
       friendly_name: Garage
       device_class: opening
-      entity_id:
-        - cover.garage_door_opener
       value_template: >-
         {{is_state("cover.garage_door_opener","open")}}
     nookswitch_motion:
       friendly_name: Nook Switch Motion
       device_class: motion
-      entity_id:
-        - sensor.nook_switch_burglar
       value_template: >-
         {{states("sensor.nook_switch_burglar") |float > 0 }}
     guestroomswitch_motion:
       friendly_name: Guest Room Switch Motion
       device_class: motion
-      entity_id:
-        - sensor.guest_room_switch_burglar 
       value_template: >-
         {{states("sensor.guest_room_switch_burglar") |float > 0 }}
     greatroomswitch_motion:
       friendly_name: Great Room Switch Motion
       device_class: motion
-      entity_id:
-        - sensor.great_room_switch_burglar 
       value_template: >-
         {{states("sensor.great_room_switch_burglar") |float > 0 }}
     tv:
       friendly_name: TV 
       device_class: occupancy
-      entity_id:
-        - device_tracker.00248d9b0d1e
       value_template: >-
         {{is_state("device_tracker.00248d9b0d1e","home")}}
     office_computer:
       friendly_name: Office Computer
       device_class: occupancy
-      entity_id:
-        - device_tracker.38d547084a5e
       value_template: >-
         {{is_state("device_tracker.38d547084a5e","home")}}
 - platform: simplisaferf
