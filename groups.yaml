@@ -108,6 +108,7 @@ Gate:
 Kitchen:
 - switch.refrigerator
 - switch.water_boiler
+- switch.kitchen_switch
 Nook:
 - light.stairs_lights
 - switch.christmas_lights
@@ -123,6 +124,13 @@ Garage:
 - sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_outside    
 - binary_sensor.tesla_model_s_5yjsa1e13hf192718_parking_sensor
 - lock.tesla_model_s_5yjsa1e13hf192718_door_lock
+- sensor.tesla_model_3_5yj3e1ea7hf002153_battery_sensor
+- binary_sensor.tesla_model_3_5yj3e1ea7hf002153_charger_sensor
+- climate.tesla_model_3_5yj3e1ea7hf002153_hvac_climate_system
+- sensor.tesla_model_3_5yj3e1ea7hf002153_temperature_sensor_inside
+- sensor.tesla_model_3_5yj3e1ea7hf002153_temperature_sensor_outside
+- binary_sensor.tesla_model_3_5yj3e1ea7hf002153_parking_sensor
+- lock.tesla_model_3_5yj3e1ea7hf002153_door_lock
 Doors:
 - binary_sensor.gate_open
 - binary_sensor.simplisafe_entry_sensor_1t314

@@ -785,7 +785,7 @@
         minutes: 5
   action:
     service: homeassistant.turn_off
-    entity_id: light.great_room_lights
+    entity_id: light.great_room_lights, switch.kitchen_lights
 - id: DisableGuestRoomLight
   alias: 'Disable Guest Room Light'
   trigger:
@@ -796,7 +796,7 @@
         minutes: 15
   action:
     service: homeassistant.turn_off
-    entity_id: light.great_room_lights
+    entity_id: light.guest_room_lights
 - id: DisableStairsLights
   alias: 'Disable Stairs Light'
   trigger:
