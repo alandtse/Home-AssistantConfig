@@ -593,7 +593,7 @@
     - service: script.notificationgaragedoor
 - id: OwntracksRefresh
   alias: "Owntracks Refresh"
-  initial_state: 'on'    
+  initial_state: 'off'
   condition:
    - condition: state
      entity_id: input_boolean.alanhome
