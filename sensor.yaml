@@ -115,6 +115,47 @@
           {%- else -%}
             mdi:fan
           {%- endif -%}
+      estimated_overage_date:
+        friendly_name: "Estimated Date of Overage"
+        value_template: >-
+           {% set start= (as_timestamp("2017-04-11 00:00:0")) %}
+           {% set odometer = states.sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor.state|round %}
+           {% set end= (as_timestamp("2020-04-11 00:00:0")) %}
+           {% set today = as_timestamp(now()) %}
+           {% set secondsInDay= 60*60*24 %}
+           {% set daysFromStart = ((start- today)/secondsInDay)|int|abs %}
+           {% set daysTillEnd = ((end - today)/secondsInDay)|int|abs %}
+           {% set totalDays = ((end - start)/secondsInDay)|int|abs %}
+           {% set mileageLimit= 30000 %}
+           {{((((totalDays * mileageLimit / (odometer/daysFromStart * totalDays) - daysFromStart)) * secondsInDay) + today)| timestamp_local}}
+      estimated_final_mileage:
+        friendly_name: "Estimated Mileage"
+        unit_of_measurement: mi
+        value_template: >-
+           {% set start= (as_timestamp("2017-04-11 00:00:0")) %}
+           {% set odometer = states.sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor.state|round %}
+           {% set end= (as_timestamp("2020-04-11 00:00:0")) %}
+           {% set today = as_timestamp(now()) %}
+           {% set secondsInDay= 60*60*24 %}
+           {% set daysFromStart = ((start- today)/secondsInDay)|int|abs %}
+           {% set daysTillEnd = ((end - today)/secondsInDay)|int|abs %}
+           {% set totalDays = ((end - start)/secondsInDay)|int|abs %}
+           {% set mileageLimit= 30000 %}
+           {{'%0.2f'|format( odometer/daysFromStart * totalDays) }}
+      estimated_daily_mileage_limit:
+        friendly_name: "Estimated Daily Mileage Limit"
+        unit_of_measurement: mi
+        value_template: >-
+           {% set start= (as_timestamp("2017-04-11 00:00:0")) %}
+           {% set odometer = states.sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor.state|round %}
+           {% set end= (as_timestamp("2020-04-11 00:00:0")) %}
+           {% set today = as_timestamp(now()) %}
+           {% set secondsInDay= 60*60*24 %}
+           {% set daysFromStart = ((start- today)/secondsInDay)|int|abs %}
+           {% set daysTillEnd = ((end - today)/secondsInDay)|int|abs %}
+           {% set totalDays = ((end - start)/secondsInDay)|int|abs %}
+           {% set mileageLimit= 30000 %}
+           {{'%0.2f'|format( (mileageLimit - odometer) / daysTillEnd) }}
   - platform: ohmconnect
     id: !secret ohmconnect_id
   - platform: google_geocode
