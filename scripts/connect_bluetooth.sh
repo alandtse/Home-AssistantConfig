@@ -1,6 +1,6 @@
 #!/bin/bash
 test="pactl list short | grep bluez_sink"
-controllers=(B8:27:EB:00:B4:BF 00:1B:DC:0F:D2:E1)
+controllers=(00:1B:DC:0F:D2:E1 B8:27:EB:00:B4:BF)
 speakers=(84:D6:D0:21:85:21 00:FC:8B:D5:99:F3)
 
 for i in ${!speakers[@]}; do
