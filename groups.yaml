@@ -121,6 +121,7 @@ Model S:
 - sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor
 - sensor.estimated_daily_mileage_limit
 - sensor.estimated_final_mileage
+- sensor.estimated_final_cost
 - sensor.estimated_overage_date
 - sensor.tesla_model_s_5yjsa1e13hf192718_battery_sensor
 - sensor.tesla_model_s_5yjsa1e13hf192718_range_sensor

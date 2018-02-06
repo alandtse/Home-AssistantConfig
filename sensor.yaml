@@ -129,7 +129,7 @@
            {% set mileageLimit= 30000 %}
            {{((((totalDays * mileageLimit / (odometer/daysFromStart * totalDays) - daysFromStart)) * secondsInDay) + today)| timestamp_local}}
       estimated_final_mileage:
-        friendly_name: "Estimated Mileage"
+        friendly_name: "Estimated Final Mileage"
         unit_of_measurement: mi
         value_template: >-
            {% set start= (as_timestamp("2017-04-11 00:00:0")) %}
@@ -142,6 +142,12 @@
            {% set totalDays = ((end - start)/secondsInDay)|int|abs %}
            {% set mileageLimit= 30000 %}
            {{'%0.2f'|format( odometer/daysFromStart * totalDays) }}
+      estimated_final_cost:
+        friendly_name: "Estimated Final Cost"
+        value_template: >-
+           {% set mileageLimit= 30000 %}
+           {% set overageCost= 0.25 %}
+           {{'%0.2f'|format(( states.sensor.estimated_final_mileage.state|float - mileageLimit) * overageCost) }}
       estimated_daily_mileage_limit:
         friendly_name: "Estimated Daily Mileage Limit"
         unit_of_measurement: mi
