@@ -12,9 +12,7 @@
       - service: notify.pushbullet
         data:
           message: "Arming alarm for away"
-      - service: script.turn_on
-        data:
-          entity_id: script.arm_away
+      - service: script.arm_away
 #      - service: shell_command.armaway
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeAway", "value1":"Arm Abode"}
@@ -41,9 +39,7 @@
       - service: notify.pushbullet
         data:
           message: "Arming alarm for home"
-      - service: script.turn_on
-        data:
-          entity_id: script.arm_home
+      - service: script.arm_home
       - service: homeassistant.turn_on
         entity_id: input_boolean.recordgate
 #      - service: shell_command.arm
@@ -60,9 +56,7 @@
       - service: notify.pushbullet
         data:
           message: "Disarming alarm"
-      - service: script.turn_on
-        data:
-          entity_id: script.disarm
+      - service: script.disarm
 #      - service: shell_command.disarm
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeStandby", "value1":"Abode Standby"}
@@ -119,18 +113,14 @@
       - delay: 00:00:01
       - service: shell_command.arm
       - delay: 00:00:30
-      - service: script.turn_on
-        data:
-          entity_id: script.checkarmhome
+      - service: script.checkarmhome
   checkarmhome:
     alias: 'Check Arm home'
     sequence:
       - condition: state
         entity_id: 'alarm_control_panel.simplisafe'
         state: 'disarmed'
-      - service: script.turn_on
-        data:
-          entity_id: script.arm_home
+      - service: script.arm_home
   arm_away:
     alias: 'Arm Away'
     sequence:
@@ -138,27 +128,21 @@
       - delay: 00:00:01
       - service: shell_command.armaway
       - delay: 00:00:30
-      - service: script.turn_on
-        data:
-          entity_id: script.checkarmaway
+      - service: script.checkarmaway
   checkarmaway:
     alias: 'Check Arm Away'
     sequence:
       - condition: state
         entity_id: 'alarm_control_panel.simplisafe'
         state: 'disarmed'
-      - service: script.turn_on
-        data:
-          entity_id: script.arm_away
+      - service: script.arm_away
 
   disarm:
     alias: 'Disarm'
     sequence:
       - service: shell_command.disarm
       - delay: 00:00:30
-      - service: script.turn_on
-        data:
-          entity_id: script.checkdisarm
+      - service: script.checkdisarm
   checkdisarm:
     alias: 'Check Disarm'
     sequence:
@@ -170,18 +154,14 @@
           - condition: state
             entity_id: 'alarm_control_panel.simplisafe'
             state: 'armed_away'
-      - service: script.turn_on
-        data:
-          entity_id: script.disarm
+      - service: script.disarm
   
   opengarage:
     alias: 'Open Garage'
     sequence:
       - service: cover.open_cover
         entity_id: cover.garage_door_opener
-      - service: script.turn_on
-        data:
-          entity_id: script.disarm
+      - service: script.disarm
 
   closegarage:
     alias: 'Close Garage'
