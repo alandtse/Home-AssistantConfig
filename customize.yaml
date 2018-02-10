@@ -117,7 +117,5 @@
        emulated_hue: true
      input_boolean.rayhome:
        emulated_hue: true
-#     switch.garage_relay_switch_8_0:
-#       emulated_hue: true
-#       emulated_hue_name: "Garage Door"
-#       friendly_name: Garage Door Switch
+     switch.garage:
+       emulated_hue: true

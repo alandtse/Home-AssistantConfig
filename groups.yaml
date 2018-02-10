@@ -151,7 +151,7 @@ Doors:
 - binary_sensor.simplisafe_entry_sensor_1t3jv
 - binary_sensor.simplisafe_entry_sensor_1t32v
 - binary_sensor.simplisafe_entry_sensor_1t32u
-- binary_sensor.garage
+- switch.garage
 - cover.garage_door_opener
 Windows:
 - binary_sensor.simplisafe_entry_sensor_1ksxv
