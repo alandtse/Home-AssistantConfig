@@ -14,13 +14,175 @@
             mdi:garage
           {% endif %}
       doorbird:
-        friendly_name: Gate Unlocked
+        friendly_name: Gate
         value_template: "{{ is_state('binary_sensor.gate_unlocked', 'on') }}"
         turn_on:
           service: shell_command.unlockgate
         turn_off:
           service: switch.turn_on
-          entity_id: switch.skylight_open
+          entity_id: switch.null
+        icon_template: >-
+          {% if is_state('binary_sensor.gate_unlocked', 'on') %}
+            mdi:lock-open
+          {% else %}
+            mdi:lock
+          {% endif %}
+      tv:
+        friendly_name: Samsung TV
+        value_template: "{{ is_state('switch.hdmi_0', 'on') }}"
+        turn_on:
+          - service: homeassistant.turn_on
+            entity_id: switch.hdmi_0
+          - service: hdmi_cec.power_on
+          - service: hdmi_cec.update
+        turn_off:
+          - service: hdmi_cec.standby
+          - service: hdmi_cec.update
+          - service: homeassistant.turn_off
+            entity_id: switch.hdmi_0
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'None'
+        icon_template: >-
+          {% if is_state('switch.hdmi_0', 'on') %}
+            mdi:television
+          {% else %}
+            mdi:television-off
+          {% endif %}
+      playstation:
+        friendly_name: Playstation
+        value_template: "{{ is_state('switch.hdmi_4', 'on') or is_state('device_tracker.00248d9b0d1e', 'home') }}"
+        turn_on:
+          - service: homeassistant.turn_on
+            entity_id: switch.hdmi_0
+          - service: homeassistant.turn_on
+            entity_id: switch.hdmi_4
+          - service: hdmi_cec.power_on
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'Playstation'
+          - service: hdmi_cec.update
+        turn_off:
+          - service: hdmi_cec.standby
+          - service: homeassistant.turn_off
+            entity_id: switch.hdmi_4
+          - service: hdmi_cec.update
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'None'
+        icon_template: >-
+          {% if is_state('switch.hdmi_4', 'on') or is_state('device_tracker.00248d9b0d1e', 'home')%}
+            mdi:playstation
+          {% else %}
+            mdi:playstation
+          {% endif %}
+      roku:
+        friendly_name: Roku
+        value_template: "{{ is_state('input_select.hdmiswitch', 'Roku') }}"
+        turn_on:
+          - service: homeassistant.turn_on
+            entity_id: switch.hdmi_0
+          - service: hdmi_cec.power_on
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'Roku'
+          - service: hdmi_cec.update
+        turn_off:
+          - service: hdmi_cec.standby
+          - service: hdmi_cec.update
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'None'
+          - service: media_player.select_source
+            data:
+              entity_id: media_player.roku_stick__5s462k290748
+              source: 'Home'
+        icon_template: >-
+          {% if is_state('input_select.hdmiswitch', 'Roku') %}
+            mdi:play-circle
+          {% else %}
+            mdi:play-circle-outline
+          {% endif %}
+      rpi:
+        friendly_name: Raspberry Pi
+        value_template: "{{ is_state('input_select.hdmiswitch', 'Raspberry Pi') }}"
+        turn_on:
+          - service: homeassistant.turn_on
+            entity_id: switch.hdmi_0
+          - service: hdmi_cec.power_on
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'Raspberry Pi'
+          - service: hdmi_cec.update
+        turn_off:
+          - service: hdmi_cec.standby
+          - service: hdmi_cec.update
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'None'
+        icon_template: >-
+          {% if is_state('input_select.hdmiswitch', 'Raspberry Pi') %}
+            mdi:raspberrypi
+          {% else %}
+            mdi:raspberrypi
+          {% endif %}
+      xbox:
+        friendly_name: XBox
+        value_template: "{{ is_state('input_select.hdmiswitch', 'Xbox') }}"
+        turn_on:
+          - service: homeassistant.turn_on
+            entity_id: switch.hdmi_0
+          - service: hdmi_cec.power_on
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'Xbox'
+          - service: hdmi_cec.update
+        turn_off:
+          - service: hdmi_cec.standby
+          - service: hdmi_cec.update
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'None'
+        icon_template: >-
+          {% if is_state('input_select.hdmiswitch', 'Xbox') %}
+            mdi:xbox
+          {% else %}
+            mdi:xbox
+          {% endif %}
+      karaoke:
+        friendly_name: Karaoke
+        value_template: "{{ is_state('input_select.hdmiswitch', 'Karaoke') }}"
+        turn_on:
+          - service: homeassistant.turn_on
+            entity_id: switch.hdmi_0
+          - service: hdmi_cec.power_on
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'Karaoke'
+          - service: hdmi_cec.update
+        turn_off:
+          - service: hdmi_cec.standby
+          - service: hdmi_cec.update
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.hdmiswitch
+              option: 'None'
+        icon_template: >-
+          {% if is_state('input_select.hdmiswitch', 'Karaoke') %}
+            mdi:microphone
+          {% else %}
+            mdi:microphone-off
+          {% endif %}
   - platform: tplink
     host: 192.168.1.82
     name: Refrigerator

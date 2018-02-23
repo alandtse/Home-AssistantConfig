@@ -733,16 +733,29 @@
 - id: NotifyDoorbell
   alias: 'Notify of ringing doorbell'
   initial_state: 'on'    
+#  condition:
+#    condition: template
+#    value_template: >
+#      {%- if states.binary_sensor.doorbell.last_changed -%}
+#        {{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.doorbell.last_changed)) > 5 }}
+#      {%- else -%}
+#        true
+#      {%- endif -%}
   trigger:
     platform: state
     entity_id: binary_sensor.doorbell 
     to: 'on'
   action:
-    service: tts.google_say
-    data:
-      entity_id: media_player.tts_bluetooth_speaker
-      message: 'Ding Dong! Someone is at the front door!'
-- id: EnbableRecordFrontIfGarageClosed
+    - service: tts.google_say
+      data:
+        entity_id: media_player.tts_bluetooth_speaker
+        message: 'Ding Dong! Someone is at the front door!'
+    - service: homeassistant.turn_on
+      entity_id: script.displaygate
+    - service: logbook.log
+      data_template:
+        name: "Doorbell detected"
+- id: EnableRecordFrontIfGarageClosed
   alias: 'Enable Front Door recording'
   condition:
     - condition: or
@@ -829,3 +842,68 @@
         name: "Restarting SimplisafeRF: "
         message: >-
           {{ trigger.to_state.name }} was changed to {{ trigger.to_state.state }} and SimplisafeRF last update {{ (as_timestamp(now()) - as_timestamp(states.group.simplisafe.last_updated))|int}} seconds ago.
+
+- id: Hdmiswitch_to_Input_Select
+  alias: Hdmiswitch to Input Select
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_select.hdmiswitch
+  action:
+    service: shell_command.switchhdmi
+    data_template:
+      value: >-
+        {%- if is_state('input_select.hdmiswitch', 'Karaoke') -%}
+          1
+        {%- elif is_state('input_select.hdmiswitch', 'Xbox') -%}
+          2
+        {%- elif is_state('input_select.hdmiswitch', 'PS3') -%}
+          3
+        {%- elif is_state('input_select.hdmiswitch', 'Roku') -%}
+          4
+        {%- elif is_state('input_select.hdmiswitch', 'Raspberry Pi') -%}
+          5
+        {%- endif -%}
+- id: TurnoffTV
+  alias: 'Auto turn off TV'
+  condition:
+    condition: template
+    value_template: "{{ not is_state('input_select.hdmiswitch', 'None') }}"
+  trigger:
+    - platform: state
+      entity_id: switch.roku, switch.karaoke, switch.xbox, switch.rpi, switch.playstation
+      to: 'off'
+      for:
+        minutes: 15
+  action:
+    - service: hdmi_cec.standby
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.hdmiswitch
+        option: 'None'
+    - service: hdmi_cec.update
+- id: change_hdmi_inputselect
+  alias: Change HDMI inputselect
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.hdmi_input
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.hdmiswitch
+        option: >
+           {%- if is_state('sensor.hdmi_input', '0') -%}
+             None
+           {%- elif is_state('sensor.hdmi_input', '1') -%}
+             Karaoke
+           {%- elif is_state('sensor.hdmi_input', '2') -%}
+             Xbox
+           {%- elif is_state('sensor.hdmi_input', '3') -%}
+             PS3
+           {%- elif is_state('sensor.hdmi_input', '4') -%}
+             Roku
+           {%- elif is_state('sensor.hdmi_input', '5') -%}
+             Raspberry Pi
+           {%- endif -%}
+

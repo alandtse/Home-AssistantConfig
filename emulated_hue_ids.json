@@ -1,1 +1,14 @@
-{"2": "input_boolean.abodeupdate", "3": "input_boolean.rayhome", "1": "input_boolean.alanhome"}
+{
+    "1": "input_boolean.alanhome",
+    "10": "switch.playstation",
+    "11": "switch.tv",
+    "12": "switch.doorbird",
+    "2": "input_boolean.abodeupdate",
+    "3": "input_boolean.rayhome",
+    "4": "switch.hdmi_4",
+    "5": "switch.garage",
+    "6": "switch.karaoke",
+    "7": "switch.rpi",
+    "8": "switch.roku",
+    "9": "switch.xbox"
+}

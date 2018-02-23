@@ -110,12 +110,32 @@
        icon: mdi:thermometer-lines
  #Emulated_Hue Devices
      input_boolean.abodeupdate:
-       emulated_hue: true
+       emulated_hue_hidden: false
      input_boolean.startrecording:
-       emulated_hue: true
+       emulated_hue_hidden: false
      input_boolean.alanhome:
-       emulated_hue: true
+       emulated_hue_hidden: false
      input_boolean.rayhome:
-       emulated_hue: true
+       emulated_hue_hidden: false
+     switch.tv:
+       friendly_name: 'TV'
+       emulated_hue_hidden: false
+     switch.playstation:
+       friendly_name: 'Playstation'
+       emulated_hue_hidden: false
+     switch.roku:
+       friendly_name: 'Roku'
+       emulated_hue_hidden: false
+     switch.rpi:
+       friendly_name: 'Raspberry Pi'
+       emulated_hue_hidden: false
+     switch.xbox:
+       friendly_name: 'Xbox'
+       emulated_hue_hidden: false
+     switch.karaoke:
+       friendly_name: 'Karaoke'
+       emulated_hue_hidden: false
      switch.garage:
-       emulated_hue: true
+       emulated_hue_hidden: false
+     switch.doorbird:
+       emulated_hue_hidden: false

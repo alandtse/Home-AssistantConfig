@@ -32,6 +32,13 @@ media:
   icon: mdi:play-circle-outline
   entities:
   - group.media_player
+  - switch.tv
+  - switch.playstation
+  - switch.roku
+  - switch.karaoke
+  - switch.xbox
+  - switch.rpi
+  - input_select.hdmiswitch
 settings:
   name: Settings
   view: true
@@ -83,7 +90,7 @@ Information:
 - sensor.disk_use_
 - sensor.plexspy
 Media Player:
-- media_player.roku_5s462k290748
+- media_player.roku_stick__5s462k290748
 Home Security:
 - input_select.abodestatus
 - input_boolean.abodeupdate

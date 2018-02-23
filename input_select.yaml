@@ -18,4 +18,14 @@
      - away
     initial: disarmed
     icon: mdi:security
+  hdmiswitch:
+    name: TV Input
+    options:
+     - Karaoke
+     - Xbox
+     - PS3
+     - Roku
+     - Raspberry Pi
+     - None
+    initial: None
 

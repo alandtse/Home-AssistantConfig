@@ -1,4 +1,7 @@
 #Weather Sensor:
+  - platform: command_line
+    name: HDMI Input
+    command: "/home/pi/hdmi/hdmi.py 0"
   - platform: pi_hole
   - platform: cert_expiry
     host: !secret ha_url
@@ -147,7 +150,7 @@
         value_template: >-
            {% set mileageLimit= 30000 %}
            {% set overageCost= 0.25 %}
-           {{'%0.2f'|format(( states.sensor.estimated_final_mileage.state|float - mileageLimit) * overageCost) }}
+           {{'%0.2f'|format([(states.sensor.estimated_final_mileage.state|float - mileageLimit) * overageCost,0]|max) }}
       estimated_daily_mileage_limit:
         friendly_name: "Estimated Daily Mileage Limit"
         unit_of_measurement: mi

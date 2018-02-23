@@ -107,6 +107,7 @@ media_player:
     connect_script: /home/homeassistant/.homeassistant/scripts/connect_bluetooth.sh
     disconnect_script: /home/homeassistant/.homeassistant/scripts/disconnect_bluetooth.sh
     cache_dir: /home/homeassistant/.homeassistant/tts
+#remote:
 notify:
   - platform: pushbullet
     api_key: !secret pushbullet_key
@@ -215,7 +216,11 @@ recorder:
       - sun
 wink:
   local_control: true
-
+hdmi_cec:
+  devices:
+    TV: 0.0.0.0
+    RPI: 1.0.0.0
+    PS3: 1.1.0.0
 shell_command: !include shell_command.yaml
 automation: !include automations.yaml
 group: !include groups.yaml
@@ -231,4 +236,3 @@ switch: !include switch.yaml
 zwave:
   usb_path: /dev/ttyACM0
   config_path: /srv/homeassistant/homeassistant_venv/lib/python3.6/site-packages/python_openzwave/ozw_config/ 
- 
