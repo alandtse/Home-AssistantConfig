@@ -26,6 +26,10 @@
           away_mode: 'True'
       - service: homeassistant.turn_off
         entity_id: light.great_room_lights
+      - service: homeassistant.turn_off
+        entity_id: light.guest_room_lights
+      - service: homeassistant.turn_off
+        entity_id: light.guest_hall_lights
       - service: homeassistant.turn_on
         entity_id: input_boolean.recordgate
   abodehome:
@@ -57,13 +61,6 @@
         data:
           message: "Disarming alarm"
       - service: script.disarm
-#      - service: shell_command.disarm
-#      - service: ifttt.trigger
-#        data: {"event":"AbodeStandby", "value1":"Abode Standby"}
-#      - service: climate.set_away_mode
-#        data:
-#          entity_id: climate.upstairs
-#          away_mode: 'False'
       - service: climate.set_away_mode
         data:
           entity_id: climate.downstairs
@@ -75,6 +72,13 @@
             homeassistant.turn_off
           {% endif %}
         entity_id: light.great_room_lights
+      - service_template: >
+          {% if is_state('sun.sun', 'below_horizon') %}
+            homeassistant.turn_on
+          {% else %}
+            homeassistant.turn_off
+          {% endif %}
+        entity_id: light.guest_hall_lights
 #      - service: light.turn_off
 #        entity_id: group.living_room_lights
 

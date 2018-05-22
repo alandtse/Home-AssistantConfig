@@ -1,5 +1,18 @@
   - platform: template
     switches:
+      security:
+        friendly_name: Security
+        value_template: "{{is_state('alarm_control_panel.simplisafe', 'armed_home') or is_state('alarm_control_panel.simplisafe', 'armed_away')}}"
+        turn_on:
+          service: script.arm_home
+        turn_off:
+          service: script.disarm
+        icon_template: >-
+          {% if is_state('alarm_control_panel.simplisafe', 'armed_home') or is_state('alarm_control_panel.simplisafe', 'armed_away') %}
+            mdi:security-home
+          {% else %}
+            mdi:security-off
+          {% endif %}
       garage:
         friendly_name: Garage
         value_template: "{{is_state('cover.garage_door_opener','open')}}"
@@ -52,29 +65,29 @@
           {% endif %}
       playstation:
         friendly_name: Playstation
-        value_template: "{{ is_state('switch.hdmi_4', 'on') or is_state('device_tracker.00248d9b0d1e', 'home') }}"
+        value_template: "{{ is_state('switch.hdmi_8', 'on') or is_state('device_tracker.00248d9b0d1e', 'home') }}"
         turn_on:
           - service: homeassistant.turn_on
             entity_id: switch.hdmi_0
           - service: homeassistant.turn_on
-            entity_id: switch.hdmi_4
+            entity_id: switch.hdmi_8
           - service: hdmi_cec.power_on
           - service: input_select.select_option
             data:
               entity_id: input_select.hdmiswitch
-              option: 'Playstation'
+              option: 'PS3'
           - service: hdmi_cec.update
         turn_off:
           - service: hdmi_cec.standby
           - service: homeassistant.turn_off
-            entity_id: switch.hdmi_4
+            entity_id: switch.hdmi_8
           - service: hdmi_cec.update
           - service: input_select.select_option
             data:
               entity_id: input_select.hdmiswitch
               option: 'None'
         icon_template: >-
-          {% if is_state('switch.hdmi_4', 'on') or is_state('device_tracker.00248d9b0d1e', 'home')%}
+          {% if is_state('switch.hdmi_8', 'on') or is_state('device_tracker.00248d9b0d1e', 'home')%}
             mdi:playstation
           {% else %}
             mdi:playstation

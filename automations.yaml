@@ -3,6 +3,9 @@
   alias: 'Alan Away'
   initial_state: 'on'    
   condition:
+    - condition: numeric_state
+      entity_id: sensor.alan_home_occupancy_confidence
+      below: 10
     - condition: state
       entity_id: input_boolean.alanhome
       state: 'on'
@@ -16,13 +19,20 @@
     - condition: template
       value_template: >
         {%- if states.group.doors.last_changed -%}
-          {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 900 }}
+          {%- set doors = [states.binary_sensor.gate_open, states.binary_sensor.simplisafe_entry_sensor_1t314, states.binary_sensor.simplisafe_entry_sensor_1t3jv, states.binary_sensor.simplisafe_entry_sensor_1t32v, states.binary_sensor.simplisafe_entry_sensor_1t32u, states.switch.garage] %}
+          {%- set last_changed = as_timestamp(states.group.doors.last_changed)|round  %}
+          {% for door in doors %}
+            {% if door.last_changed and as_timestamp(door.last_changed)|round >= as_timestamp(states.group.doors.last_changed)|round %}
+              {%- set last_changed = as_timestamp(door.last_changed) %}
+            {% endif %}
+          {% endfor %}
+          {{as_timestamp(now()) - last_changed < 900}}
         {%- else -%}
           true
         {%- endif -%}
   trigger:
     - platform: state
-      entity_id: device_tracker.alandtse_nexus5, device_tracker.nexus_5
+      entity_id: device_tracker.alandtse_pixel2
       to: 'not_home'
       #for: '00:05:00'
   action:
@@ -40,6 +50,9 @@
   alias: 'Ray Away'
   initial_state: 'on'    
   condition:
+   - condition: numeric_state
+     entity_id: sensor.ray_home_occupancy_confidence
+     below: 10
    - condition: state
      entity_id: input_boolean.rayhome
      state: 'on'
@@ -53,13 +66,20 @@
    - condition: template
      value_template: >
        {%- if states.group.doors.last_changed -%}
-         {{ (as_timestamp(now()) - as_timestamp(states.group.doors.last_changed)) < 900 }}
+         {%- set doors = [states.binary_sensor.gate_open, states.binary_sensor.simplisafe_entry_sensor_1t314, states.binary_sensor.simplisafe_entry_sensor_1t3jv, states.binary_sensor.simplisafe_entry_sensor_1t32v, states.binary_sensor.simplisafe_entry_sensor_1t32u, states.switch.garage] %}
+         {%- set last_changed = as_timestamp(states.group.doors.last_changed)|round  %}
+         {% for door in doors %}
+           {% if door.last_changed and as_timestamp(door.last_changed)|round >= as_timestamp(states.group.doors.last_changed)|round %}
+             {%- set last_changed = as_timestamp(door.last_changed) %}
+           {% endif %}
+         {% endfor %}
+         {{as_timestamp(now()) - last_changed < 900}}
        {%- else -%}
          true
        {%- endif -%}
   trigger:
     - platform: state
-      entity_id: device_tracker.raywtse_note4, device_tracker.ray_tse_galaxy_note4
+      entity_id: device_tracker.raywtse_note4
       to: 'not_home'
 #      for: '00:05:00'
   action:
@@ -88,8 +108,11 @@
          true
        {%- endif -%}
   trigger:
+    - platform: numeric_state
+      entity_id: sensor.alan_home_occupancy_confidence
+      above: 10
     - platform: state
-      entity_id: device_tracker.alandtse_nexus5, device_tracker.nexus_5
+      entity_id: device_tracker.alandtse_pixel2, device_tracker.pixel_2
       to: 'home'
   action:
     - service: homeassistant.turn_on
@@ -99,7 +122,7 @@
         name: "Alan home: "
         message: >-
           {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} is Home.
+            {{ state.attributes.friendly_name }} is Home and confidence is {{ sensor.alan_home_occupancy_confidence }}.
           {%- endfor -%}
     - service: tts.google_say
       data:
@@ -121,6 +144,9 @@
          true
        {%- endif -%}
   trigger:
+    - platform: numeric_state
+      entity_id: sensor.ray_home_occupancy_confidence
+      above: 10
     - platform: state
       entity_id: device_tracker.raywtse_note4, device_tracker.ray_tse_galaxy_note4
       to: 'home'
@@ -132,7 +158,7 @@
         name: "Ray home: "
         message: >-
           {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} is Home.
+            {{ state.attributes.friendly_name }} is Home and confidence is {{ sensor.ray_home_occupancy_confidence }}.
           {%- endfor -%}
     - service: tts.google_say
       data:
@@ -387,7 +413,7 @@
        entity_id: group.household
        state: 'on'
      - condition: time
-       after: '08:15:00'
+       after: '08:00:00'
        before: '19:45:00'
      - condition: state
        entity_id: input_boolean.abodeupdate
@@ -512,7 +538,7 @@
        state: 'on'
   trigger:
     platform: time
-    at: '07:45:00'
+    at: '07:30:00'
   action:
      service: homeassistant.turn_on
      entity_id: script.abodestandby
@@ -742,9 +768,10 @@
 #        true
 #      {%- endif -%}
   trigger:
-    platform: state
-    entity_id: binary_sensor.doorbell 
-    to: 'on'
+    platform: event
+    event_type: doorbird_doorbell
+    #entity_id: binary_sensor.doorbell
+    #to: 'on'
   action:
     - service: tts.google_say
       data:
@@ -821,6 +848,46 @@
   action:
     service: homeassistant.turn_off
     entity_id: light.stairs_lights
+- id: EnableGarageLight
+  alias: 'Enable Garage Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garageswitch_motion
+      to: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: switch.garage_switch
+- id: DisableGarageLight
+  alias: 'Disable Garage Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garageswitch_motion
+      to: 'off'
+      for:
+        minutes: 5
+  action:
+    service: homeassistant.turn_off
+    entity_id: switch.garage_switch
+- id: EnableGuestHallLight
+  alias: 'Enable Guest Hall Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.guesthallswitch_motion
+      to: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.guest_hall_lights
+- id: DisableGuestHallLight
+  alias: 'Disable Guest Hall Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.guesthallswitch_motion
+      to: 'off'
+      for:
+        minutes: 5
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.guest_hall_lights
 - id: CheckSimplisafe
   alias: 'Check Simplisaferf'
   initial_state: 'on'
@@ -834,7 +901,7 @@
         {%- endif -%}
   trigger:
     - platform: state
-      entity_id: group.doors, group.downstairs_occupancy, group.upstairs_occupancy, group.windows
+      entity_id: group.doors, group.downstairs_occupancy, group.windows
   action:
     - service: shell_command.restartsimplisafe
     - service: logbook.log
@@ -867,8 +934,13 @@
 - id: TurnoffTV
   alias: 'Auto turn off TV'
   condition:
-    condition: template
-    value_template: "{{ not is_state('input_select.hdmiswitch', 'None') }}"
+    - condition: and
+      conditions:
+#      - condition: state
+#        entity_id: switch.roku, switch.karaoke, switch.xbox, switch.rpi, switch.playstation
+#        state: 'off'
+      - condition: template
+        value_template: "{{ not is_state('input_select.hdmiswitch', 'None') }}"
   trigger:
     - platform: state
       entity_id: switch.roku, switch.karaoke, switch.xbox, switch.rpi, switch.playstation
@@ -906,4 +978,84 @@
            {%- elif is_state('sensor.hdmi_input', '5') -%}
              Raspberry Pi
            {%- endif -%}
+- id: TurnoffEVChargingEvie
+  alias: 'Auto turn off Evie charging'
+  condition:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+        state: 'home'
+      - condition: state
+        entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+        state: 'on'
+      - condition: state
+        entity_id: switch.tesla_model_s_5yjsa1e13hf192718_maxrange_switch
+        state: 'off'
+  trigger:
+    - platform: time
+      at: '08:00:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+    - service: homeassistant.turn_off
+      entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+- id: TurnoffEVChargingEva
+  alias: 'Auto turn off Eva charging'
+  condition:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker
+        state: 'home'
+      - condition: state
+        entity_id: switch.tesla_model_3_5yj3e1ea2jf006634_charger_switch
+        state: 'on'
+      - condition: state
+        entity_id: switch.tesla_model_3_5yj3e1ea2jf006634_maxrange_switch
+        state: 'off'
+  trigger:
+    - platform: time
+      at: '08:00:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: switch.tesla_model_3_5yj3e1ea2jf006634_charger_switch
+    - service: homeassistant.turn_off
+      entity_id: switch.tesla_model_3_5yj3e1ea2jf006634_charger_switch
+
+- id: AutoUnlockGate
+  alias: 'Auto Unlock Gate on Motion'
+  condition:
+    - condition: or
+      conditions:
+      - condition: or
+        conditions:
+        - condition: template
+          value_template: >
+            {%- if states.input_boolean.alanhome.last_changed -%}
+              {{ is_state('input_boolean.alanhome','home') and (as_timestamp(now()) - as_timestamp(states.input_boolean.alanhome.last_changed)) < 300 }}
+            {%- else -%}
+              false
+            {%- endif -%}
+        - condition: template
+          value_template: >
+            {%- if states.input_boolean.rayhome.last_changed -%}
+              {{ is_state('input_boolean.rayhome','home') and (as_timestamp(now()) - as_timestamp(states.input_boolean.rayhome.last_changed)) < 300 }}
+            {%- else -%}
+              false
+            {%- endif -%}
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: input_select.abodestatus
+          state: 'standby'
+        - condition: state
+          entity_id: cover.garage_door_opener
+          state: 'Open'
+  trigger:
+    - platform: event
+      event_type: doorbird_motionsensor
+  action:
+    service: homeassistant.turn_on
+    entity_id: switch.doorbird
 

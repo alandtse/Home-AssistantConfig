@@ -11,23 +11,23 @@ default_view:
   - group.kitchen
   - group.great_room
   - group.guest_room
-  - group.model_s
-  - group.model_3
+  - group.garage
   - group.nook
   - group.doors
   - group.windows
 cameras:
-  name: Cameras
+  name: cameras
   view: true
   icon: mdi:camera
   entities:
 #  - camera.doorbird
   - camera.doorbird_live
   - camera.doorbird_last_ring
+  - camera.doorbird_last_motion
   - camera.dashcam
   - camera.kidsroom
 media:
-  name: Media
+  name: media
   view: true
   icon: mdi:play-circle-outline
   entities:
@@ -39,6 +39,14 @@ media:
   - switch.xbox
   - switch.rpi
   - input_select.hdmiswitch
+cars:
+  name: cars
+  view: true
+  icon: mdi:car
+  entities:
+  - group.model_s
+  - group.model_3_eva
+  - group.model_3
 settings:
   name: Settings
   view: true
@@ -50,6 +58,7 @@ settings:
   - group.downstairs_occupancy
   - group.upstairs_occupancy
   - group.household
+  - group.battery_alert
 Weather:
 - sensor.pws_weather
 - sensor.pws_temp_f
@@ -77,6 +86,7 @@ Thermostats:
 - sensor.master_bedroom_temperature
 - sensor.playroom_temperature
 - input_boolean.thermo_away_upstairs
+- sensor.ohmconnect_status
 Information:
 - sensor.ssl_certificate_expiry
 - sensor.time__date
@@ -84,11 +94,13 @@ Information:
 - sensor.evening_commute
 - sensor.alan_to_home
 - sensor.ray_to_home
-- sensor.cpu_use
-- sensor.ram_use
-- sensor.swap_use
-- sensor.disk_use_
+- sensor.processor_use
+- sensor.memory_use_percent
+- sensor.swap_use_percent
+- sensor.disk_use_percent
 - sensor.plexspy
+- sensor.pihole_dns_unique_clients
+- sensor.pihole_ads_percentage_blocked_today
 Media Player:
 - media_player.roku_stick__5s462k290748
 Home Security:
@@ -96,6 +108,7 @@ Home Security:
 - input_boolean.abodeupdate
 - cover.garage_door_opener
 - camera.kidsroom
+- switch.security
 - alarm_control_panel.simplisafe
 - input_select.alarmstatus
 - group.doors
@@ -122,9 +135,23 @@ Nook:
 - switch.christmas_lights
 Great Room:
 - light.great_room_lights
+- binary_sensor.great_room_occupancy
+- binary_sensor.greatroomswitch_motion
+- sensor.great_room_temperature
 Guest Room:
 - light.guest_room_lights
+- binary_sensor.guest_room_occupancy
+- binary_sensor.guestroomswitch_motion
+- sensor.guest_room_temperature
+- light.guest_hall_lights
+- binary_sensor.guesthallswitch_motion
+
+Garage:
+- switch.garage_switch
+- binary_sensor.garageswitch_motion
+- cover.garage_door_opener
 Model S:
+- switch.tesla_model_s_5yjsa1e13hf192718_update_switch
 - sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor
 - sensor.estimated_daily_mileage_limit
 - sensor.estimated_final_mileage
@@ -141,6 +168,7 @@ Model S:
 - binary_sensor.tesla_model_s_5yjsa1e13hf192718_parking_sensor
 - lock.tesla_model_s_5yjsa1e13hf192718_door_lock
 Model 3:
+- switch.tesla_model_3_5yj3e1ea7hf002153_update_switch
 - sensor.tesla_model_3_5yj3e1ea7hf002153_mileage_sensor
 - sensor.tesla_model_3_5yj3e1ea7hf002153_battery_sensor
 - sensor.tesla_model_3_5yj3e1ea7hf002153_range_sensor
@@ -152,7 +180,20 @@ Model 3:
 - sensor.tesla_model_3_5yj3e1ea7hf002153_temperature_sensor_outside
 - binary_sensor.tesla_model_3_5yj3e1ea7hf002153_parking_sensor
 - lock.tesla_model_3_5yj3e1ea7hf002153_door_lock
-Doors:
+Model 3 Eva:
+- switch.tesla_model_3_5yj3e1ea2jf006634_update_switch
+- sensor.tesla_model_3_5yj3e1ea2jf006634_mileage_sensor
+- sensor.tesla_model_3_5yj3e1ea2jf006634_battery_sensor
+- sensor.tesla_model_3_5yj3e1ea2jf006634_range_sensor
+- binary_sensor.tesla_model_3_5yj3e1ea2jf006634_charger_sensor
+- switch.tesla_model_3_5yj3e1ea2jf006634_charger_switch
+- switch.tesla_model_3_5yj3e1ea2jf006634_maxrange_switch
+- climate.tesla_model_3_5yj3e1ea2jf006634_hvac_climate_system
+- sensor.tesla_model_3_5yj3e1ea2jf006634_temperature_sensor_inside
+- sensor.tesla_model_3_5yj3e1ea2jf006634_temperature_sensor_outside
+- binary_sensor.tesla_model_3_5yj3e1ea2jf006634_parking_sensor
+- lock.tesla_model_3_5yj3e1ea2jf006634_door_lock
+Doors: &doors_group_entities
 - binary_sensor.gate_open
 - binary_sensor.simplisafe_entry_sensor_1t314
 - binary_sensor.simplisafe_entry_sensor_1t3jv
@@ -160,7 +201,7 @@ Doors:
 - binary_sensor.simplisafe_entry_sensor_1t32u
 - switch.garage
 - cover.garage_door_opener
-Windows:
+Windows: &windows_group_entities
 - binary_sensor.simplisafe_entry_sensor_1ksxv
 - binary_sensor.simplisafe_entry_sensor_1l2aa
 - binary_sensor.simplisafe_entry_sensor_1ksya
@@ -174,8 +215,10 @@ Windows:
 - binary_sensor.simplisafe_entry_sensor_1t1ai
 - binary_sensor.simplisafe_entry_sensor_1t316
 Downstairs Occupancy:
+- binary_sensor.garageswitch_motion
 - binary_sensor.guest_room_occupancy
 - binary_sensor.guestroomswitch_motion
+- binary_sensor.guesthallswitch_motion
 - binary_sensor.great_room_occupancy
 - binary_sensor.greatroomswitch_motion
 - binary_sensor.simplisafe_motion_sensor_19ptl
@@ -197,20 +240,22 @@ Household:
 - input_boolean.orlahome
 Devices:
 - sensor.alan
-- device_tracker.alandtse_nexus5
-- device_tracker.nexus_5
+- device_tracker.alandtse_pixel2
+- device_tracker.pixel_2
 - sensor.ray
 - device_tracker.raywtse_note4
 - device_tracker.ray_tse_galaxy_note4
-- sensor.model_s
+- sensor.evie
+- sensor.eva
 - camera.alan_map
-- camera.tesla_map
+- camera.evie_map
 - camera.ray_map
+- camera.eva_map
 - device_tracker.70480f72bc9b
 - device_tracker.78fd940d9949
 - sensor.model_3
-- camera.tesla_m3_map
-Simplisafe:
+- camera.grandparents_map
+Simplisafe: &simplisafe_group_entities
 - binary_sensor.simplisafe_entry_sensor_1t314
 - binary_sensor.simplisafe_entry_sensor_1t3jv
 - binary_sensor.simplisafe_entry_sensor_1t32v

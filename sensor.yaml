@@ -36,30 +36,30 @@
 #    username: !secret plex_user
 #    password: !secret plex_password
 #Morning Commute Google Travel Time Sensor
-  - platform: google_travel_time
-    name: Morning Commute
-    api_key: !secret google_key
-    origin: !secret add_home
-    destination: !secret add_work
+#  - platform: google_travel_time
+#    name: Morning Commute
+#    api_key: !secret google_key
+#    origin: !secret add_home
+#    destination: !secret add_work
 #Evening Commute Google Travel Time Sensor
-  - platform: google_travel_time
-    name: Evening Commute
-    api_key: !secret google_key
-    origin: !secret add_work
-    destination: !secret add_home
-  - platform: google_travel_time
-    name: Alan to Home
-    api_key: !secret google_key
-    origin: device_tracker.alandtse_nexus5
-    destination: !secret add_home
-  - platform: google_travel_time
-    name: Ray to Home
-    api_key: !secret google_key
-    origin: device_tracker.raywtse_note4
-    destination: !secret add_home
+#  - platform: google_travel_time
+#    name: Evening Commute
+#    api_key: !secret google_key
+#    origin: !secret add_work
+#    destination: !secret add_home
+#  - platform: google_travel_time
+#    name: Alan to Home
+#    api_key: !secret google_key
+#    origin: device_tracker.alandtse_pixel2
+#    destination: !secret add_home
+#  - platform: google_travel_time
+#    name: Ray to Home
+#    api_key: !secret google_key
+#    origin: device_tracker.raywtse_note4
+#    destination: !secret add_home
   - platform: systemmonitor
     resources:
-    - type: disk_use
+    - type: disk_use_percent
       arg: /
     - type: memory_use_percent
     - type: swap_use_percent
@@ -131,6 +131,8 @@
            {% set totalDays = ((end - start)/secondsInDay)|int|abs %}
            {% set mileageLimit= 30000 %}
            {{((((totalDays * mileageLimit / (odometer/daysFromStart * totalDays) - daysFromStart)) * secondsInDay) + today)| timestamp_local}}
+        icon_template: >-
+            mdi:calendar
       estimated_final_mileage:
         friendly_name: "Estimated Final Mileage"
         unit_of_measurement: mi
@@ -145,12 +147,16 @@
            {% set totalDays = ((end - start)/secondsInDay)|int|abs %}
            {% set mileageLimit= 30000 %}
            {{'%0.2f'|format( odometer/daysFromStart * totalDays) }}
+        icon_template: >-
+            mdi:counter
       estimated_final_cost:
         friendly_name: "Estimated Final Cost"
         value_template: >-
            {% set mileageLimit= 30000 %}
            {% set overageCost= 0.25 %}
            {{'%0.2f'|format([(states.sensor.estimated_final_mileage.state|float - mileageLimit) * overageCost,0]|max) }}
+        icon_template: >-
+            mdi:currency-usd
       estimated_daily_mileage_limit:
         friendly_name: "Estimated Daily Mileage Limit"
         unit_of_measurement: mi
@@ -165,21 +171,61 @@
            {% set totalDays = ((end - start)/secondsInDay)|int|abs %}
            {% set mileageLimit= 30000 %}
            {{'%0.2f'|format( (mileageLimit - odometer) / daysTillEnd) }}
+        icon_template: >-
+            mdi:steering
   - platform: ohmconnect
     id: !secret ohmconnect_id
   - platform: google_geocode
     name: Alan
-    origin: device_tracker.alandtse_nexus5
+    origin: device_tracker.alandtse_pixel2
     api_key: !secret google_key
   - platform: google_geocode
     name: Ray
     origin: device_tracker.raywtse_note4
     api_key: !secret google_key
   - platform: google_geocode
-    name: Model S
+    name: Evie
     origin: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+    api_key: !secret google_key
+  - platform: google_geocode
+    name: Eva
+    origin: device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker
     api_key: !secret google_key
   - platform: google_geocode
     name: Model 3
     origin: device_tracker.tesla_model_3_5yj3e1ea7hf002153_location_tracker
     api_key: !secret google_key
+  - platform: mqtt
+    state_topic: 'location/owner/Garage/40:4E:36:AF:8C:23'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Alan Garage'
+  - platform: mqtt
+    state_topic: 'location/owner/Great Room/40:4E:36:AF:8C:23'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Alan Great Room'
+  - platform: mqtt
+    state_topic: 'location/owner/Garage/A4:07:B6:CB:40:5F'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Ray Garage'
+  - platform: mqtt
+    state_topic: 'location/owner/Great Room/A4:07:B6:CB:40:5F'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Ray Great Room'
+  - platform: min_max
+    name: "Alan Home Occupancy Confidence"
+    type: mean
+    round_digits: 0
+    entity_ids:
+      - sensor.alan_garage
+      - sensor.alan_great_room
+  - platform: min_max
+    name: "Ray Home Occupancy Confidence"
+    type: mean
+    round_digits: 0
+    entity_ids:
+      - sensor.ray_garage
+      - sensor.ray_great_room

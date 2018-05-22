@@ -3,6 +3,8 @@
     "10": "switch.playstation",
     "11": "switch.tv",
     "12": "switch.doorbird",
+    "13": "switch.alarm",
+    "14": "switch.security",
     "2": "input_boolean.abodeupdate",
     "3": "input_boolean.rayhome",
     "4": "switch.hdmi_4",

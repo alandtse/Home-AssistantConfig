@@ -6,8 +6,8 @@
                is_state('input_boolean.rayhome', 'on') -%}
           You are both home, you silly goose.
         {%- else -%}
-          Ray is at {{ states.device_tracker.raywtse_note4.state.replace('_', ' ') }}.
-          and Alan is at {{ states.device_tracker.alandtse_nexus5.state.replace('_', ' ') }}.
+          Ray is at {{ states.sensor.ray.state.replace('_', ' ') }}.
+          and Alan is at {{ states.sensor.alan.state.replace('_', ' ') }}.
         {% endif %}
   CheckGarageIntent:
     speech:

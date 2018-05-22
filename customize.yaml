@@ -135,6 +135,8 @@
      switch.karaoke:
        friendly_name: 'Karaoke'
        emulated_hue_hidden: false
+     switch.security:
+       emulated_hue_hidden: false
      switch.garage:
        emulated_hue_hidden: false
      switch.doorbird:

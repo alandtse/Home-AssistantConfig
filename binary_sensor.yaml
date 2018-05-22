@@ -11,7 +11,6 @@
           {% else %}
               OFF
           {%- endif %}
-- platform: doorbird
 - platform: template
   sensors:
     doorbell:
@@ -50,11 +49,21 @@
       device_class: motion
       value_template: >-
         {{(states("sensor.great_room_switch_burglar") |float > 0) and (states("sensor.great_room_switch_burglar") |float < 254)}}
+    guesthallswitch_motion:
+      friendly_name: Guest Hall Switch Motion
+      device_class: motion
+      value_template: >-
+        {{(states("sensor.guest_hall_switch_burglar") |float > 0) and (states("sensor.guest_hall_switch_burglar") |float < 254)}}
+    garageswitch_motion:
+      friendly_name: Garage Switch Motion
+      device_class: motion
+      value_template: >-
+        {{(states("sensor.garage_burglar") |float > 0) and (states("sensor.garage_burglar") |float < 254)}}
     tv:
       friendly_name: TV 
       device_class: occupancy
       value_template: >-
-        {{is_state("device_tracker.00248d9b0d1e","home")}}
+        {{is_state('switch.hdmi_0', 'on')}}
     office_computer:
       friendly_name: Office Computer
       device_class: occupancy
