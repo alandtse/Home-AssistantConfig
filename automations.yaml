@@ -1032,14 +1032,14 @@
         conditions:
         - condition: template
           value_template: >
-            {%- if states.input_boolean.alanhome.last_changed -%}
+            {%- if is_state('binary_sensor.gate_open', 'off') and states.input_boolean.alanhome.last_changed -%}
               {{ is_state('input_boolean.alanhome','home') and (as_timestamp(now()) - as_timestamp(states.input_boolean.alanhome.last_changed)) < 300 }}
             {%- else -%}
               false
             {%- endif -%}
         - condition: template
           value_template: >
-            {%- if states.input_boolean.rayhome.last_changed -%}
+            {%- if is_state('binary_sensor.gate_open', 'off') and states.input_boolean.rayhome.last_changed -%}
               {{ is_state('input_boolean.rayhome','home') and (as_timestamp(now()) - as_timestamp(states.input_boolean.rayhome.last_changed)) < 300 }}
             {%- else -%}
               false
@@ -1050,8 +1050,11 @@
           entity_id: input_select.abodestatus
           state: 'standby'
         - condition: state
+          entity_id: binary_sensor.gate_open
+          state: 'closed'
+        - condition: state
           entity_id: cover.garage_door_opener
-          state: 'Open'
+          state: 'open'
   trigger:
     - platform: event
       event_type: doorbird_motionsensor
