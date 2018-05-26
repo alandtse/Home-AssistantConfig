@@ -1,0 +1,34 @@
+#################################################################
+## Scripts
+#################################################################
+
+  abodeaway:
+    alias: 'Abode Arm'
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.abodestatus
+          option: 'away'
+      - service: notify.pushbullet
+        data:
+          message: "Arming alarm for away"
+      - service: script.arm_away
+#      - service: shell_command.armaway
+#      - service: ifttt.trigger
+#        data: {"event":"AbodeAway", "value1":"Arm Abode"}
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.downstairs
+          away_mode: 'True'
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.upstairs
+          away_mode: 'True'
+      - service: homeassistant.turn_off
+        entity_id: light.great_room_lights
+      - service: homeassistant.turn_off
+        entity_id: light.guest_room_lights
+      - service: homeassistant.turn_off
+        entity_id: light.guest_hall_lights
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.recordgate

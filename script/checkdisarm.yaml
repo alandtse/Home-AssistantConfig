@@ -1,0 +1,13 @@
+  checkdisarm:
+    alias: 'Check Disarm'
+    sequence:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: 'alarm_control_panel.simplisafe'
+            state: 'armed_home'
+          - condition: state
+            entity_id: 'alarm_control_panel.simplisafe'
+            state: 'armed_away'
+      - service: script.disarm
+

@@ -1,0 +1,4 @@
+  recordgate:
+    alias: 'Record Gate'
+    sequence:
+      - service: shell_command.recordgate

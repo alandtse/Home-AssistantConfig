@@ -1,0 +1,7 @@
+  checkarmhome:
+    alias: 'Check Arm home'
+    sequence:
+      - condition: state
+        entity_id: 'alarm_control_panel.simplisafe'
+        state: 'disarmed'
+      - service: script.arm_home

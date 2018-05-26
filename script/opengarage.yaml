@@ -1,0 +1,7 @@
+  opengarage:
+    alias: 'Open Garage'
+    sequence:
+      - service: cover.open_cover
+        entity_id: cover.garage_door_opener
+      - service: script.disarm
+

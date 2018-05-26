@@ -1,0 +1,6 @@
+  notificationleavework:
+    alias: 'Leave for Work'
+    sequence:
+      - service: notify.pushbullet
+        data:
+          message: 'Traffic has cleared, you can leave for work.'

@@ -1,0 +1,5 @@
+  closegarage:
+    alias: 'Close Garage'
+    sequence:
+      - service: cover.close_cover
+        entity_id: cover.garage_door_opener

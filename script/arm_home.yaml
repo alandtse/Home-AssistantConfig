@@ -1,0 +1,8 @@
+  arm_home:
+    alias: 'Arm Home'
+    sequence:
+      - service: shell_command.disarm
+      - delay: 00:00:01
+      - service: shell_command.arm
+      - delay: 00:00:30
+      - service: script.checkarmhome

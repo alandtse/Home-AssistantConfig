@@ -1,0 +1,18 @@
+  abodehome:
+    alias: 'Abode Home'
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.abodestatus
+          option: 'home'
+#      - service: shell_command.disarm
+      - service: notify.pushbullet
+        data:
+          message: "Arming alarm for home"
+      - service: script.arm_home
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.recordgate
+#      - service: shell_command.arm
+#      - service: ifttt.trigger
+#        data: {"event":"AbodeHome", "value1":"Abode Home"}
+

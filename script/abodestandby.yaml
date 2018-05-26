@@ -1,0 +1,32 @@
+  abodestandby:
+    alias: 'Abode Standby'
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.abodestatus
+          option: 'standby'
+      - service: notify.pushbullet
+        data:
+          message: "Disarming alarm"
+      - service: script.disarm
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.downstairs
+          away_mode: 'False'
+      - service_template: >
+          {% if is_state('sun.sun', 'below_horizon') %}
+            homeassistant.turn_on
+          {% else %}
+            homeassistant.turn_off
+          {% endif %}
+        entity_id: light.great_room_lights
+      - service_template: >
+          {% if is_state('sun.sun', 'below_horizon') %}
+            homeassistant.turn_on
+          {% else %}
+            homeassistant.turn_off
+          {% endif %}
+        entity_id: light.guest_hall_lights
+#      - service: light.turn_off
+#        entity_id: group.living_room_lights
+
