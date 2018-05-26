@@ -233,7 +233,7 @@ hdmi_cec:
     RPI: 1.0.0.0
     PS3: 1.1.0.0
 shell_command: !include shell_command.yaml
-automation: !include automations.yaml
+automation: !include_dir_list automations/ 
 group: !include groups.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml

@@ -1,0 +1,46 @@
+  alias: 'Ray Away'
+  initial_state: 'on'    
+  condition:
+   - condition: numeric_state
+     entity_id: sensor.ray_home_occupancy_confidence
+     below: 10
+   - condition: state
+     entity_id: input_boolean.rayhome
+     state: 'on'
+   - condition: template
+     value_template: >
+       {%- if states.input_boolean.rayhome.last_changed -%}
+         {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.rayhome.last_changed)) > 300 }}
+       {%- else -%}
+         true
+       {%- endif -%}
+   - condition: template
+     value_template: >
+       {%- if states.group.doors.last_changed -%}
+         {%- set doors = [states.binary_sensor.gate_open, states.binary_sensor.simplisafe_entry_sensor_1t314, states.binary_sensor.simplisafe_entry_sensor_1t3jv, states.binary_sensor.simplisafe_entry_sensor_1t32v, states.binary_sensor.simplisafe_entry_sensor_1t32u, states.switch.garage] %}
+         {%- set last_changed = as_timestamp(states.group.doors.last_changed)|round  %}
+         {% for door in doors %}
+           {% if door.last_changed and as_timestamp(door.last_changed)|round >= as_timestamp(states.group.doors.last_changed)|round %}
+             {%- set last_changed = as_timestamp(door.last_changed) %}
+           {% endif %}
+         {% endfor %}
+         {{as_timestamp(now()) - last_changed < 900}}
+       {%- else -%}
+         true
+       {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: device_tracker.raywtse_note4
+      to: 'not_home'
+#      for: '00:05:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.rayhome
+    - service: logbook.log
+      data_template:
+        name: "Ray away: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Away.
+          {%- endfor -%}
+

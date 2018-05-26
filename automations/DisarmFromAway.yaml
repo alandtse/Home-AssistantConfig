@@ -1,0 +1,14 @@
+  alias: 'Disarm Abode from Away'
+  initial_state: 'on'    
+  condition:
+    condition: state
+    entity_id: input_select.abodestatus
+    state: 'away'
+  trigger:
+   - platform: state
+     entity_id: group.household
+     to: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: script.abodestandby
+

@@ -1,0 +1,29 @@
+  alias: 'Mark all away if Abode manually armed'
+  initial_state: 'on'    
+  condition:
+   - condition: or
+     conditions:
+      - condition: state
+        entity_id: input_boolean.rayhome
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.alanhome
+        state: 'on'
+  trigger:
+    - platform: state
+      entity_id: input_select.abodestatus
+      to: 'away'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.rayhome
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.alanhome
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.solomonhome
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.orlahome
+
+#################################################################
+## Security System
+#################################################################
+

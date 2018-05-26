@@ -1,0 +1,15 @@
+  alias: "Owntracks Refresh"
+  initial_state: 'off'
+  condition:
+   - condition: state
+     entity_id: input_boolean.alanhome
+     state: 'off'
+   - condition: state
+     entity_id: input_boolean.rayhome
+     state: 'off'
+  trigger:
+    - platform: time
+      minutes: '/15'
+      seconds: 0
+  action:
+    service: script.owntracks_update

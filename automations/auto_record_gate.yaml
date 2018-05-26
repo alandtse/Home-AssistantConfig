@@ -1,0 +1,25 @@
+  alias: Auto record gate on motion
+  initial_state: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_boolean.recordgate
+        state: 'on'
+  trigger:
+  - entity_id: binary_sensor.gate_motion
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+    - service: shell_command.recordgate
+      data_template:
+        value: >
+          {% set timestamp = trigger.to_state.last_changed %}
+          {{ timestamp.strftime("%Y%m%d-%H%M%S") }}
+    - service: notify.pushbullet
+      data_template:
+        message: "Frontdoor motion"
+        title: "Doorbird Motion Detected"
+        data:
+            url: !secret mycloud_doorbird_url

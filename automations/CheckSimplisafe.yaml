@@ -1,0 +1,25 @@
+  alias: 'Check Simplisaferf'
+  initial_state: 'on'
+  condition:
+    - condition: template
+      value_template: >
+        {%- if states.group.simplisafe.last_updated -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.group.simplisafe.last_updated)) > 18000 }}
+        {%- elif is_state("binary_sensor.simplisafe_entry_sensor_1t32u", "on") and (as_timestamp(now() - as_timestamp(states.binary_sensor.simplisafe_entry_sensor_1t32u.last_changed) > 1800 )) -%}
+        {%- else -%}
+          false
+        {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: group.doors, group.downstairs_occupancy, group.windows
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "simplisafe/command/stop"
+        #- service: shell_command.restartsimplisafe
+    - service: logbook.log
+      data_template:
+        name: "Restarting SimplisafeRF: "
+        message: >-
+          {{ trigger.to_state.name }} was changed to {{ trigger.to_state.state }} and SimplisafeRF last update {{ (as_timestamp(now()) - as_timestamp(states.group.simplisafe.last_updated))|int}} seconds ago.
+

@@ -1,0 +1,25 @@
+  alias: 'Notify of ringing doorbell'
+  initial_state: 'on'    
+#  condition:
+#    condition: template
+#    value_template: >
+#      {%- if states.binary_sensor.doorbell.last_changed -%}
+#        {{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.doorbell.last_changed)) > 5 }}
+#      {%- else -%}
+#        true
+#      {%- endif -%}
+  trigger:
+    platform: event
+    event_type: doorbird_doorbell
+    #entity_id: binary_sensor.doorbell
+    #to: 'on'
+  action:
+    - service: tts.google_say
+      data:
+        entity_id: media_player.tts_bluetooth_speaker
+        message: 'Ding Dong! Someone is at the front door!'
+    - service: homeassistant.turn_on
+      entity_id: script.displaygate
+    - service: logbook.log
+      data_template:
+        name: "Doorbell detected"

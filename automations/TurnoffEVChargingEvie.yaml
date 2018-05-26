@@ -1,0 +1,21 @@
+  alias: 'Auto turn off Evie charging'
+  condition:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+        state: 'home'
+      - condition: state
+        entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+        state: 'on'
+      - condition: state
+        entity_id: switch.tesla_model_s_5yjsa1e13hf192718_maxrange_switch
+        state: 'off'
+  trigger:
+    - platform: time
+      at: '08:00:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+    - service: homeassistant.turn_off
+      entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch

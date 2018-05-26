@@ -1,0 +1,23 @@
+  alias: Change downstairs Thermostat mode
+  initial_state: 'on'
+  condition:
+    condition: template
+    value_template: >
+      {%- if states.sensor.downstairsthermmode.last_changed -%}
+        {{ (as_timestamp(now()) - as_timestamp(states.sensor.downstairsthermmode.last_changed)) > 60 }}
+      {%- else -%}
+        true
+      {%- endif -%}
+  trigger:
+    platform: state
+    entity_id: input_boolean.thermo_away_main
+  action:
+     service: climate.set_away_mode
+     entity_id: climate.downstairs
+     data_template:
+       away_mode: >
+         {%- if is_state('input_boolean.thermo_away_main', 'off') -%}
+           off
+         {%- elif is_state('input_boolean.thermo_away_main', 'on') -%}
+           on
+         {%- endif -%}

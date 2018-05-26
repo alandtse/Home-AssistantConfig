@@ -1,0 +1,23 @@
+  alias: Change HDMI inputselect
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.hdmi_input
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.hdmiswitch
+        option: >
+           {%- if is_state('sensor.hdmi_input', '0') -%}
+             None
+           {%- elif is_state('sensor.hdmi_input', '1') -%}
+             Karaoke
+           {%- elif is_state('sensor.hdmi_input', '2') -%}
+             Xbox
+           {%- elif is_state('sensor.hdmi_input', '3') -%}
+             PS3
+           {%- elif is_state('sensor.hdmi_input', '4') -%}
+             Roku
+           {%- elif is_state('sensor.hdmi_input', '5') -%}
+             Raspberry Pi
+           {%- endif -%}

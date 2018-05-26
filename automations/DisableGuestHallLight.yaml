@@ -1,0 +1,10 @@
+  alias: 'Disable Guest Hall Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.guesthallswitch_motion
+      to: 'off'
+      for:
+        minutes: 5
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.guest_hall_lights

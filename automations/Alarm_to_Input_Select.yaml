@@ -1,0 +1,22 @@
+  alias: Alarm to Input Select 
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_select.alarmstatus
+  action:
+    service: script.turn_on
+    data_template: 
+      entity_id: >
+        {%- if is_state('input_select.alarmstatus', 'disarmed') -%}
+          script.checkdisarm
+        {%- elif is_state('input_select.alarmstatus', 'home') -%}
+          script.checkarmhome
+        {%- elif is_state('input_select.alarmstatus', 'away') -%}
+          script.checkarmaway
+        {%- endif -%}
+
+#################################################################
+## HASS Related
+#################################################################
+
+

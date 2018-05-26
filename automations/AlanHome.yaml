@@ -1,0 +1,35 @@
+  alias: 'Alan Home'
+  initial_state: 'on'    
+  condition:
+   - condition: state
+     entity_id: input_boolean.alanhome
+     state: 'off'
+   - condition: template
+     value_template: >
+       {%- if states.input_boolean.alanhome.last_changed -%}
+         {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.alanhome.last_changed)) > 300 }}
+       {%- else -%}
+         true
+       {%- endif -%}
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.alan_home_occupancy_confidence
+      above: 10
+    - platform: state
+      entity_id: device_tracker.alandtse_pixel2, device_tracker.pixel_2
+      to: 'home'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.alanhome
+    - service: logbook.log
+      data_template:
+        name: "Alan home: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Home and confidence is {{ sensor.alan_home_occupancy_confidence }}.
+          {%- endfor -%}
+    - service: tts.google_say
+      data:
+        entity_id: media_player.tts_bluetooth_speaker
+        message: 'Alan is Home!'
+

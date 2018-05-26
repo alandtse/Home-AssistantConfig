@@ -1,0 +1,14 @@
+  alias: Downstairs thermostat to Input_Boolean
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.downstairsthermmode
+  action:
+    service_template: >
+      {%- if is_state('sensor.downstairsthermmode', 'Home') -%}
+        homeassistant.turn_off
+      {%- elif is_state('sensor.downstairsthermmode', 'Away') -%}
+        homeassistant.turn_on
+      {%- endif -%}
+    entity_id: input_boolean.thermo_away_main
+

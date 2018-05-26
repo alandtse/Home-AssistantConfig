@@ -1,0 +1,8 @@
+  alias: 'Enable Guest Hall Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.guesthallswitch_motion
+      to: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.guest_hall_lights

@@ -1,0 +1,16 @@
+  alias: 'Enable Front Door recording'
+  condition:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.abodestatus
+        state: 'standby'
+  trigger:
+    - platform: state
+      entity_id: cover.garage_door_opener
+      to: 'closed'
+      for:
+        minutes: 5
+  action:
+    service: homeassistant.turn_on
+    entity_id: input_boolean.recordgate

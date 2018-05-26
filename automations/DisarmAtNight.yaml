@@ -1,0 +1,14 @@
+  alias: 'Disarm Abode at night'
+  initial_state: 'on'    
+  condition:
+    condition: state
+    entity_id: input_select.abodestatus
+    state: 'home'
+  trigger:
+   - platform: state
+     entity_id: input_boolean.rayhome, input_boolean.alanhome
+     to: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.abodestandby
+

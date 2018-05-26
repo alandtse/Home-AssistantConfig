@@ -1,0 +1,29 @@
+  alias: 'Abode Home from Standby'
+  initial_state: 'on'    
+  condition:
+    condition: and
+    conditions:
+     - condition: state
+       entity_id: input_select.abodestatus
+       state: 'standby'
+     - condition: time
+       after: '21:15:00'
+       before: '07:30:00'
+     - condition: state
+       entity_id: input_boolean.abodeupdate
+       state: 'on'
+     - condition: template
+       value_template: >
+         {%- if states.input_select.abodestatus.last_changed -%}
+           {{ (as_timestamp(now()) - as_timestamp(states.input_select.abodestatus.last_changed)) > 300 }}
+         {%- else -%}
+           true
+         {%- endif -%}
+  trigger:
+   - platform: time
+     minutes: '/10'
+     seconds: 00
+  action:
+     service: homeassistant.turn_on
+     entity_id: script.abodehome
+

@@ -1,0 +1,20 @@
+  alias: Hdmiswitch to Input Select
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_select.hdmiswitch
+  action:
+    service: shell_command.switchhdmi
+    data_template:
+      value: >-
+        {%- if is_state('input_select.hdmiswitch', 'Karaoke') -%}
+          1
+        {%- elif is_state('input_select.hdmiswitch', 'Xbox') -%}
+          2
+        {%- elif is_state('input_select.hdmiswitch', 'PS3') -%}
+          3
+        {%- elif is_state('input_select.hdmiswitch', 'Roku') -%}
+          4
+        {%- elif is_state('input_select.hdmiswitch', 'Raspberry Pi') -%}
+          5
+        {%- endif -%}

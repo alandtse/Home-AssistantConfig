@@ -1,0 +1,29 @@
+  alias: 'Orla Away'
+  initial_state: 'on'    
+  condition:
+   - condition: state
+     entity_id: input_boolean.orlahome
+     state: 'on'
+   - condition: template
+     value_template: >
+       {%- if states.input_boolean.orlahome.last_changed -%}
+         {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.orlahome.last_changed)) > 300 }}
+       {%- else -%}
+         true
+       {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: device_tracker.78fd940d9949
+      to: 'not_home'
+      for:
+        minutes: 5
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.orlahome
+    - service: logbook.log
+      data_template:
+        name: "Orla away: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Away.
+          {%- endfor -%}

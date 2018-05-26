@@ -1,0 +1,32 @@
+  alias: 'Solomon Home'
+  initial_state: 'on'    
+  condition:
+   - condition: state
+     entity_id: input_boolean.solomonhome
+     state: 'off'
+   - condition: template
+     value_template: >
+       {%- if states.input_boolean.solomonhome.last_changed -%}
+         {{ (as_timestamp(now()) - as_timestamp(states.input_boolean.solomonhome.last_changed)) > 300 }}
+       {%- else -%}
+         true
+       {%- endif -%}
+  trigger:
+    - platform: state
+      entity_id: device_tracker.70480f72bc9b
+      to: 'home'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.solomonhome
+    - service: logbook.log
+      data_template:
+        name: "Solomon home: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is Home.
+          {%- endfor -%}
+    - service: tts.google_say
+      data:
+        entity_id: media_player.tts_bluetooth_speaker
+        message: 'Solomon is Home!'
+

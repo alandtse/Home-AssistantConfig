@@ -1,0 +1,22 @@
+  alias: 'Auto turn off TV'
+  condition:
+    - condition: and
+      conditions:
+#      - condition: state
+#        entity_id: switch.roku, switch.karaoke, switch.xbox, switch.rpi, switch.playstation
+#        state: 'off'
+      - condition: template
+        value_template: "{{ not is_state('input_select.hdmiswitch', 'None') }}"
+  trigger:
+    - platform: state
+      entity_id: switch.roku, switch.karaoke, switch.xbox, switch.rpi, switch.playstation
+      to: 'off'
+      for:
+        minutes: 15
+  action:
+    - service: hdmi_cec.standby
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.hdmiswitch
+        option: 'None'
+    - service: hdmi_cec.update
