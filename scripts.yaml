@@ -159,7 +159,7 @@
             entity_id: 'alarm_control_panel.simplisafe'
             state: 'armed_away'
       - service: script.disarm
-  
+
   opengarage:
     alias: 'Open Garage'
     sequence:
