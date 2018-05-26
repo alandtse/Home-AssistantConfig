@@ -94,10 +94,12 @@ Information:
 - sensor.evening_commute
 - sensor.alan_to_home
 - sensor.ray_to_home
+- sensor.raspberrypi_cpu_temperature
 - sensor.processor_use
 - sensor.memory_use_percent
 - sensor.swap_use_percent
 - sensor.disk_use_percent
+- sensor.rpi2_cpu_temperature
 - sensor.plexspy
 - sensor.pihole_dns_unique_clients
 - sensor.pihole_ads_percentage_blocked_today
@@ -242,9 +244,11 @@ Devices:
 - sensor.alan
 - device_tracker.alandtse_pixel2
 - device_tracker.pixel_2
+- sensor.alan_home_occupancy_confidence
 - sensor.ray
 - device_tracker.raywtse_note4
 - device_tracker.ray_tse_galaxy_note4
+- sensor.ray_home_occupancy_confidence
 - sensor.evie
 - sensor.eva
 - camera.alan_map

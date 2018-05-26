@@ -1,5 +1,15 @@
 #Weather Sensor:
   - platform: command_line
+    name: Raspberrypi CPU Temperature
+    command: cat /sys/class/thermal/thermal_zone0/temp 2> /home/homeassistant/command.log
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+  - platform: command_line
+    name: Rpi2 CPU Temperature
+    command: ssh -i /home/homeassistant/.ssh/localssh pi@192.168.1.81 'cat /sys/class/thermal/thermal_zone0/temp' 2> /home/homeassistant/command.log
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+  - platform: command_line
     name: HDMI Input
     command: "/home/pi/hdmi/hdmi.py 0"
   - platform: pi_hole
