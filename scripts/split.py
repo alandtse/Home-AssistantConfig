@@ -8,7 +8,7 @@ import argparse
 # global settings
 start_delimiter = '- id:'
 end_delimiter = ''
-
+comment_delimiter = "#"
 # parse command line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input-file", required=True, help="input filename")
@@ -45,6 +45,16 @@ def genFilename(string):
         return string.lstrip(' ').rstrip(':') + extension
     else:
         return string.replace(start, "").strip() + extension
+def processString(string):
+    if indent is not None and indent >= 0:
+        if string.startswith(comment_delimiter):
+            return string
+        elif leadingspaces(string) < indent:
+            return ""
+        else:
+            return string #string[indent:]
+    else:
+        return string
 
 # read the input file
 with open(input_file, 'r') as input_:
@@ -75,14 +85,15 @@ while input_lines:
     with open(output_path, 'w') as output_file:
         # write out the buffer
         while buffer_lines:
-            output_file.write("{0}\n".format(buffer_lines.pop(0)))
-        #output_file.write("{0}\n".format(first_line))
+            output_file.write("{0}\n".format(processString(buffer_lines.pop(0))))
+        if indent is not None and indent > 0:
+            output_file.write("{0}\n".format(processString(first_line)))
         # while we have lines left and they don't match the end delimiter
         while (input_lines and not 
             ((end_delimiter and input_lines[0].startswith(end_delimiter))
                 or foundStart(input_lines[0]))):
                 if (not foundStart(input_lines[0])):
-                        output_file.write("{0}\n".format(input_lines.pop(0)))
+                        output_file.write("{0}\n".format(processString(input_lines.pop(0))))
 
         # remove end delimiter if present
         if input_lines and end_delimiter and input_lines[0].startswith(end_delimiter): 
