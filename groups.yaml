@@ -5,9 +5,7 @@ default_view:
   #- group.all_lights
   - group.switches
   - group.home_security
-  - group.weather
-  - group.thermostats
-  - group.information
+  - group.gate
   - group.kitchen
   - group.great_room
   - group.guest_room
@@ -18,15 +16,34 @@ default_view:
 cameras:
   name: cameras
   view: true
-  icon: mdi:camera
+  icon: mdi:cctv
   entities:
-#  - camera.doorbird
-  - camera.doorbird_live
-  - camera.doorbird_last_ring
-  - camera.doorbird_last_motion
-  - camera.dashcam
-  - camera.garage
+  - group.cameras_doorbird
+  - group.cameras_garage
   - camera.kidsroom
+cameras_doorbird:
+  view: no
+  entities:
+    - camera.doorbird_live
+    - camera.doorbird_last_ring
+    - camera.doorbird_last_motion
+cameras_garage:
+  view: no
+  entities:
+    - camera.dashcam
+    - camera.garage
+people:
+  name: People
+  view: true
+  icon: mdi:account-multiple
+  entities:
+    - group.devices
+    - group.sensors
+    - group.downstairs_occupancy
+    - group.upstairs_occupancy
+    - group.household
+    - group.maps_people
+    - group.maps_cars  
 media:
   name: media
   view: true
@@ -48,18 +65,21 @@ cars:
   - group.model_s
   - group.model_3_eva
   - group.model_3
+          
+climate:
+  name: Climate
+  view: true
+  icon: mdi:thermostat
+  entities:
+    - group.weather
+    - group.thermostats
 settings:
   name: Settings
   view: true
   icon: mdi:settings
   entities:
-  - group.devices
-  - group.sensors
-  - group.gate
-  - group.downstairs_occupancy
-  - group.upstairs_occupancy
-  - group.household
-  - group.battery_alert
+    - group.battery_alert
+    - group.information
 Weather:
 - sensor.pws_weather
 - sensor.pws_temp_f
@@ -110,7 +130,6 @@ Home Security:
 - input_select.abodestatus
 - input_boolean.abodeupdate
 - cover.garage_door_opener
-- camera.kidsroom
 - switch.security
 - alarm_control_panel.simplisafe
 - input_select.alarmstatus
@@ -254,14 +273,21 @@ Devices:
 - sensor.ray_home_occupancy_confidence
 - sensor.evie
 - sensor.eva
-- camera.alan_map
-- camera.evie_map
-- camera.ray_map
-- camera.eva_map
 - device_tracker.70480f72bc9b
 - device_tracker.78fd940d9949
 - sensor.model_3
-- camera.grandparents_map
+Maps_people:
+  view: no
+  entities:
+    - camera.alan_map
+    - camera.ray_map
+Maps_cars:          
+  view: no
+  entities:
+    - camera.eva_map
+    - camera.evie_map
+    - camera.grandparents_map
+
 Simplisafe: &simplisafe_group_entities
 - binary_sensor.simplisafe_entry_sensor_1t314
 - binary_sensor.simplisafe_entry_sensor_1t3jv
@@ -280,4 +306,4 @@ Simplisafe: &simplisafe_group_entities
 - binary_sensor.simplisafe_entry_sensor_1t1ai
 - binary_sensor.simplisafe_entry_sensor_1t316
 - binary_sensor.simplisafe_motion_sensor_19ptl
-- binary_sensor.simplisafe_motion_sensor_19p59
+- binary_sensoa.simplisafe_motion_sensor_19p59
