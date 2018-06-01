@@ -1,0 +1,22 @@
+  alias: Auto notify on gate open
+  initial_state: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_select.abodestatus
+        state: 'away'
+      - condition: state
+        entity_id: input_select.abodestatus
+        state: 'home'
+  trigger:
+  - entity_id: binary_sensor.gate_open
+    platform: state
+    to: 'on'
+  action:
+    - service: notify.pushbullet
+      data_template:
+        message: "Gate opened unexpectedly"
+        title: "Gate opened"
+        data:
+            url: !secret doorbird_last_motion_url
