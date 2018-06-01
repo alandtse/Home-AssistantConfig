@@ -1,7 +1,18 @@
 - platform: mqtt
   state_topic: 'camera/DCS-2330L/motion'
-  friendly_name: "Kids' Room Motion" 
-  name: 'dcs-2330l_motion'
+  name: "Kids' Room Motion"
+  device_class: motion
+  # inactive: No alarm
+  # active: Motion Detected
+  value_template: >-
+          {%- if value != "inactive" %}
+              ON
+          {% else %}
+              OFF
+          {%- endif %}
+- platform: mqtt
+  state_topic: 'camera/garage/motion'
+  name: "Garage Camera Motion"
   device_class: motion
   # inactive: No alarm
   # active: Motion Detected

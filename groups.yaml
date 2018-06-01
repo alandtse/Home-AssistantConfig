@@ -25,6 +25,7 @@ cameras:
   - camera.doorbird_last_ring
   - camera.doorbird_last_motion
   - camera.dashcam
+  - camera.garage
   - camera.kidsroom
 media:
   name: media
@@ -151,6 +152,7 @@ Guest Room:
 Garage:
 - switch.garage_switch
 - binary_sensor.garageswitch_motion
+- binary_sensor.garage_camera_motion
 - cover.garage_door_opener
 Model S:
 - switch.tesla_model_s_5yjsa1e13hf192718_update_switch
@@ -218,6 +220,7 @@ Windows: &windows_group_entities
 - binary_sensor.simplisafe_entry_sensor_1t316
 Downstairs Occupancy:
 - binary_sensor.garageswitch_motion
+- binary_sensor.garage_camera_motion
 - binary_sensor.guest_room_occupancy
 - binary_sensor.guestroomswitch_motion
 - binary_sensor.guesthallswitch_motion
@@ -230,7 +233,7 @@ Downstairs Occupancy:
 - binary_sensor.office_computer
 
 Upstairs Occupancy:
-- binary_sensor.dcs2330l_motion
+- binary_sensor.kids_room_motion
 - binary_sensor.kids_room_occupancy
 - binary_sensor.playroom_occupancy
 - binary_sensor.nookswitch_motion

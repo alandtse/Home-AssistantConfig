@@ -140,6 +140,9 @@ camera:
     password: !secret doorbird_password
     still_image_url: http://bha-1ccae3707f56/bha-api/image.cgi
     mjpeg_url: http://bha-1ccae3707f56/bha-api/video.cgi
+  - platform: mjpeg
+    name: Garage
+    mjpeg_url: http://192.168.1.81:8081/ 
   - platform: doorbird
   - platform: mjpeg
     name: dashcam

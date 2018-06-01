@@ -1,7 +1,7 @@
   alias: 'Enable Garage Light'
   trigger:
     - platform: state
-      entity_id: binary_sensor.garageswitch_motion
+      entity_id: binary_sensor.garageswitch_motion, binary_sensor.simplisafe_entry_sensor_1t32v, binary_sensor.simplisafe_entry_sensor_1t32u, binary_sensor.garage_camera_motion
       to: 'on'
   action:
     service: homeassistant.turn_on
