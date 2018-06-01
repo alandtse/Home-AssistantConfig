@@ -4,7 +4,7 @@
       entity_id: group.downstairs_occupancy 
       to: 'off'
       for:
-        minutes: 5
+        minutes: 15
   action:
     service: homeassistant.turn_off
     entity_id: light.great_room_lights, switch.kitchen_lights
