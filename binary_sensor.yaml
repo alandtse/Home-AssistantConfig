@@ -39,7 +39,7 @@
       friendly_name: Gate 
       device_class: opening
       value_template: >-
-        {{states("sensor.gate_alarm_level") |float > 0 }}
+        {{((states("sensor.gate_alarm_level") |float > 0) and (states("sensor.gate_alarm_level") |float < 254) or (states("sensor.gate_alarm_level") | float == 255) and (states("sensor.gate_access_control") | float == 22))}}
     garage:
       friendly_name: Garage
       device_class: opening
