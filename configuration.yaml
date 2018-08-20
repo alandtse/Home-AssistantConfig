@@ -37,8 +37,8 @@ zone:
    radius: 50
    icon: mdi:home
  - name: Han's
-   latitude: !secret lat_grandparents
-   longitude: !secret long_grandparents
+   latitude: !secret lat_han
+   longitude: !secret long_han
    radius: 50
    icon: mdi:home
 # Enables the frontend
