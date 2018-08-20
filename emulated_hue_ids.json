@@ -5,6 +5,7 @@
     "12": "switch.doorbird",
     "13": "switch.alarm",
     "14": "switch.security",
+    "15": "switch.frontdoorlock",
     "2": "input_boolean.abodeupdate",
     "3": "input_boolean.rayhome",
     "4": "switch.hdmi_4",

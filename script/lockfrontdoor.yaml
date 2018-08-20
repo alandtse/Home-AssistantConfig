@@ -1,0 +1,6 @@
+  lockfrontdoor:
+    alias: 'Lock Front Door'
+    sequence:
+      - service: lock.lock 
+        entity_id: lock.lock_front_door_lock
+

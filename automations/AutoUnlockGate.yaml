@@ -5,8 +5,8 @@
         {{ is_state('binary_sensor.gate_open', 'off') and ((states.input_boolean.alanhome.last_changed and is_state('input_boolean.alanhome','on') and (as_timestamp(now()) - as_timestamp(states.input_boolean.alanhome.last_changed)) < 300 ) or (states.input_boolean.rayhome.last_changed and is_state('input_boolean.rayhome','on') and (as_timestamp(now()) - as_timestamp(states.input_boolean.rayhome.last_changed)) < 300) or ((is_state('input_select.abodestatus','standby') and is_state('binary_sensor.gate_open','off') and is_state('cover.garage_door_opener','open')))) }}
   trigger:
     - platform: event
-      event_type: doorbird_motionsensor
+      event_type: doorbird_doorbird_1_motion
   action:
     service: homeassistant.turn_on
-    entity_id: switch.doorbird
+    entity_id: switch.doorbird_1_open_door
 

@@ -7,10 +7,10 @@
         data:
           entity_id: 'media_player.roku_stick__5s462k290748'
           source: 'IP Camera Viewer Basic'
-      - delay: 00:00:02
+      - delay: 00:00:2
       - service: remote.send_command
         data:
-          entity_id: remote.roku
+          entity_id: remote.roku_stick__5s462k290748
           command:
             - select
             - select

@@ -88,6 +88,18 @@ logbook:
       - sensor.great_room_switch_alarm_type_2
 
 logger:
+  default: warning
+  logs:
+    homeassistant.components.websocket_api: critical
+    homeassistant.components.roku: debug
+    homeassistant.components.zwave.util: info
+    custom_components.media_player.alexa: debug
+    custom_components.device_tracker.bluetooth_tracker: critical
+    custom_components.device_tracker.ddwrt: critical
+    homeassistant.core: error
+    homeassistant.components.mqtt: warning
+    homeassistant.components.sensor.template: error
+    homeassistant.components.configurator: info
 # Track the sun
 sun:
 
@@ -133,7 +145,7 @@ mqtt:
 # Lily Camera
 camera:
   - platform: mjpeg
-    name: kidsroom
+    name: Kids Room
     username: !secret dlink_user
     password: !secret dlink_password
     still_image_url: http://DCS-2330L:8080/dmsdump?nowprofileid=1
@@ -146,10 +158,11 @@ camera:
     mjpeg_url: http://bha-1ccae3707f56/bha-api/video.cgi
   - platform: mjpeg
     name: Garage
+    still_image_url: !secret garage_still
     mjpeg_url: http://192.168.1.81:8081/ 
   - platform: doorbird
   - platform: mjpeg
-    name: dashcam
+    name: Dashcam
     mjpeg_url: http://DR500GW-HD/blackvue_live.cgi?direction=R  
   - platform: generic
     still_image_url: https://radblast.wunderground.com/cgi-bin/radar/WUNIDS_map?station=SOX&brand=wui&num=1&delay=15&type=N0R&frame=0&scale=0.18097826086956523&noclutter=0&showstorms=0&mapx=400&mapy=240&centerx=638.6336336336336&centery=236.89189189189187&transx=238.63363363363362&transy=-3.1081081081081265&showlabels=1&severe=0&rainsnow=0&lightning=0&smooth=0&rand=24853447&lat=0&lon=0&label=you
@@ -216,13 +229,15 @@ tesla:
   username: !secret tesla_user
   password: !secret tesla_password
 doorbird:
-  host: bha-1ccae3707f56  
+  devices:
+    host: bha-1ccae3707f56
 #  host: 192.168.1.99
-  username: !secret doorbird_user
-  password: !secret doorbird_password
-  doorbell_events: true
-  motion_events: true
-  hass_url_override: https://192.168.1.108:8123
+    username: !secret doorbird_user
+    password: !secret doorbird_password
+    monitored_conditions:
+        - doorbell
+        - motion
+    hass_url_override: https://192.168.1.108:8123
 alarm_control_panel:
   platform: simplisafe
   username: !secret simplisafe_user
@@ -232,6 +247,12 @@ recorder:
   exclude:
     domains:
       - sun
+   include:
+     domains:
+     - sensor
+     - input_boolean
+     - input_select
+     - input_number
 wink:
   local_control: true
 hdmi_cec:

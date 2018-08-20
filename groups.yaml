@@ -20,13 +20,13 @@ cameras:
   entities:
   - group.cameras_doorbird
   - group.cameras_garage
-  - camera.kidsroom
+  - camera.kids_room
 cameras_doorbird:
   view: no
   entities:
-    - camera.doorbird_live
-    - camera.doorbird_last_ring
-    - camera.doorbird_last_motion
+    - camera.doorbird
+    - camera.doorbird_1_last_ring
+    - camera.doorbird_1_last_motion
 cameras_garage:
   view: no
   entities:
@@ -50,6 +50,7 @@ media:
   icon: mdi:play-circle-outline
   entities:
   - group.media_player
+  - remote.roku_stick__5s462k290748
   - switch.tv
   - switch.playstation
   - switch.roku
@@ -71,14 +72,13 @@ climate:
   view: true
   icon: mdi:thermostat
   entities:
-    - group.weather
     - group.thermostats
+    - group.weather
 settings:
   name: Settings
   view: true
   icon: mdi:settings
   entities:
-    - group.battery_alert
     - group.information
 Weather:
 - sensor.pws_weather
@@ -126,6 +126,10 @@ Information:
 - sensor.pihole_ads_percentage_blocked_today
 Media Player:
 - media_player.roku_stick__5s462k290748
+- media_player.tts_bluetooth_speaker
+- media_player.downstairs
+- media_player.upstairs
+- media_player.everywhere
 Home Security:
 - input_select.abodestatus
 - input_boolean.abodeupdate
@@ -133,6 +137,7 @@ Home Security:
 - switch.security
 - alarm_control_panel.simplisafe
 - input_select.alarmstatus
+- switch.frontdoorlock
 - group.doors
 - group.windows
 - group.downstairs_occupancy
@@ -142,9 +147,7 @@ Sensors:
 - group.downstairs_occupancy
 - group.upstairs_occupancy
 Gate:
-- binary_sensor.doorbell
 - input_boolean.recordgate
-- binary_sensor.gate_motion
 - switch.light_on
 - switch.doorbird
 - binary_sensor.gate_open
@@ -219,6 +222,7 @@ Model 3 Eva:
 Doors: &doors_group_entities
 - binary_sensor.gate_open
 - binary_sensor.simplisafe_entry_sensor_1t314
+- sensor.front_door_lock_state
 - binary_sensor.simplisafe_entry_sensor_1t3jv
 - binary_sensor.simplisafe_entry_sensor_1t32v
 - binary_sensor.simplisafe_entry_sensor_1t32u

@@ -183,6 +183,82 @@
            {{'%0.2f'|format( (mileageLimit - odometer) / daysTillEnd) }}
         icon_template: >-
             mdi:steering
+      template_door_code_entered:
+        value_template: >-
+          {% if ((as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M")) - as_timestamp(states.sensor.lock_front_door_deadbolt_alarm_level.last_changed)) < 1) %}
+            {{ states.sensor.lock_front_door_deadbolt_alarm_level.state }}
+          {% else %}
+            0
+          {% endif %}
+      front_door_lock_state:
+        friendly_name: "Front Door Lock Status"
+        #NOTE: To ensure consistent updates, we link to the update of the zwave entity id, and not the lock!
+        entity_id:
+          - sensor.lock_front_door_deadbolt_alarm_type
+          - zwave.lock_front_door_deadbolt
+        value_template: >-
+            {% set alarm_type = states('sensor.lock_front_door_deadbolt_alarm_type') %}
+            {% set alarm_level = states('sensor.lock_front_door_deadbolt_alarm_level') %}
+
+            {#- Figure out if HASS set lock -#}
+            {% if states.script.lockfrontdoor.attributes.last_triggered != None %}
+            {% set last_lock = as_timestamp(states.lock.lock_front_door_lock.last_changed) - as_timestamp(states.script.lockfrontdoor.attributes.last_triggered) %}
+            {%- else -%}
+            {% set last_lock = 10000 %}
+            {%- endif %}
+            {% if states.script.unlockfrontdoor.attributes.last_triggered != None %}
+            {% set last_unlock = as_timestamp(states.lock.lock_front_door_lock.last_changed) - as_timestamp(states.script.unlockfrontdoor.attributes.last_triggered) %}
+            {%- else -%}
+            {% set last_unlock = 10000 %}
+            {%- endif %}
+            {% set hass_lock = (is_state("lock.lock_front_door_lock", 'locked') and last_lock != None and last_lock < 10) %}
+            {% set hass_unlock = (is_state("lock.lock_front_door_lock", 'unlocked') and last_unlock != None and last_unlock < 10) %}
+
+            {#- Set User -#}
+            {% if alarm_level == '1' %}
+            {% set user = 'Default 1'%}
+            {%- elif alarm_level == '2' -%}
+            {% set user = 'Default 2'%}
+            {%- elif alarm_level == '3' -%}
+            {% set user = 'Alan or Ray' %}
+            {%- elif alarm_level == '4' -%}
+            {% set user = 'Mom or Dad' %}
+            {%- else -%}
+            {% set user = 'Unknown User ' ~ alarm_level %}
+            {%- endif %}
+
+            {#- Z-Wave/RF Lock: Alarm State 0x01 (???) -#}
+            {%- if hass_lock -%}
+                {{ 'locked with Home Assistant' }}
+
+            {#- Z-Wave/RF Unlock: Alarm State 0x01 (???) -#}
+            {%- elif hass_unlock -%}
+                {{ 'unlocked with Home Assistant' }}
+
+            {# Manually Locked: Alarm State 0x15 (21) #}
+            {% elif alarm_type == '21' %}
+                {{ 'manually locked' }}
+
+            {#- Manual Unlock: Alarm State 0x16 (22) -#}
+            {%- elif alarm_type == '22' -%}
+                {{ 'manually unlocked' }}
+
+            {#- Keypad Lock by keypad touch (lock & leave): Alarm State 0x12 (18) -#}
+            {%- elif alarm_type ==  '18' -%}
+                {{ 'locked with keypad' }}
+
+            {#- Keypad Unlock: Alarm State 0x13 (19) -#}
+            {%- elif alarm_type == '19' -%}
+                {{ 'unlocked with keypad by user ' ~ user }}
+
+            {%- else -%}
+                {#- The lock status is sometimes unknown when HASS boots and Z-Wave is initialized.  In this case we want to use the last state reported by the lock itself (physically) if possible, otherwise we return 'unknown' -#}
+                {# {{ 'unknown' }} #}
+                {% set state = states.lock.lock_front_door_lock %}
+                {% set status = (state.attributes.lock_status if state else '')|trim() %}
+                {% set result = status if status != '' else 'unknown' %}
+                {{ result|lower() }}
+            {%- endif -%}
   - platform: ohmconnect
     id: !secret ohmconnect_id
   - platform: google_geocode
@@ -239,3 +315,6 @@
     entity_ids:
       - sensor.ray_garage
       - sensor.ray_great_room
+  - platform: time_date
+    display_options:
+      - 'date_time'

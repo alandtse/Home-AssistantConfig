@@ -12,6 +12,7 @@
       - service: script.arm_home
       - service: homeassistant.turn_on
         entity_id: input_boolean.recordgate
+      - service: script.lockfrontdoor
 #      - service: shell_command.arm
 #      - service: ifttt.trigger
 #        data: {"event":"AbodeHome", "value1":"Abode Home"}

@@ -1,8 +1,14 @@
   alias: 'Enable Great Room Light'
   condition:
-    condition: template
-    value_template: >
-      {{ as_timestamp(now()) - as_timestamp(states.automation.disable_great_room_light.attributes.last_triggered) < 600 }}
+    - condition: or  # 'when dark' condition: either after sunset or before sunrise
+      conditions:
+        - condition: sun
+          after: sunset
+        - condition: sun
+          before: sunrise
+    - condition: template
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(states.automation.disable_great_room_light.attributes.last_triggered) < 600 }}
   trigger:
     platform: state
     entity_id: binary_sensor.great_room_occupancy, binary_sensor.greatroomswitch_motion, binary_sensor.simplisafe_motion_sensor_19ptl, binary_sensor.tv, binary_sensor.simplisafe_motion_sensor_19p59, binary_sensor.office_occupancy, binary_sensor.office_computer
