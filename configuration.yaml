@@ -247,12 +247,12 @@ recorder:
   exclude:
     domains:
       - sun
-   include:
-     domains:
-     - sensor
-     - input_boolean
-     - input_select
-     - input_number
+  include:
+    domains:
+      - sensor
+      - input_boolean
+      - input_select
+      - input_number
 wink:
   local_control: true
 hdmi_cec:
