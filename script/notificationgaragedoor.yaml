@@ -7,8 +7,10 @@
       - service: notify.ecobee
         data:
           message: 'Garage door is open, please check!'
-      - service: tts.google_say
+      - service: media_player.alexa_tts
         data:
-          entity_id: media_player.tts_bluetooth_speaker
+          entity_id:
+            - media_player.downstairs
+            - media_player.upstairs
           message: 'Garage door is open, please check!'
 

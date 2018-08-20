@@ -10,13 +10,15 @@
 #      {%- endif -%}
   trigger:
     platform: event
-    event_type: doorbird_doorbell
+    event_type: doorbird_doorbird_1_button
     #entity_id: binary_sensor.doorbell
     #to: 'on'
   action:
-    - service: tts.google_say
+    - service: media_player.alexa_tts
       data:
-        entity_id: media_player.tts_bluetooth_speaker
+        entity_id:
+          - media_player.downstairs
+          - media_player.upstairs
         message: 'Ding Dong! Someone is at the front door!'
     - service: homeassistant.turn_on
       entity_id: script.displaygate

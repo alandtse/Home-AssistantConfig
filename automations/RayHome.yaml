@@ -28,9 +28,11 @@
           {%- for state in states if state.entity_id == trigger.entity_id -%}
             {{ state.attributes.friendly_name }} is Home and confidence is {{ sensor.ray_home_occupancy_confidence }}.
           {%- endfor -%}
-    - service: tts.google_say
+    - service: media_player.alexa_tts
       data:
-        entity_id: media_player.tts_bluetooth_speaker
+        entity_id:
+          - media_player.downstairs
+          - media_player.upstairs
         message: 'Ray is Home!'
 #### Guests
 

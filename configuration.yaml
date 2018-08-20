@@ -98,15 +98,19 @@ tts:
     cache_dir: /home/homeassistant/.homeassistant/tts
     time_memory: 300
 media_player:
-  - platform: tts_bluetooth_speaker
-    address:
-      - 84:D6:D0:21:85:21.a2dp_sink
-      - 00:FC:8B:D5:99:F3.a2dp_sink
-    volume: 1.00
-    pre_silence_duration: .5
-    connect_script: /home/homeassistant/.homeassistant/scripts/connect_bluetooth.sh
-    disconnect_script: /home/homeassistant/.homeassistant/scripts/disconnect_bluetooth.sh
-    cache_dir: /home/homeassistant/.homeassistant/tts
+#  - platform: tts_bluetooth_speaker
+#    address:
+#      - 84:D6:D0:21:85:21.a2dp_sink
+#      - 00:FC:8B:D5:99:F3.a2dp_sink
+#    volume: 1.00
+#    pre_silence_duration: .5
+#    connect_script: /home/homeassistant/.homeassistant/scripts/connect_bluetooth.sh
+#    disconnect_script: /home/homeassistant/.homeassistant/scripts/disconnect_bluetooth.sh
+#    cache_dir: /home/homeassistant/.homeassistant/tts
+  - platform: alexa
+    email: !secret amazon_user
+    password: !secret amazon_pass
+    url: amazon.com
 #remote:
 notify:
   - platform: pushbullet
