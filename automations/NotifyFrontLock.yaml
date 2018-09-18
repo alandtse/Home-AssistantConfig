@@ -1,0 +1,28 @@
+  alias: 'Notify issue with front lock'
+  initial_state: 'on'    
+  condition:
+    condition: template
+    value_template: >
+      {%- if states.sensor.frontdoor_action.last_changed -%}
+        {{ (as_timestamp(now()) - as_timestamp(states.sensor.frontdoor_action.last_changed)) > 300 }}
+      {%- else -%}
+        true
+      {%- endif -%}
+  trigger:
+    platform: template
+    value_template: "{% if is_state('sensor.frontdoor_action', 'Tamper Alarm') or is_state('sensor.frontdoor_action', 'Lock Jammed') %}true{% endif %}"
+  action:
+    - service: media_player.alexa_tts
+      data:
+        entity_id:
+          - media_player.kitchen
+          - media_player.great_room
+          - media_player.guest_room
+          - media_player.stairs
+          - media_player.master_bedroom
+        message: 'Check the front door lock!'
+    - service: notify.html5
+      data_template:
+        message: " At {{ as_timestamp (now()) | timestamp_custom('%I:%M %p') }} on {{ now().strftime('%d %b %Y') }} "
+        title: >
+          {{ trigger.to_state.attributes.friendly_name }} reports issue {{ states(sensor.frontdoor_action) }}

@@ -73,6 +73,11 @@ emulated_hue:
   expose_by_default: false
 # Enables support for tracking state changes over time.
 history:
+  exclude:
+    domains:
+      - automation
+      - weblink
+      - updater
 
 # View all events in a logbook
 logbook:
@@ -86,12 +91,16 @@ logbook:
       - sensor.great_room_switch_alarm_level_2
       - sensor.great_room_switch_alarm_type
       - sensor.great_room_switch_alarm_type_2
+      - automation.battery_sensor_from_attributes
+      - automation.update_battery_status_group_members
+      - automation.battery_notification
+      - automation.battery_notification_clear
 
 logger:
   default: warning
   logs:
     homeassistant.components.websocket_api: critical
-    homeassistant.components.roku: debug
+    homeassistant.components.hdmi_cec: debug
     homeassistant.components.zwave.util: info
     custom_components.media_player.alexa: debug
     custom_components.device_tracker.bluetooth_tracker: critical
@@ -222,6 +231,9 @@ device_tracker:
       - 192.168.1.2/24
     interval_seconds: 60
     consider_home: 300
+    exclude:
+      - 192.168.1.84
+      - 192.168.1.108
    # scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
 ecobee:
   api_key: !secret ecobee_key
@@ -249,10 +261,27 @@ recorder:
       - sun
   include:
     domains:
+      - binary_sensor
+      - switch
+      - lock
+      - light
+      - automation
+      - script
       - sensor
       - input_boolean
       - input_select
       - input_number
+      - input_text
+      - input_datetime
+influxdb:
+  host: 127.0.0.1
+  username: !secret influxdb_user
+  password: !secret api_password
+  tags:
+    instance: prod
+    source: hass
+  tags_attributes:
+    - friendly_name
 wink:
   local_control: true
 hdmi_cec:
@@ -276,3 +305,17 @@ zwave:
   usb_path: /dev/ttyACM0
   config_path: /srv/homeassistant/homeassistant_venv/lib/python3.6/site-packages/python_openzwave/ozw_config/ 
   network_key: !secret zwave_key
+panel_custom:
+  - name: zwavegraph2
+    sidebar_title: ZWave Graph2
+    sidebar_icon: mdi:access-point-network
+    url_path: zwave
+  - name: ddwrt
+    sidebar_title: Ddwrt
+    sidebar_icon: mdi:router-wireless
+  - name: pihole
+    sidebar_title: Pihole
+    sidebar_icon: mdi:chart-areaspline
+  - name: stats
+    sidebar_title: Stats
+    sidebar_icon: mdi:chart-areaspline

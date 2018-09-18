@@ -1,0 +1,35 @@
+  alias: 'Disable Tesla updating'
+  condition:
+    - condition: template
+      value_template:  >-
+        {% set object_id = trigger.to_state.object_id %}
+        {% set model_vin = "_".join(object_id.split("_")[2:-2]) %}
+        {% set select_id = 'tesla_model_' ~ model_vin ~ '_update_switch' %}
+        {{ states['switch'][select_id].state in ['on'] }}
+  trigger:
+    - platform: state
+      entity_id:  
+        - switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+        - switch.tesla_model_3_5yj3e1ea2jf006634_charger_switch
+        - switch.tesla_model_3_5yj3e1ea7hf002153_charger_switch
+      to: 'off'
+      for:
+        hours: "24"
+        minutes: "0"
+        seconds: "0"
+  action:
+    - service: homeassistant.turn_off
+      data_template:
+        entity_id: >-
+          {% set object_id = trigger.to_state.object_id %}
+          {% set model_vin = "_".join(object_id.split("_")[2:-2]) %}
+          {% set select_id = 'tesla_model_' ~ model_vin ~ '_update_switch' %}
+          switch.{{ select_id }}
+    - service: notify.html5
+      data_template:
+        message: >-
+          {% set object_id = trigger.to_state.object_id %}
+          {% set model_vin = "_".join(object_id.split("_")[2:-2]) %}
+          {% set select_id = 'tesla_model_' ~ model_vin ~ '_update_switch' %}
+          Updates disabled for {{ model_vin }}.
+        title: "Tesla"

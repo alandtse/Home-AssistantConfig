@@ -126,9 +126,11 @@ Information:
 - sensor.pihole_ads_percentage_blocked_today
 Media Player:
 - media_player.roku_stick__5s462k290748
-- media_player.tts_bluetooth_speaker
-- media_player.downstairs
-- media_player.upstairs
+- media_player.kitchen
+- media_player.great_room
+- media_player.guest_room
+- media_player.stairs
+- media_player.master_bedroom
 - media_player.everywhere
 Home Security:
 - input_select.abodestatus
