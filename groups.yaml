@@ -312,4 +312,4 @@ Simplisafe: &simplisafe_group_entities
 - binary_sensor.simplisafe_entry_sensor_1t1ai
 - binary_sensor.simplisafe_entry_sensor_1t316
 - binary_sensor.simplisafe_motion_sensor_19ptl
-- binary_sensoa.simplisafe_motion_sensor_19p59
+- binary_sensor.simplisafe_motion_sensor_19p59

@@ -12,14 +12,16 @@
   trigger:
     - platform: state
       entity_id: group.doors, group.downstairs_occupancy, group.windows
+    - platform: time
+      at: '04:02:00'
   action:
-    - service: mqtt.publish
-      data:
-        topic: "simplisafe/command/stop"
-        #- service: shell_command.restartsimplisafe
     - service: logbook.log
       data_template:
         name: "Restarting SimplisafeRF: "
         message: >-
           {{ trigger.to_state.name }} was changed to {{ trigger.to_state.state }} and SimplisafeRF last update {{ (as_timestamp(now()) - as_timestamp(states.group.simplisafe.last_updated))|int}} seconds ago.
-
+    - service: shell_command.restartsimplisafe
+    - delay: 00:01:00
+    - service: mqtt.publish
+      data:
+        topic: "simplisafe/command/stop"
