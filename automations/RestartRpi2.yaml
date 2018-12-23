@@ -1,0 +1,36 @@
+  alias: 'Restart Rpi2 when crashes'
+  condition:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.c83a35caed70
+        state: 'not_home'
+      - condition: state
+        entity_id: switch.honeywell_unknown_type5052_id3033_switch
+        state: 'on'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.c83a35caed70
+      from: 'home'
+      to: 'not_home'
+      for:
+        hours: 0
+        minutes: 10
+        seconds: 0
+    - platform: time
+      minutes: '/30'
+      seconds: 00
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Restarting rpi2:"
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} logged off.
+          {%- endfor -%}
+    - service: switch.turn_off
+      entity_id: switch.honeywell_unknown_type5052_id3033_switch
+    - delay: 00:00:15
+    - service: switch.turn_on
+      entity_id: switch.honeywell_unknown_type5052_id3033_switch
+
