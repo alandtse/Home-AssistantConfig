@@ -161,6 +161,20 @@
            {{'%0.2f'|format( (mileageLimit - odometer) / daysTillEnd) }}
         icon_template: >-
             mdi:steering
+      garage_temperature:
+        friendly_name: "Garage Temperature"
+        unit_of_measurement: "°F"
+        value_template: >-
+           {%- if is_state("device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker", "home") and is_state("device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker", "home") -%}
+             {{ '%0.1f'|format((states("sensor.tesla_model_3_5yj3e1ea2jf006634_temperature_sensor_outside") |float + states("sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_outside")|float) / 2 )}}
+           {%- elif is_state("device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker", "home") -%}
+             {{ states("sensor.tesla_model_3_5yj3e1ea2jf006634_temperature_sensor_outside")}}
+           {%- elif is_state("device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker", "home") -%}
+             {{ states("sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_outside")|float}}
+           {%- else -%}
+             unknown
+           {%- endif -%}
+        device_class: "temperature"
       template_door_code_entered:
         value_template: >-
           {% if ((as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M")) - as_timestamp(states.sensor.lock_front_door_deadbolt_alarm_level.last_changed)) < 1) %}
