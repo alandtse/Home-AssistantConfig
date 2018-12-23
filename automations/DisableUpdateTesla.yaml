@@ -14,8 +14,8 @@
         - switch.tesla_model_3_5yj3e1ea7hf002153_charger_switch
       to: 'off'
       for:
-        hours: "24"
-        minutes: "0"
+        hours: "25"
+        minutes: "45"
         seconds: "0"
   action:
     - service: homeassistant.turn_off
