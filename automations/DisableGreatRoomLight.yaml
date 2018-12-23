@@ -7,4 +7,4 @@
         minutes: 15
   action:
     service: homeassistant.turn_off
-    entity_id: light.great_room_lights, switch.kitchen_lights
+    entity_id: light.great_room_switch_level, switch.kitchen_switch

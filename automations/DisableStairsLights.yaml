@@ -7,4 +7,4 @@
         minutes: 5
   action:
     service: homeassistant.turn_off
-    entity_id: light.stairs_lights
+    entity_id: light.nook_switch_level

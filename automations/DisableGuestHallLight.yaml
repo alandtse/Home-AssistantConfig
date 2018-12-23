@@ -7,4 +7,4 @@
         minutes: 5
   action:
     service: homeassistant.turn_off
-    entity_id: light.guest_hall_lights
+    entity_id: light.guest_hall_switch_level

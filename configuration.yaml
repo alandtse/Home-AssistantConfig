@@ -97,7 +97,7 @@ logbook:
       - automation.battery_notification_clear
 
 logger:
-  default: info
+  default: critical
   logs:
     homeassistant.components.websocket_api: critical
     homeassistant.components.hdmi_cec: debug
@@ -230,7 +230,7 @@ device_tracker:
     exclude:
       - 192.168.1.84
       - 192.168.1.108
-   # scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
+    scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
 owntracks:
   max_gps_accuracy: 1000
   interval_seconds: 30
@@ -264,6 +264,10 @@ recorder:
       - sensor.time__date
   include:
     domains:
+      - alarm_control_panel
+      - climate
+      - cover
+      - group
       - binary_sensor
       - switch
       - lock

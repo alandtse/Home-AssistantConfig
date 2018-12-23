@@ -70,6 +70,16 @@
       device_class: motion
       value_template: >-
         {{(states("sensor.garage_burglar") |float > 0) and (states("sensor.garage_burglar") |float < 254)}}
+    masterclosetswitch_motion:
+      friendly_name: Master Closet Switch Motion
+      device_class: motion
+      value_template: >-
+        {{(states("sensor.mastercloset_burglar") |float > 0) and (states("sensor.mastercloset_burglar") |float < 254)}}
+    masterbathroomswitch_motion:
+      friendly_name: Master Bathroom Switch Motion
+      device_class: motion
+      value_template: >-
+        {{(states("sensor.masterbathroom_burglar") |float > 0) and (states("sensor.masterbathroom_burglar") |float < 254)}}
     tv:
       friendly_name: TV 
       device_class: occupancy
@@ -79,5 +89,5 @@
       friendly_name: Office Computer
       device_class: occupancy
       value_template: >-
-        {{is_state("device_tracker.38d547084a5e","home")}}
+        {{is_state("device_tracker.3c6aa7dd18c3","home")}}
 - platform: simplisaferf

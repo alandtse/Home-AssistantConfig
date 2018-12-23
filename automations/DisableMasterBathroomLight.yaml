@@ -1,0 +1,10 @@
+  alias: 'Disable Master Bathroom Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.masterbathroomswitch_motion
+      to: 'off'
+      for:
+        minutes: 5
+  action:
+    service: homeassistant.turn_off
+    entity_id: switch.masterbathroom_switch

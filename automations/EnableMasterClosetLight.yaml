@@ -1,0 +1,8 @@
+  alias: 'Enable Master Closet Light'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.masterclosetswitch_motion
+      to: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: switch.mastercloset_switch
