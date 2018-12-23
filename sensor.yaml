@@ -45,28 +45,6 @@
 #    port: 32400
 #    username: !secret plex_user
 #    password: !secret plex_password
-#Morning Commute Google Travel Time Sensor
-#  - platform: google_travel_time
-#    name: Morning Commute
-#    api_key: !secret google_key
-#    origin: !secret add_home
-#    destination: !secret add_work
-#Evening Commute Google Travel Time Sensor
-#  - platform: google_travel_time
-#    name: Evening Commute
-#    api_key: !secret google_key
-#    origin: !secret add_work
-#    destination: !secret add_home
-#  - platform: google_travel_time
-#    name: Alan to Home
-#    api_key: !secret google_key
-#    origin: device_tracker.alandtse_pixel2
-#    destination: !secret add_home
-#  - platform: google_travel_time
-#    name: Ray to Home
-#    api_key: !secret google_key
-#    origin: device_tracker.raywtse_note4
-#    destination: !secret add_home
   - platform: systemmonitor
     resources:
     - type: disk_use_percent
@@ -269,18 +247,18 @@
     name: Ray
     origin: device_tracker.raywtse_note4
     api_key: !secret google_key
-  - platform: google_geocode
-    name: Evie
-    origin: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
-    api_key: !secret google_key
-  - platform: google_geocode
-    name: Eva
-    origin: device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker
-    api_key: !secret google_key
-  - platform: google_geocode
-    name: Model 3
-    origin: device_tracker.tesla_model_3_5yj3e1ea7hf002153_location_tracker
-    api_key: !secret google_key
+    #  - platform: google_geocode
+    #    name: Evie
+    #origin: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+    #  api_key: !secret google_key
+    #- platform: google_geocode
+    # name: Eva
+    # origin: device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker
+    # api_key: !secret google_key
+    #- platform: google_geocode
+    #  name: Model 3
+    #  origin: device_tracker.tesla_model_3_5yj3e1ea7hf002153_location_tracker
+    # api_key: !secret google_key
   - platform: mqtt
     state_topic: 'location/owner/Garage/40:4E:36:AF:8C:23'
     value_template: '{{ value_json.confidence }}'
@@ -318,3 +296,43 @@
   - platform: time_date
     display_options:
       - 'date_time'
+  - platform: places
+    name: Alan
+    devicetracker_id: device_tracker.alandtse_pixel2
+    options: zone, place
+    map_provider: google
+    map_zoom: 18
+    home_zone: zone.home
+    api_key: !secret email_alan
+  - platform: places
+    name: Ray
+    devicetracker_id: device_tracker.raywtse_note4
+    options: zone, place
+    map_provider: google
+    map_zoom: 18
+    home_zone: zone.home
+    api_key: !secret email_ray
+  - platform: places
+    name: Evie
+    devicetracker_id: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+    options: zone, place
+    map_provider: google
+    map_zoom: 18
+    home_zone: zone.home
+    api_key: !secret email_alan
+  - platform: places
+    name: Eva
+    devicetracker_id: device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker
+    options: zone, place
+    map_provider: google
+    map_zoom: 18
+    home_zone: zone.home
+    api_key: !secret email_ray
+  - platform: places
+    name: Model 3
+    devicetracker_id: device_tracker.tesla_model_3_5yj3e1ea7hf002153_location_tracker
+    options: zone, place
+    map_provider: google
+    map_zoom: 18
+    home_zone: zone.home
+    api_key: !secret email_ray
