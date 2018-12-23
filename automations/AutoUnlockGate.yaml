@@ -8,5 +8,5 @@
       event_type: doorbird_doorbird_1_motion
   action:
     service: homeassistant.turn_on
-    entity_id: switch.doorbird_1_open_door
+    entity_id:  switch.doorbird_1_relay_1
 

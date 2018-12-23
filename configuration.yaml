@@ -97,10 +97,11 @@ logbook:
       - automation.battery_notification_clear
 
 logger:
-  default: warning
+  default: info
   logs:
     homeassistant.components.websocket_api: critical
     homeassistant.components.hdmi_cec: debug
+    homeassistant.components.doorbird: info
     homeassistant.components.zwave.util: info
     custom_components.media_player.alexa: debug
     custom_components.device_tracker.bluetooth_tracker: critical
@@ -214,11 +215,6 @@ device_tracker:
     protocol: ssh
     interval_seconds: 30 
     consider_home: 300
-  - platform: owntracks
-    max_gps_accuracy: 1000
-    interval_seconds: 30 
-    consider_home: 300
-    waypoints: True
 #  - platform: bluetooth_le_tracker
 #    interval_seconds: 90
 #    consider_home: 300
@@ -235,12 +231,18 @@ device_tracker:
       - 192.168.1.84
       - 192.168.1.108
    # scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
+owntracks:
+  max_gps_accuracy: 1000
+  interval_seconds: 30
+  consider_home: 300
+  waypoints: True
 ecobee:
   api_key: !secret ecobee_key
 tesla:
   username: !secret tesla_user
   password: !secret tesla_password
 doorbird:
+  token: !secret doorbird_token
   devices:
     host: bha-1ccae3707f56
 #  host: 192.168.1.99
@@ -250,15 +252,16 @@ doorbird:
         - doorbell
         - motion
     hass_url_override: https://192.168.1.108:8123
-alarm_control_panel:
-  platform: simplisafe
-  username: !secret simplisafe_user
-  password: !secret simplisafe_password 
+    #simplisafe:
+    # accounts:
+    # username: !secret simplisafe_user
+    # password: !secret simplisafe_password 
 recorder:
   db_url: !secret recorder_db_url
   exclude:
     domains:
       - sun
+      - sensor.time__date
   include:
     domains:
       - binary_sensor
@@ -273,6 +276,7 @@ recorder:
       - input_number
       - input_text
       - input_datetime
+      - device_tracker
 influxdb:
   host: 127.0.0.1
   username: !secret influxdb_user
@@ -310,12 +314,3 @@ panel_custom:
     sidebar_title: ZWave Graph2
     sidebar_icon: mdi:access-point-network
     url_path: zwave
-  - name: ddwrt
-    sidebar_title: Ddwrt
-    sidebar_icon: mdi:router-wireless
-  - name: pihole
-    sidebar_title: Pihole
-    sidebar_icon: mdi:chart-areaspline
-  - name: stats
-    sidebar_title: Stats
-    sidebar_icon: mdi:chart-areaspline
