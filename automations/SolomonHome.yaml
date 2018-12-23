@@ -13,7 +13,7 @@
        {%- endif -%}
   trigger:
     - platform: state
-      entity_id: device_tracker.70480f72bc9b
+      entity_id: device_tracker.e0338e88d3ac
       to: 'home'
   action:
     - service: homeassistant.turn_on
