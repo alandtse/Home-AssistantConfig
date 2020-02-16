@@ -1,20 +1,20 @@
 #Weather Sensor:
-  - platform: command_line
+  - platform: uptime
+    name: "HA runtime in minutes"
+    unit_of_measurement: minutes
+  - platform: mqtt 
     name: Raspberrypi CPU Temperature
-    command: cat /sys/class/thermal/thermal_zone0/temp 2> /home/homeassistant/command.log
+    state_topic: "raspberrypi/temp/state" 
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
-  - platform: command_line
+  - platform: mqtt
     name: Rpi2 CPU Temperature
-    command: ssh -i /home/homeassistant/.ssh/localssh pi@192.168.1.81 'cat /sys/class/thermal/thermal_zone0/temp' 2> /home/homeassistant/command.log
+    state_topic: "rpi2/temp/state" 
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
-  - platform: command_line
+  - platform: mqtt
     name: HDMI Input
-    command: "/home/pi/hdmi/hdmi.py 0"
-  - platform: pi_hole
-  - platform: cert_expiry
-    host: !secret ha_url
+    state_topic: "hdmi/status"
   - platform: darksky
     api_key: !secret darksky_key
     monitored_conditions:
@@ -26,15 +26,6 @@
     monitored_conditions:
       - temperature
       - symbol
-  - platform: wunderground
-    api_key: !secret wunderground_key
-    #pws_id: !secret wunderground_pws
-    monitored_conditions:
-      - weather
-      - temp_f
-      - pressure_in
-      - wind_string
-      - relative_humidity
 #Time and Date Sensor
   - platform: time_date
     display_options:
@@ -110,7 +101,7 @@
         friendly_name: "Estimated Date of Overage"
         value_template: >-
            {% set start= (as_timestamp("2017-04-11 00:00:0")) %}
-           {% set odometer = states.sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor.state|round %}
+           {% set odometer = states.sensor.evie_mileage_sensor.state|round %}
            {% set end= (as_timestamp("2020-04-11 00:00:0")) %}
            {% set today = as_timestamp(now()) %}
            {% set secondsInDay= 60*60*24 %}
@@ -126,7 +117,7 @@
         unit_of_measurement: mi
         value_template: >-
            {% set start= (as_timestamp("2017-04-11 00:00:0")) %}
-           {% set odometer = states.sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor.state|round %}
+           {% set odometer = states.sensor.evie_mileage_sensor.state|round %}
            {% set end= (as_timestamp("2020-04-11 00:00:0")) %}
            {% set today = as_timestamp(now()) %}
            {% set secondsInDay= 60*60*24 %}
@@ -150,7 +141,7 @@
         unit_of_measurement: mi
         value_template: >-
            {% set start= (as_timestamp("2017-04-11 00:00:0")) %}
-           {% set odometer = states.sensor.tesla_model_s_5yjsa1e13hf192718_mileage_sensor.state|round %}
+           {% set odometer = states.sensor.evie_mileage_sensor.state|round %}
            {% set end= (as_timestamp("2020-04-11 00:00:0")) %}
            {% set today = as_timestamp(now()) %}
            {% set secondsInDay= 60*60*24 %}
@@ -165,102 +156,26 @@
         friendly_name: "Garage Temperature"
         unit_of_measurement: "°F"
         value_template: >-
-           {%- if is_state("device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker", "home") and is_state("device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker", "home") -%}
-             {{ '%0.1f'|format((states("sensor.tesla_model_3_5yj3e1ea2jf006634_temperature_sensor_outside") |float + states("sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_outside")|float) / 2 )}}
-           {%- elif is_state("device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker", "home") -%}
-             {{ states("sensor.tesla_model_3_5yj3e1ea2jf006634_temperature_sensor_outside")}}
-           {%- elif is_state("device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker", "home") -%}
-             {{ states("sensor.tesla_model_s_5yjsa1e13hf192718_temperature_sensor_outside")|float}}
+           {%- if is_state("device_tracker.eva_location_tracker", "home") and is_state("device_tracker.evie_location_tracker", "home") -%}
+             {{ '%0.1f'|format((states("sensor.eva_temperature_sensor_outside") |float + states("sensor.evie_temperature_sensor_outside")|float) / 2 )}}
+           {%- elif is_state("device_tracker.eva_location_tracker", "home") -%}
+             {{ states("sensor.eva_temperature_sensor_outside")}}
+           {%- elif is_state("device_tracker.evie_location_tracker", "home") -%}
+             {{ states("sensor.evie_temperature_sensor_outside")|float}}
            {%- else -%}
              unknown
            {%- endif -%}
         device_class: "temperature"
-      template_door_code_entered:
-        value_template: >-
-          {% if ((as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M")) - as_timestamp(states.sensor.lock_front_door_deadbolt_alarm_level.last_changed)) < 1) %}
-            {{ states.sensor.lock_front_door_deadbolt_alarm_level.state }}
-          {% else %}
-            0
-          {% endif %}
-      front_door_lock_state:
-        friendly_name: "Front Door Lock Status"
-        #NOTE: To ensure consistent updates, we link to the update of the zwave entity id, and not the lock!
-        entity_id:
-          - sensor.lock_front_door_deadbolt_alarm_type
-          - zwave.lock_front_door_deadbolt
-        value_template: >-
-            {% set alarm_type = states('sensor.lock_front_door_deadbolt_alarm_type') %}
-            {% set alarm_level = states('sensor.lock_front_door_deadbolt_alarm_level') %}
-
-            {#- Figure out if HASS set lock -#}
-            {% if states.script.lockfrontdoor.attributes.last_triggered != None %}
-            {% set last_lock = as_timestamp(states.lock.lock_front_door_lock.last_changed) - as_timestamp(states.script.lockfrontdoor.attributes.last_triggered) %}
-            {%- else -%}
-            {% set last_lock = 10000 %}
-            {%- endif %}
-            {% if states.script.unlockfrontdoor.attributes.last_triggered != None %}
-            {% set last_unlock = as_timestamp(states.lock.lock_front_door_lock.last_changed) - as_timestamp(states.script.unlockfrontdoor.attributes.last_triggered) %}
-            {%- else -%}
-            {% set last_unlock = 10000 %}
-            {%- endif %}
-            {% set hass_lock = (is_state("lock.lock_front_door_lock", 'locked') and last_lock != None and last_lock < 10) %}
-            {% set hass_unlock = (is_state("lock.lock_front_door_lock", 'unlocked') and last_unlock != None and last_unlock < 10) %}
-
-            {#- Set User -#}
-            {% if alarm_level == '1' %}
-            {% set user = 'Default 1'%}
-            {%- elif alarm_level == '2' -%}
-            {% set user = 'Default 2'%}
-            {%- elif alarm_level == '3' -%}
-            {% set user = 'Alan or Ray' %}
-            {%- elif alarm_level == '4' -%}
-            {% set user = 'Mom or Dad' %}
-            {%- else -%}
-            {% set user = 'Unknown User ' ~ alarm_level %}
-            {%- endif %}
-
-            {#- Z-Wave/RF Lock: Alarm State 0x01 (???) -#}
-            {%- if hass_lock -%}
-                {{ 'locked with Home Assistant' }}
-
-            {#- Z-Wave/RF Unlock: Alarm State 0x01 (???) -#}
-            {%- elif hass_unlock -%}
-                {{ 'unlocked with Home Assistant' }}
-
-            {# Manually Locked: Alarm State 0x15 (21) #}
-            {% elif alarm_type == '21' %}
-                {{ 'manually locked' }}
-
-            {#- Manual Unlock: Alarm State 0x16 (22) -#}
-            {%- elif alarm_type == '22' -%}
-                {{ 'manually unlocked' }}
-
-            {#- Keypad Lock by keypad touch (lock & leave): Alarm State 0x12 (18) -#}
-            {%- elif alarm_type ==  '18' -%}
-                {{ 'locked with keypad' }}
-
-            {#- Keypad Unlock: Alarm State 0x13 (19) -#}
-            {%- elif alarm_type == '19' -%}
-                {{ 'unlocked with keypad by user ' ~ user }}
-
-            {%- else -%}
-                {#- The lock status is sometimes unknown when HASS boots and Z-Wave is initialized.  In this case we want to use the last state reported by the lock itself (physically) if possible, otherwise we return 'unknown' -#}
-                {# {{ 'unknown' }} #}
-                {% set state = states.lock.lock_front_door_lock %}
-                {% set status = (state.attributes.lock_status if state else '')|trim() %}
-                {% set result = status if status != '' else 'unknown' %}
-                {{ result|lower() }}
-            {%- endif -%}
   - platform: ohmconnect
     id: !secret ohmconnect_id
-  - platform: google_geocode
-    name: Alan
-    origin: device_tracker.alandtse_pixel2
-    api_key: !secret google_key
-  - platform: google_geocode
-    name: Ray
-    origin: device_tracker.raywtse_note4
-    api_key: !secret google_key
+    #  - platform: google_geocode
+    # name: Alan
+    # origin: device_tracker.alandtse_pixel2
+    #   api_key: !secret google_key
+    # - platform: google_geocode
+    #  name: Ray
+    # origin: device_tracker.raywtse_note4
+    # api_key: !secret google_key
     #  - platform: google_geocode
     #    name: Evie
     #origin: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
@@ -328,7 +243,7 @@
     api_key: !secret email_ray
   - platform: places
     name: Evie
-    devicetracker_id: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+    devicetracker_id: device_tracker.evie_location_tracker
     options: zone, place
     map_provider: google
     map_zoom: 18
@@ -336,7 +251,7 @@
     api_key: !secret email_alan
   - platform: places
     name: Eva
-    devicetracker_id: device_tracker.tesla_model_3_5yj3e1ea2jf006634_location_tracker
+    devicetracker_id: device_tracker.eva_location_tracker
     options: zone, place
     map_provider: google
     map_zoom: 18
@@ -344,9 +259,12 @@
     api_key: !secret email_ray
   - platform: places
     name: Model 3
-    devicetracker_id: device_tracker.tesla_model_3_5yj3e1ea7hf002153_location_tracker
+    devicetracker_id: device_tracker.tesla_model_3_location_tracker
     options: zone, place
     map_provider: google
     map_zoom: 18
     home_zone: zone.home
     api_key: !secret email_ray
+  - platform: rpi_power
+    text_state: true
+

@@ -1,17 +1,16 @@
 {
-    "1": "input_boolean.alanhome",
+    "1": "input_boolean.abodeupdate",
     "10": "switch.playstation",
-    "11": "switch.tv",
-    "12": "switch.doorbird",
-    "13": "switch.alarm",
-    "14": "switch.security",
-    "15": "switch.frontdoorlock",
-    "2": "input_boolean.abodeupdate",
+    "11": "switch.frontdoorlock",
+    "12": "switch.rpi",
+    "13": "switch.xbox",
+    "14": "switch.garagedoorlock",
+    "2": "input_boolean.alanhome",
     "3": "input_boolean.rayhome",
-    "4": "switch.hdmi_4",
-    "5": "switch.garage",
-    "6": "switch.karaoke",
-    "7": "switch.rpi",
+    "4": "switch.karaoke",
+    "5": "switch.doorbird",
+    "6": "switch.tv",
+    "7": "switch.garage",
     "8": "switch.roku",
-    "9": "switch.xbox"
+    "9": "switch.security"
 }

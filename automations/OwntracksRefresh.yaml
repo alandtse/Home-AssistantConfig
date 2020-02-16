@@ -8,7 +8,7 @@
      entity_id: input_boolean.rayhome
      state: 'off'
   trigger:
-    - platform: time
+    - platform: time_pattern
       minutes: '/15'
       seconds: 0
   action:

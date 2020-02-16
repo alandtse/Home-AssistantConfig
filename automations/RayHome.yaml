@@ -16,7 +16,7 @@
       entity_id: sensor.ray_home_occupancy_confidence
       above: 10
     - platform: state
-      entity_id: device_tracker.raywtse_note4, device_tracker.ray_tse_galaxy_note4
+      entity_id: person.ray
       to: 'home'
   action:
     - service: homeassistant.turn_on
@@ -28,14 +28,16 @@
           {%- for state in states if state.entity_id == trigger.entity_id -%}
             {{ state.attributes.friendly_name }} is Home and confidence is {{ sensor.ray_home_occupancy_confidence }}.
           {%- endfor -%}
-    - service: media_player.alexa_tts
+    - service: notify.alexa_media
       data:
-        entity_id:
+        target:
           - media_player.kitchen
           - media_player.great_room
           - media_player.guest_room
           - media_player.stairs
           - media_player.master_bedroom
         message: 'Ray is Home!'
+        data:
+          type: announce
 #### Guests
 

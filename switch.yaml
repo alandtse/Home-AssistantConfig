@@ -1,27 +1,42 @@
   - platform: template
     switches:
+      garagedoorlock:
+        friendly_name: Garage Door Lock
+        value_template: "{{ is_state('lock.garage_door', 'locked') }}"
+        turn_on:
+          service: script.lockgaragedoor
+        turn_off:
+          service: script.unlockgaragedoor
+        icon_template: >-
+          {% if is_state('lock.garage_door', 'locked') %}
+            mdi:lock
+          {% else %}
+            mdi:lock-open
+          {% endif %}
       frontdoorlock:
         friendly_name: Front Door Lock
-        value_template: "{{ is_state('lock.lock_front_door_lock', 'locked') }}"
+        value_template: "{{ is_state('lock.front_door', 'locked') }}"
         turn_on:
           service: script.lockfrontdoor
         turn_off:
           service: script.unlockfrontdoor
         icon_template: >-
-          {% if is_state('lock.lock_front_door_lock', 'locked') %}
+          {% if is_state('lock.front_door', 'locked') %}
             mdi:lock
           {% else %}
             mdi:lock-open
           {% endif %}
       security:
         friendly_name: Security
-        value_template: "{{is_state('alarm_control_panel.215_cedarwood', 'armed_home') or is_state('alarm_control_panel.215_cedarwood', 'armed_away')}}"
+        value_template: "{{is_state('alarm_control_panel.215_cedarwood_alarm_control_panel', 'armed_home') or is_state('alarm_control_panel.215_cedarwood_alarm_control_panel', 'armed_away')}}"
         turn_on:
-          service: script.arm_home
+          - service: script.arm_home
+          - service: script.lockgaragedoor
+          - service: script.lockfrontdoor
         turn_off:
-          service: script.disarm
+          - service: script.disarm
         icon_template: >-
-          {% if is_state('alarm_control_panel.215_cedarwood', 'armed_home') or is_state('alarm_control_panel.215_cedarwood', 'armed_away') %}
+          {% if is_state('alarm_control_panel.215_cedarwood_alarm_control_panel', 'armed_home') or is_state('alarm_control_panel.215_cedarwood_alarm_control_panel', 'armed_away') %}
             mdi:security-home
           {% else %}
             mdi:security-off
@@ -41,14 +56,15 @@
           {% endif %}
       doorbird:
         friendly_name: Gate
-        value_template: "{{ is_state('binary_sensor.gate_unlocked', 'on') }}"
+        value_template: "{{ is_state('switch.doorbird_1_relay_1', 'on') }}"
         turn_on:
-          service: shell_command.unlockgate
+          service: switch.turn_on
+          entity_id: switch.doorbird_1_relay_1
         turn_off:
           service: switch.turn_on
           entity_id: switch.null
         icon_template: >-
-          {% if is_state('binary_sensor.gate_unlocked', 'on') %}
+          {% if is_state('switch.doorbird_1_relay_1', 'on') %}
             mdi:lock-open
           {% else %}
             mdi:lock
@@ -78,7 +94,7 @@
           {% endif %}
       playstation:
         friendly_name: Playstation
-        value_template: "{{ is_state('switch.hdmi_8', 'on') or is_state('device_tracker.00248d9b0d1e', 'home') }}"
+        value_template: "{{ is_state('device_tracker.00248d9b0d1e', 'home') }}"
         turn_on:
           - service: homeassistant.turn_on
             entity_id: switch.hdmi_0
@@ -100,11 +116,7 @@
               entity_id: input_select.hdmiswitch
               option: 'None'
         icon_template: >-
-          {% if is_state('switch.hdmi_8', 'on') or is_state('device_tracker.00248d9b0d1e', 'home')%}
-            mdi:playstation
-          {% else %}
-            mdi:playstation
-          {% endif %}
+          mdi:playstation
       roku:
         friendly_name: Roku
         value_template: "{{ is_state('input_select.hdmiswitch', 'Roku') }}"
@@ -126,8 +138,10 @@
               option: 'None'
           - service: media_player.select_source
             data:
-              entity_id: media_player.roku_stick__5s462k290748
+              entity_id: media_player.roku_stick_5s462k290748
               source: 'Home'
+          - service: homeassistant.turn_off
+            entity_id: media_player.roku_stick_5s462k290748
         icon_template: >-
           {% if is_state('input_select.hdmiswitch', 'Roku') %}
             mdi:play-circle
@@ -154,11 +168,7 @@
               entity_id: input_select.hdmiswitch
               option: 'None'
         icon_template: >-
-          {% if is_state('input_select.hdmiswitch', 'Raspberry Pi') %}
-            mdi:raspberrypi
-          {% else %}
-            mdi:raspberrypi
-          {% endif %}
+          mdi:raspberry-pi
       xbox:
         friendly_name: XBox
         value_template: "{{ is_state('input_select.hdmiswitch', 'Xbox') }}"
@@ -209,15 +219,6 @@
           {% else %}
             mdi:microphone-off
           {% endif %}
-  - platform: tplink
-    host: 192.168.1.82
-    name: Refrigerator
-  - platform: tplink
-    host: 192.168.1.95
-    name: Christmas Lights
-  - platform: tplink
-    host: 192.168.1.94
-    name: Water Boiler
   - platform: doorbird
     switches:
       - light_on

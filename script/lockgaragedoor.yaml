@@ -1,0 +1,6 @@
+  lockgaragedoor:
+    alias: 'Lock Garage Door'
+    sequence:
+      - service: lock.lock 
+        entity_id: lock.garage_door
+

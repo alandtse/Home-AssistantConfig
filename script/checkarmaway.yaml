@@ -2,7 +2,7 @@
     alias: 'Check Arm Away'
     sequence:
       - condition: state
-        entity_id: 'alarm_control_panel.simplisafe'
+        entity_id: 'alarm_control_panel.215_cedarwood_alarm_control_panel'
         state: 'disarmed'
       - service: script.arm_away
 

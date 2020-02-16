@@ -1,0 +1,6 @@
+  unlockgaragedoor:
+    alias: 'Unlock Garage Door'
+    sequence:
+      - service: lock.unlock 
+        entity_id: lock.garage_door
+      - service: script.checkdisarm

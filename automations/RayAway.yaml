@@ -30,7 +30,7 @@
        {%- endif -%}
   trigger:
     - platform: state
-      entity_id: device_tracker.raywtse_note4
+      entity_id: person.ray
       to: 'not_home'
 #      for: '00:05:00'
   action:

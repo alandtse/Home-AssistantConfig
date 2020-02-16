@@ -1,6 +1,8 @@
   disarm:
     alias: 'Disarm'
     sequence:
-      - service: shell_command.disarm
+      - service: mqtt.publish
+        data:
+          topic: "simplisafe/command/disarm"
       - delay: 00:00:30
       - service: script.checkdisarm

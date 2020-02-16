@@ -1,0 +1,5 @@
+  turnoffalllights:
+    alias: 'Turn off all lights'
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: switch.garage_switch, switch.kitchen_switch,switch.masterbathroom_switch,switch.mastercloset_switch, light.great_room_switch_level, light.guest_hall_switch_level, light.guest_room_switch_level, light.nook_switch_level, light.dining_room_switch_level

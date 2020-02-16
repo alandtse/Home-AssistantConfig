@@ -1,5 +1,4 @@
 default_view:
-  view: true
   icon: mdi:home
   entities:
   #- group.all_lights
@@ -15,26 +14,22 @@ default_view:
   - group.windows
 cameras:
   name: cameras
-  view: true
   icon: mdi:cctv
   entities:
   - group.cameras_doorbird
   - group.cameras_garage
   - camera.kids_room
 cameras_doorbird:
-  view: no
   entities:
     - camera.doorbird
     - camera.doorbird_1_last_ring
     - camera.doorbird_1_last_motion
 cameras_garage:
-  view: no
   entities:
     - camera.dashcam
     - camera.garage
 people:
   name: People
-  view: true
   icon: mdi:account-multiple
   entities:
     - group.devices
@@ -46,11 +41,10 @@ people:
     - group.maps_cars  
 media:
   name: media
-  view: true
   icon: mdi:play-circle-outline
   entities:
   - group.media_player
-  - remote.roku_stick__5s462k290748
+  - remote.roku_stick_5s462k290748
   - switch.tv
   - switch.playstation
   - switch.roku
@@ -60,7 +54,6 @@ media:
   - input_select.hdmiswitch
 cars:
   name: cars
-  view: true
   icon: mdi:car
   entities:
   - group.model_s
@@ -69,14 +62,12 @@ cars:
           
 climate:
   name: Climate
-  view: true
   icon: mdi:thermostat
   entities:
     - group.thermostats
     - group.weather
 settings:
   name: Settings
-  view: true
   icon: mdi:settings
   entities:
     - group.information
@@ -110,7 +101,7 @@ Thermostats:
 - sensor.ohmconnect_status
 Information:
 - sensor.ssl_certificate_expiry
-- sensor.time__date
+- sensor.time_date
 - sensor.morning_commute
 - sensor.evening_commute
 - sensor.alan_to_home
@@ -125,7 +116,7 @@ Information:
 - sensor.pihole_dns_unique_clients
 - sensor.pihole_ads_percentage_blocked_today
 Media Player:
-- media_player.roku_stick__5s462k290748
+- media_player.roku_stick_5s462k290748
 - media_player.kitchen
 - media_player.great_room
 - media_player.guest_room
@@ -283,12 +274,10 @@ Devices:
 - device_tracker.78fd940d9949
 - sensor.model_3
 Maps_people:
-  view: no
   entities:
     - camera.alan_map
     - camera.ray_map
 Maps_cars:          
-  view: no
   entities:
     - camera.eva_map
     - camera.evie_map

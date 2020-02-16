@@ -14,15 +14,17 @@
     #entity_id: binary_sensor.doorbell
     #to: 'on'
   action:
-    - service: media_player.alexa_tts
+    - service: notify.alexa_media
       data:
-        entity_id:
+        target:
           - media_player.kitchen
           - media_player.great_room
           - media_player.guest_room
           - media_player.stairs
           - media_player.master_bedroom
         message: 'Ding Dong! Someone is at the front door!'
+        data:
+          type: announce
     - service: homeassistant.turn_on
       entity_id: script.displaygate
     - service: logbook.log

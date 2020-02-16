@@ -1,0 +1,6 @@
+guardaway:
+  alias: Guard Away
+  sequence:
+  - data: 
+      entity_id: alarm_control_panel.alexa_guard_2caa5
+    service: alarm_control_panel.alarm_arm_away

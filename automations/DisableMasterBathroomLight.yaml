@@ -4,7 +4,7 @@
       entity_id: binary_sensor.masterbathroomswitch_motion
       to: 'off'
       for:
-        minutes: 5
+        minutes: 15
   action:
     service: homeassistant.turn_off
     entity_id: switch.masterbathroom_switch

@@ -16,7 +16,7 @@
       entity_id: sensor.alan_home_occupancy_confidence
       above: 10
     - platform: state
-      entity_id: device_tracker.alandtse_pixel2, device_tracker.pixel_2
+      entity_id: person.alan
       to: 'home'
   action:
     - service: homeassistant.turn_on
@@ -28,13 +28,15 @@
           {%- for state in states if state.entity_id == trigger.entity_id -%}
             {{ state.attributes.friendly_name }} is Home and confidence is {{ sensor.alan_home_occupancy_confidence }}.
           {%- endfor -%}
-    - service: media_player.alexa_tts
+    - service: notify.alexa_media
       data:
-        entity_id:
+        target:
           - media_player.kitchen
           - media_player.great_room
           - media_player.guest_room
           - media_player.stairs
           - media_player.master_bedroom
         message: 'Alan is Home!'
+        data:
+          type: announce
 

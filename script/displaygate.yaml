@@ -5,16 +5,18 @@
         entity_id: switch.roku
       - service: media_player.select_source
         data:
-          entity_id: 'media_player.roku_stick__5s462k290748'
-          source: 'IP Camera Viewer Basic'
+          entity_id: 'media_player.roku_stick_5s462k290748'
+          source: 'IP Camera Viewer - Basic'
       - delay: 00:00:2
       - service: remote.send_command
         data:
-          entity_id: remote.roku_stick__5s462k290748
+          entity_id: remote.roku_stick_5s462k290748
           command:
             - select
             - select
       - delay: 00:00:30
+      - condition: template
+        value_template: "{{ as_timestamp(now()) - as_timestamp(states.switch.roku.last_changed) < 45 }}"
       - service: homeassistant.turn_off
         entity_id: switch.roku
 

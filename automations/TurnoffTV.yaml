@@ -2,11 +2,23 @@
   condition:
     - condition: and
       conditions:
-#      - condition: state
-#        entity_id: switch.roku, switch.karaoke, switch.xbox, switch.rpi, switch.playstation
-#        state: 'off'
+      - condition: state
+        entity_id: switch.roku
+        state: 'off'
+      - condition: state
+        entity_id: switch.karaoke
+        state: 'off'
+      - condition: state
+        entity_id: switch.xbox
+        state: 'off'
+      - condition: state
+        entity_id: switch.rpi
+        state: 'off'
+      - condition: state
+        entity_id: switch.playstation
+        state: 'off'
       - condition: template
-        value_template: "{{ not is_state('input_select.hdmiswitch', 'None') }}"
+        value_template: "{{ is_state('input_select.hdmiswitch', 'None') }}"
   trigger:
     - platform: state
       entity_id: switch.roku, switch.karaoke, switch.xbox, switch.rpi, switch.playstation

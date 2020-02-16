@@ -3,5 +3,6 @@
     sequence:
       - service: cover.open_cover
         entity_id: cover.garage_door_opener
+      - service: script.unlockgaragedoor
       - service: script.disarm
 

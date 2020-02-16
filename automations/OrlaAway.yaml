@@ -13,7 +13,7 @@
        {%- endif -%}
   trigger:
     - platform: state
-      entity_id: device_tracker.e0338ec19abe
+      entity_id: person.orla
       to: 'not_home'
       for:
         minutes: 5

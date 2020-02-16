@@ -1,0 +1,13 @@
+  closegreatroomcamera:
+    alias: 'Close Greatroom Camera'
+    sequence:
+      - service: cover.set_cover_position
+        data:
+          entity_id: cover.greatroom_move_leftright
+          position: 100
+      - delay: '00:00:08'
+      - service: cover.set_cover_position
+        data:
+          entity_id: cover.greatroom_move_leftright
+          position: 0
+

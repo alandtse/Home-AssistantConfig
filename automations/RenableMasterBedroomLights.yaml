@@ -1,0 +1,10 @@
+  alias: 'Renable Master Bedroom Lights'
+  trigger:
+    - platform: state
+      entity_id: switch.master_bedroom_lights
+      to: 'off'
+      for:
+        minutes: 10
+  action:
+    service: homeassistant.turn_on
+    entity_id: switch.master_bedroom_lights

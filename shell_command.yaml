@@ -1,7 +1,8 @@
-  arm: '/home/pi/simplisafe-rf/arm.py'
-  armaway: '/home/pi/simplisafe-rf/armaway.py'
-  disarm: '/home/pi/simplisafe-rf/disarm.py'
+  arm: 'config/scripts/arm.py'
+  armaway: 'config/scripts/armaway.py'
+  disarm: 'config/scripts/disarm.py'
   unlockgate: '/home/pi/homeassistant-doorbird-proxy/unlock.sh'
   recordgate: '/home/pi/doorbird/recordgate.sh {{ value }}'
   restartsimplisafe: 'sudo systemctl restart pigpiod.service simplisaferf.service'
-  switchhdmi: '/home/pi/hdmi/hdmi.py {{ value }}'
+  switchhdmi: 'config/scripts/hdmi.py {{ value }}'
+  fixdns: echo "nameserver 192.168.1.108" >> /etc/resolv.conf

@@ -3,19 +3,19 @@
     - condition: and
       conditions:
       - condition: state
-        entity_id: device_tracker.tesla_model_s_5yjsa1e13hf192718_location_tracker
+        entity_id: device_tracker.evie_location_tracker
         state: 'home'
       - condition: state
-        entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+        entity_id: switch.evie_charger_switch
         state: 'on'
       - condition: state
-        entity_id: switch.tesla_model_s_5yjsa1e13hf192718_maxrange_switch
+        entity_id: switch.evie_maxrange_switch
         state: 'off'
   trigger:
     - platform: time
       at: '08:00:00'
   action:
     - service: homeassistant.turn_off
-      entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+      entity_id: switch.evie_charger_switch
     - service: homeassistant.turn_off
-      entity_id: switch.tesla_model_s_5yjsa1e13hf192718_charger_switch
+      entity_id: switch.evie_charger_switch

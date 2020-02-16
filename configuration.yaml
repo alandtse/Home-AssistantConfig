@@ -12,8 +12,13 @@ homeassistant:
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
   packages: !include_dir_named packages
-# Show links to resources in log and frontend
-#introduction:
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.0.0/24
+    - type: legacy_api_password
+      api_password: !secret api_password
+
 
 zone:
  - name: home
@@ -49,14 +54,11 @@ frontend:
 config:
 
 http:
-  # Uncomment this to add a password (recommended!)
-  api_password: !secret api_password
   # Uncomment this if you are using SSL or running in Docker etc
   base_url: !secret base_url 
-  ssl_certificate: !secret ssl_certificate 
-  ssl_key: !secret ssl_key 
-  trusted_networks:
-    - 192.168.1.0/24
+  #server_port: 8123
+  #ssl_certificate: !secret ssl_certificate 
+  #ssl_key: !secret ssl_key 
 
 # Checks for available updates
 updater:
@@ -84,7 +86,7 @@ logbook:
   exclude:
     entities:
       - sensor.yr_symbol
-      - sensor.time__date
+      - sensor.time_date
       - sensor.great_room_switch_sourcenodeid
       - sensor.great_room_switch_sourcenodeid_2
       - sensor.great_room_switch_alarm_level
@@ -97,28 +99,29 @@ logbook:
       - automation.battery_notification_clear
 
 logger:
-  default: critical
+  default: info
   logs:
     homeassistant.components.websocket_api: critical
-    homeassistant.components.hdmi_cec: debug
     homeassistant.components.doorbird: info
     homeassistant.components.zwave.util: info
-    custom_components.media_player.alexa: debug
-    custom_components.device_tracker.bluetooth_tracker: critical
-    custom_components.device_tracker.ddwrt: critical
-    homeassistant.core: error
+    custom_components.tesla: debug
+    custom_components.alexa_media: debug
+    homeassistant.core: info
     homeassistant.components.mqtt: warning
     homeassistant.components.sensor.template: error
     homeassistant.components.configurator: info
+    alexapy: debug
+    # teslajsonpy: debug
 # Track the sun
 sun:
 
 # Text to speech
-tts:
-  - platform: google
-    cache: true
-    cache_dir: /home/homeassistant/.homeassistant/tts
-    time_memory: 300
+#tts:
+#  - platform: google_translate
+#    service_name: google_say
+#    cache: true
+#    cache_dir: /home/homeassistant/.homeassistant/tts
+#    time_memory: 300
 media_player:
 #  - platform: tts_bluetooth_speaker
 #    address:
@@ -129,21 +132,29 @@ media_player:
 #    connect_script: /home/homeassistant/.homeassistant/scripts/connect_bluetooth.sh
 #    disconnect_script: /home/homeassistant/.homeassistant/scripts/disconnect_bluetooth.sh
 #    cache_dir: /home/homeassistant/.homeassistant/tts
-  - platform: alexa
-    email: !secret amazon_user
-    password: !secret amazon_pass
-    url: amazon.com
-#remote:
+
+alexa_media:
+  accounts:
+    - email: !secret amazon_user
+      password: !secret amazon_pass
+      url: amazon.com
+      debug: True
+      exclude_devices:
+        - "Alan's Alexa Apps"
+        - "Solomon's Alexa Apps"
+        - Garage
+        - "This Device"
 notify:
   - platform: pushbullet
     api_key: !secret pushbullet_key
     name: pushbullet
-  - platform: ecobee
-    name: ecobee
   - platform: html5
     name: html5
-    gcm_api_key: !secret gcm_api_key
-    gcm_sender_id: !secret gcm_sender_id
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret vapid_email
+    #gcm_api_key: !secret gcm_api_key
+    #gcm_sender_id: !secret gcm_sender_id
 mqtt:
   broker: 127.0.0.1
   port: 1883
@@ -158,14 +169,14 @@ camera:
     name: Kids Room
     username: !secret dlink_user
     password: !secret dlink_password
-    still_image_url: http://DCS-2330L:8080/dmsdump?nowprofileid=1
-    mjpeg_url: http://dcs-2330l:8080/video1.mjpg
+    still_image_url: http://DCS-2330L.local:8080/dmsdump?nowprofileid=1
+    mjpeg_url: http://dcs-2330l.local:8080/video1.mjpg
   - platform: mjpeg
     name: Doorbird
     username: !secret doorbird_user
     password: !secret doorbird_password
-    still_image_url: http://bha-1ccae3707f56/bha-api/image.cgi
-    mjpeg_url: http://bha-1ccae3707f56/bha-api/video.cgi
+    still_image_url: http://bha-1ccae3707f56.local/bha-api/image.cgi
+    mjpeg_url: http://192.168.1.99/bha-api/video.cgi
   - platform: mjpeg
     name: Garage
     still_image_url: !secret garage_still
@@ -173,7 +184,16 @@ camera:
   - platform: doorbird
   - platform: mjpeg
     name: Dashcam
-    mjpeg_url: http://DR500GW-HD/blackvue_live.cgi?direction=R  
+    mjpeg_url: http://DR500GW-HD.local/blackvue_live.cgi?direction=R  
+  - platform: generic
+    name: Great Room
+    username: !secret dafang_user
+    password: !secret dafang_pass
+    authentication: basic
+    still_image_url: https://dafang.local/cgi-bin/currentpic.cgi
+    verify_ssl: false
+    scan_interval: 1
+    #input: -rtsp_transport tcp -i rtsp://dafang:8554/unicast -an -max_muxing_queue_size 1024 -acodec copy
   - platform: generic
     still_image_url: https://radblast.wunderground.com/cgi-bin/radar/WUNIDS_map?station=SOX&brand=wui&num=1&delay=15&type=N0R&frame=0&scale=0.18097826086956523&noclutter=0&showstorms=0&mapx=400&mapy=240&centerx=638.6336336336336&centery=236.89189189189187&transx=238.63363363363362&transy=-3.1081081081081265&showlabels=1&severe=0&rainsnow=0&lightning=0&smooth=0&rand=24853447&lat=0&lon=0&label=you
     name: Radar
@@ -199,20 +219,17 @@ camera:
     limit_refetch_to_url_change: true    
 cover:
   - platform: myq
-    name: garage
     username: !secret myq_user
     password: !secret myq_password
     type: chamberlain 
 device_tracker:
   - platform: ddwrt
 #   Second host is from custom component: https://community.home-assistant.io/t/dd-wrt-dual-band-router-and-multiple-router-support/12000
-    hosts: 
-      - 192.168.1.1
-      - 192.168.1.2
+    host: 192.168.1.1
+    #- 192.168.1.1
+        #     - 192.168.1.2
     username: !secret ddwrt_user
     password: !secret ddwrt_password
-#   protocol is for custom_component to allow access to second ddwrt
-    protocol: ssh
     interval_seconds: 30 
     consider_home: 300
 #  - platform: bluetooth_le_tracker
@@ -230,29 +247,26 @@ device_tracker:
     exclude:
       - 192.168.1.84
       - 192.168.1.108
-    scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
+#    scan_options: " --privileged -sn -n --host-timeout 10s -T5 "
 owntracks:
   max_gps_accuracy: 1000
   interval_seconds: 30
   consider_home: 300
-  waypoints: True
-ecobee:
-  api_key: !secret ecobee_key
-tesla:
-  username: !secret tesla_user
-  password: !secret tesla_password
+  #tesla:
+  #  username: !secret tesla_user
+  #  password: !secret tesla_password
 doorbird:
-  token: !secret doorbird_token
   devices:
-    host: bha-1ccae3707f56
+    host: 192.168.1.99
 #  host: 192.168.1.99
     username: !secret doorbird_user
     password: !secret doorbird_password
-    monitored_conditions:
+    events:
         - doorbell
         - motion
-    hass_url_override: https://192.168.1.108:8123
-    #simplisafe:
+   # hass_url_override: https://192.168.1.108:8123
+    token: !secret doorbird_token 
+  #simplisafe:
     # accounts:
     # username: !secret simplisafe_user
     # password: !secret simplisafe_password 
@@ -261,7 +275,7 @@ recorder:
   exclude:
     domains:
       - sun
-      - sensor.time__date
+      - sensor.time_date
   include:
     domains:
       - alarm_control_panel
@@ -281,17 +295,17 @@ recorder:
       - input_text
       - input_datetime
       - device_tracker
-influxdb:
-  host: 127.0.0.1
-  username: !secret influxdb_user
-  password: !secret api_password
-  tags:
-    instance: prod
-    source: hass
-  tags_attributes:
-    - friendly_name
-wink:
-  local_control: true
+      - media_player
+      - person
+        # influxdb:
+        #   host: 127.0.0.1
+        #   username: !secret influxdb_user
+        #   password: !secret api_password
+        #   tags:
+        #   instance: prod
+        #   source: hass
+        #   tags_attributes:
+        #  - friendly_name
 hdmi_cec:
   devices:
     TV: 0.0.0.0
@@ -309,12 +323,38 @@ dialogflow: !include apiai.yaml
 input_select: !include input_select.yaml
 input_boolean: !include input_boolean.yaml
 switch: !include switch.yaml
-zwave:
-  usb_path: /dev/ttyACM0
-  config_path: /srv/homeassistant/homeassistant_venv/lib/python3.6/site-packages/python_openzwave/ozw_config/ 
-  network_key: !secret zwave_key
+#zwave:
+#  usb_path: /dev/ttyACM0
+#  config_path: /config/ozw_config/ 
+#  network_key: !secret zwave_key
 panel_custom:
   - name: zwavegraph2
-    sidebar_title: ZWave Graph2
+    sidebar_title: Z-Wave Graph
     sidebar_icon: mdi:access-point-network
     url_path: zwave
+
+    #image_processing:
+    #  - platform: tensorflow
+    #    scan_interval: 604800
+    #    source:
+    #    - entity_id: camera.doorbird
+    #    - entity_id: camera.doorbird_1_last_motion
+    #    - entity_id: camera.garage
+    #    - entity_id: camera.kids_room
+    #  - entity_id: camera.great_room
+    # file_out:
+    #   - "/tmp/{{ camera_entity.split('.')[1] }}_latest.jpg"
+    #  - "/tmp/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+    # model:
+    #  graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
+    #  categories:
+    #    - category: person
+system_health:
+stream:
+person:
+breaking_changes:
+pi_hole:
+  - host: 'pi.hole'
+    api_key: !secret pi_hole_api_key
+sentry:
+  dsn: !secret sentry_dsn

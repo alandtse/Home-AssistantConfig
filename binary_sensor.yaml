@@ -4,42 +4,25 @@
   device_class: motion
   # inactive: No alarm
   # active: Motion Detected
-  value_template: >-
-          {%- if value != "inactive" %}
-              ON
-          {% else %}
-              OFF
-          {%- endif %}
+  value_template: '{{value_json.val}}'
+  payload_on: active
+  payload_off: inactive
 - platform: mqtt
   state_topic: 'camera/garage/motion'
   name: "Garage Camera Motion"
   device_class: motion
   # inactive: No alarm
   # active: Motion Detected
-  value_template: >-
-          {%- if value != "inactive" %}
-              ON
-          {% else %}
-              OFF
-          {%- endif %}
+  value_template: '{{value_json.val}}'
+  payload_on: active
+  payload_off: inactive
 - platform: template
   sensors:
-    doorbell:
-      friendly_name: Gate Doorbell
-      device_class: sound
-      value_template: 'off'
-    gate_motion:
-      friendly_name: Gate Motion
-      device_class: motion
-      value_template: 'off'
-    gate_unlocked:
-      friendly_name: Gate Unlocked
-      value_template: 'off'
     gate_open:
       friendly_name: Gate 
       device_class: opening
       value_template: >-
-        {{((states("sensor.gate_alarm_level") |float > 0) and (states("sensor.gate_alarm_level") |float < 254) or (states("sensor.gate_alarm_level") | float == 255) and (states("sensor.gate_access_control") | float == 22))}}
+        {{((states("sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level") |float > 0) and (states("sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level") |float < 254) or (states("sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level") | float == 255) and (states("sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control") | float == 22))}}
     garage:
       friendly_name: Garage
       device_class: opening
@@ -80,6 +63,11 @@
       device_class: motion
       value_template: >-
         {{(states("sensor.masterbathroom_burglar") |float > 0) and (states("sensor.masterbathroom_burglar") |float < 254)}}
+    diningroomswitch_motion:
+      friendly_name: Dining Room Switch Motion
+      device_class: motion
+      value_template: >-
+        {{(states("sensor.dining_burglar") |float > 0) and (states("sensor.dining_burglar") |float < 254)}}
     tv:
       friendly_name: TV 
       device_class: occupancy
@@ -90,4 +78,4 @@
       device_class: occupancy
       value_template: >-
         {{is_state("device_tracker.3c6aa7dd18c3","home")}}
-- platform: simplisaferf
+        #- platform: simplisaferf

@@ -2,6 +2,6 @@
     alias: 'Unlock Front Door'
     sequence:
       - service: lock.unlock 
-        entity_id: lock.lock_front_door_lock
-      - service: script.disarm
+        entity_id: lock.front_door
+      - service: script.checkdisarm
 

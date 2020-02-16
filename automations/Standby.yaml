@@ -28,7 +28,7 @@
           entity_id: input_select.abodestatus
           state: 'away'
   trigger:
-   - platform: time
+   - platform: time_pattern
      minutes: '/10'
      seconds: 00
   action:

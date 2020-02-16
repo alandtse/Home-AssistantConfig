@@ -4,7 +4,7 @@
       entity_id: binary_sensor.guesthallswitch_motion
       to: 'off'
       for:
-        minutes: 5
+        minutes: 1
   action:
     service: homeassistant.turn_off
     entity_id: light.guest_hall_switch_level

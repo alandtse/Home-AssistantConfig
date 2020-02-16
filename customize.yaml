@@ -141,3 +141,5 @@ camera.doorbird_1_last_ring:
   friendly_name: Gate Last Ring
 switch.frontdoorlock:
   emulated_hue_hidden: false
+switch.garagedoorlock:
+  emulated_hue_hidden: false

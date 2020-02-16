@@ -1,8 +1,8 @@
   arm_away:
     alias: 'Arm Away'
     sequence:
-      - service: shell_command.disarm
-      - delay: 00:00:01
-      - service: shell_command.armaway
+      - service: mqtt.publish
+        data:
+          topic: "simplisafe/command/armaway"
       - delay: 00:00:30
       - service: script.checkarmaway

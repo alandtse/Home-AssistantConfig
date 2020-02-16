@@ -4,9 +4,10 @@
     platform: state
     entity_id: input_select.hdmiswitch
   action:
-    service: shell_command.switchhdmi
+    service: mqtt.publish 
     data_template:
-      value: >-
+      topic: "hdmi/command"
+      payload_template: >-
         {%- if is_state('input_select.hdmiswitch', 'Karaoke') -%}
           1
         {%- elif is_state('input_select.hdmiswitch', 'Xbox') -%}
